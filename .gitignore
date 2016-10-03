@@ -17,6 +17,7 @@ passenger.3000*
 
 # Ignore application configuration.
 config/secrets.yml
+config/database.yml
 config/sidekiq.yml
 
 # Doc files
