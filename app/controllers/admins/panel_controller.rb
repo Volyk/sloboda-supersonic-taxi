@@ -3,5 +3,6 @@ class Admins::PanelController < Devise::SessionsController
   before_action :authenticate_admin!
 
   def index
+    @admins = Admin.all
   end
 end

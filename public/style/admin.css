@@ -1,0 +1,62 @@
+#admin_panel_login {
+  text-align: center;
+}
+
+#login_form_wrapper {
+  display: inline-block;
+  margin-top: 10%;
+  font-size: 18px;
+}
+
+.actions input {
+  width: 140px;
+  height: 30px;
+  font-size: 16px;
+}
+
+.text input {
+  width: 200px;
+  height: 20px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.grey_text {
+  color: grey;
+}
+
+#admin_panel_wrapper a {
+  color: #696969;
+  text-decoration: underline;
+}
+
+#admin_panel_wrapper a:hover {
+  color: #696969;
+  text-decoration: underline;;
+  background-color: white;
+}
+
+#admin_panel_wrapper a:visited {
+  color: #696969;
+  text-decoration: underline;
+ }
+
+#admin_panel_wrapper a:active {
+  color: #696969;
+  text-decoration: none;
+  background-color: white;
+}
+
+#logout_panel {
+  display: inline-block;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+}
+
+#admins_list {
+  display: inline-block;
+  position: absolute;
+  top: 55px;
+  left: 25px;
+}

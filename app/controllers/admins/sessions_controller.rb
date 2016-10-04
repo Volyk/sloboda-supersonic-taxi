@@ -1,15 +1,14 @@
 class Admins::SessionsController < Devise::SessionsController
 # before_action :configure_sign_in_params, only: [:create]
-
+layout false
   # GET /resource/sign_in
   def new
-    #@admin = Admin.new(:login => 'tvat', :password => '123456')
-    #@admin.save
-    if admin_signed_in?
-      render plain: 'Ok'
-    else
-      super
+    @admins = Admin.all
+    if @admins.length == 0
+      @admin = Admin.new(:login => 'admin', :password => 'admin')
+      @admin.save
     end
+    super
   end
 
   # POST /resource/sign_in
