@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
 
+root 'drivers#profile'
 
+devise_for :drivers, skip: :all
+  as :driver do
+    get 'driver' => 'devise/sessions#new', :as => :new_driver_session
+    post 'driver' => 'devise/sessions#create', :as => :driver_session
+    delete 'driver' => 'devise/sessions#destroy', :as => :destroy_driver_session
+  end
 
   devise_for :admins, path: 'admin', skip: :registrations, controllers: { sessions: 'admins/sessions' }
 
