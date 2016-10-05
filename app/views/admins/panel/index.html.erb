@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin Panel</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link href="style/admin.css" rel="stylesheet">
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <div id="admin_panel_wrapper">
+
+      <div id="logout_panel">
+        <span class="grey_text">Welcome, </span><%= Admin.find_for_authentication(:id => current_admin.id).login %> |
+        <%= link_to 'Logout', destroy_admin_session_path, :method => :delete %>
+      </div>
+
+      <div id="admins_list">
+      <h4>Admins:</h4>
+      <% @admins.each do |admin| %>
+      - <%= admin.login %><br><br>
+      <% end %>
+      </div>
+
+    </div>
+  </body>
+</html>
