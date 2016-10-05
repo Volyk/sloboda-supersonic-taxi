@@ -3,11 +3,6 @@ class Admins::SessionsController < Devise::SessionsController
 layout false
   # GET /resource/sign_in
   def new
-    @admins = Admin.all
-    if @admins.length == 0
-      @admin = Admin.new(:login => 'admin', :password => 'admin')
-      @admin.save
-    end
     super
   end
 

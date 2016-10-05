@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
+
+
   devise_for :admins, path: 'admin', skip: :registrations, controllers: { sessions: 'admins/sessions' }
 
   devise_scope :admin do
-    get 'admin', to: 'admins/sessions#new'
+    get '/admin', to: 'admins/sessions#new'
     get '/admins' => 'admins/panel#index', as: :admin_root
   end
 
