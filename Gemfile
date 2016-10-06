@@ -32,8 +32,6 @@ gem 'jbuilder', '~> 2.5'
 
 gem "pg"
 
-gem "devise"
-
 group :development, :test do
   gem "rspec-rails"
   gem "factory_girl_rails"

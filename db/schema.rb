@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20161004161127) do
     t.index ["number"], name: "index_drivers_on_number", unique: true
     t.index ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true
 
+end
+
   create_table "admins", force: :cascade do |t|
     t.string   "login",               default: "", null: false
     t.string   "encrypted_password",  default: "", null: false
