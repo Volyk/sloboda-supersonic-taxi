@@ -60,3 +60,10 @@
   top: 55px;
   left: 25px;
 }
+
+#websocket_panel {
+  display: inline-block;
+  position: absolute;
+  top: 25px;
+  left: 250px;
+}

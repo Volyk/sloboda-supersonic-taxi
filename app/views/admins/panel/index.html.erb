@@ -23,6 +23,31 @@
       <% end %>
       </div>
 
+      <div id="websocket_panel">
+        <button id="ping">Test Websocket</button>
+      </div>
+
     </div>
+
+    <script type="text/javascript">
+
+    function load_handler() {
+      var dispatcher = new WebSocketRails('localhost:3000/websocket');
+
+      dispatcher.bind('pong', function(data) {
+        alert(data.message);
+      });
+
+      function send_ping() {
+        var ping_msg = { title: 'Test connection.' }
+        dispatcher.trigger('ping', ping_msg);
+      }
+
+      document.getElementById('ping').addEventListener('click', send_ping)
+    }
+
+    window.addEventListener('load', load_handler)
+
+    </script>
   </body>
 </html>

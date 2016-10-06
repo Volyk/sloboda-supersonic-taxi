@@ -45,6 +45,11 @@ gem "pg"
 
 gem "devise"
 
+gem 'faye-websocket', '0.10.0'
+
+gem 'websocket-rails', github: 'moaa/websocket-rails', branch: 'threadsocket-rails'
+gem 'websocket-rails-js', github: 'websocket-rails/websocket-rails-js', branch: 'sub_protocols'
+
 group :development, :test do
   gem "rspec-rails"
   gem "factory_girl_rails"
