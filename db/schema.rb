@@ -10,10 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161004161127) do
+ActiveRecord::Schema.define(version: 20161005162859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admins", force: :cascade do |t|
+    t.string   "login",               default: "", null: false
+    t.string   "encrypted_password",  default: "", null: false
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",       default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["login"], name: "index_admins_on_login", unique: true, using: :btree
+  end
+
+  create_table "dispatchers", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_dispatchers_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_dispatchers_on_reset_password_token", unique: true, using: :btree
+  end
 
   create_table "drivers", force: :cascade do |t|
     t.string   "car_type"
@@ -31,21 +62,34 @@ ActiveRecord::Schema.define(version: 20161004161127) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.index ["number"], name: "index_drivers_on_number", unique: true
-    t.index ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true
+    t.index ["number"], name: "index_drivers_on_number", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true, using: :btree
+  end
 
-  create_table "admins", force: :cascade do |t|
-    t.string   "login",               default: "", null: false
-    t.string   "encrypted_password",  default: "", null: false
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",       default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["login"], name: "index_admins_on_login", unique: true, using: :btree
+  create_table "orders", force: :cascade do |t|
+    t.string   "start_point"
+    t.string   "end_point"
+    t.text     "comment"
+    t.integer  "client_id"
+    t.integer  "driver_id"
+    t.integer  "dispatcher_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "orders_blogs", force: :cascade do |t|
+    t.string   "action"
+    t.integer  "order_id"
+    t.integer  "dispatcher_id"
+    t.integer  "driver_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "widgets", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

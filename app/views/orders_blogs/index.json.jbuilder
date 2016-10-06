@@ -1,0 +1,1 @@
+json.array! @orders_blogs, partial: 'orders_blogs/orders_blog', as: :orders_blog

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start point:</strong>
+  <%= @order.start_point %>
+</p>
+
+<p>
+  <strong>End point:</strong>
+  <%= @order.end_point %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @order.comment %>
+</p>
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>
