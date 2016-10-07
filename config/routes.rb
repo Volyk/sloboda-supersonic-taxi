@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-root 'drivers#profile'
+  get 'orders/index'
+
+root 'home#index'
+
+resources :orders, only: [:index]
 
 devise_for :drivers, skip: :all
   as :driver do

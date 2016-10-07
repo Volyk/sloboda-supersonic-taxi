@@ -13,3 +13,23 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+	background-image: url(../images/wallpaper.jpg);
+}
+.order-form input.ng-invalid.ng-dirty {
+    border-color: #FA787E;
+}
+.order-form input.ng-valid.ng-dirty {
+    border-color: #78FA89;
+}
+.order-form {
+	width: 500px;
+	margin-top: 50px;
+}
+.order-form span.required {
+	color: red;
+}

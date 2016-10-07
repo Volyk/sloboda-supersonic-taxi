@@ -1,0 +1,20 @@
+app = angular.module('app',[
+	'templates',
+  'ngRoute',
+  'controllers',
+])
+
+app.config([ '$routeProvider',
+  ($routeProvider)->
+    $routeProvider
+      .when('/',
+        templateUrl: "<%= asset_path('index.html') %>",
+        controller: 'CreateOrderController'
+      )
+])
+
+controllers = angular.module('controllers',[])
+controllers.controller("CreateOrderController", [ '$scope',
+  ($scope)-> 
+
+])
