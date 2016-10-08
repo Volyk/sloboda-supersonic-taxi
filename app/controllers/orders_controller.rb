@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
   private
 
   def orders_params
-    params.fetch(:order, {}).permit(:start_point, :end_point, :comment, :passengers, :baggege)
+    params.require(:order).permit(:phone, :email, :start_point, :end_point, :comment, :passengers, :baggege)
   end
 
   def get_order

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 resources :orders
+post 'orders/index'
 
 root 'orders#index'
 
