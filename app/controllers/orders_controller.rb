@@ -2,6 +2,8 @@ class OrdersController < ApplicationController
   before_action :get_order, except: [:index, :create, :new]
   respond_to :html, :json
 
+  skip_before_action :verify_authenticity_token
+
   def index
     @users = Order.all
     respond_with(@orders) do |format|
@@ -19,11 +21,11 @@ class OrdersController < ApplicationController
   end  
 
 	def create
-    @order = Order.new(orders_params)
+    @order = Order.new(order_params)
     if @order.save
-      render json: @order.as_json, status: :ok
+      render json: @order
     else
-      render json: {user: @order.errors, status: :no_content}
+      render json: @order.errors, status: :unprocessable_entity
     end
   end  
 
@@ -42,8 +44,8 @@ class OrdersController < ApplicationController
 
   private
 
-  def orders_params
-    params.require(:order).permit(:phone, :email, :start_point, :end_point, :comment, :passengers, :baggege)
+  def order_params
+    params.require(:order).permit(:phone, :email, :start_point, :end_point, :comment, :passengers, :baggage)
   end
 
   def get_order
