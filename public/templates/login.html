@@ -3,7 +3,7 @@
         <form novalidate class="form-horizontal order-form" name="order">
         <div class="form-group">
             <label for="login" class="col-sm-4 control-label">{{text}}<span class="required">*</span></label>
-            <div class="col-sm-8"><input type="text" maxlength={{length}} ng-pattern="phone_pattern" ng-model="sign_up.login" class="form-control" id="login" placeholder={{placeholder}} required></div>
+            <div class="col-sm-8"><input type="text" maxlength={{length}} ng-model="sign_up.login" class="form-control" id="login" placeholder={{placeholder}} required></div>
         </div>
         <div class="form-group">
             <label for="password" class="col-sm-4 control-label">Пароль</label>
@@ -11,7 +11,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-2 col-sm-offset-5 col-xs-3 col-xs-offset-3">
-                <button type="submit" ng-disabled="order.$invalid" class="btn btn-default" ng-click="addOrder()">Отправить</button>
+                <button type="submit" ng-disabled="order.$invalid" class="btn btn-default" ng-click="login()">Отправить</button>
             </div>
         </div>
         </form>

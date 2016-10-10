@@ -4,7 +4,7 @@ resources :orders
 
 root 'orders#index'
 
-devise_for :drivers, skip: :all
+devise_for :drivers, skip: :all, controllers: { sessions: 'drivers/sessions' }
   as :driver do
     get 'driver' => 'devise/sessions#new', :as => :new_driver_session
     post 'driver' => 'devise/sessions#create', :as => :driver_session

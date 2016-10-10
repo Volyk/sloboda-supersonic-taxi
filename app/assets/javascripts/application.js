@@ -19,3 +19,4 @@
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+//= require angular-devise

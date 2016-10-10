@@ -1,5 +1,5 @@
 (function() {
-var app = angular.module('taxi', ['ngRoute']);
+var app = angular.module('taxi', ['ngRoute', 'Devise']);
 
 app.controller('CreateOrderController', ['$scope', '$http', function($scope, $http) {
     $scope.order = {};
@@ -24,21 +24,63 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
     };
 }]);
 
-app.controller('DriversController', ['$scope', function($scope) {
+app.controller('DriversController', ['$scope', 'Auth', function($scope, Auth) {
+    $scope.sign_up = {};
     $scope.text = 'Номер телефона';
     $scope.length = 10;
     $scope.placeholder = '0987654321';
-    
-
+    $scope.login = function(){
+    var credentials = {
+        'driver': {
+        'phone': $scope.sign_up.login,
+        'password': $scope.sign_up.password
+        }
+    };
+    var config = {
+            headers: {
+                'X-HTTP-Method-Override': 'POST'
+            }
+    };
+    Auth.login(credentials, config).then(function(driver) {
+            alert('success!!!!'); 
+        }, function(error) {
+            console.log(error)
+        });
+        $scope.$on('devise:login', function(event, currentDriver) {     });
+        $scope.$on('devise:new-session', function(event, currentDriver) {   });
+    }
 }]);
 
-app.controller('DispatchersController', ['$scope', function($scope) {
+app.controller('DispatchersController', ['$scope', 'Auth', function($scope, Auth) {
     $scope.text = 'Логин';
     $scope.length = 20;
     $scope.placeholder = 'example';
+    $scope.sign_up = {};
+    $scope.login = function(){
+    var credentials = {
+        'dispatcher': {
+        'login': $scope.sign_up.login,
+        'password': $scope.sign_up.password
+        }
+    };
+    var config = {
+            headers: {
+                'X-HTTP-Method-Override': 'POST'
+            }
+    };
+    Auth.login(credentials, config).then(function(driver) {
+            alert('success!!!!'); 
+        }, function(error) {
+            console.log(error)
+        });
+        $scope.$on('devise:login', function(event, currentDriver) {       });
+        $scope.$on('devise:new-session', function(event, currentDriver) {      });
+    }
 }]);
 
-app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+app.config(['$routeProvider', '$locationProvider', 'AuthProvider', function ($routeProvider, $locationProvider, AuthProvider) {
+    AuthProvider.loginMethod('POST');
+    AuthProvider.loginPath('/driver');
     $locationProvider.html5Mode(true); 
     $routeProvider
         .when('/', {
@@ -54,6 +96,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
             controller: 'DispatchersController'
         })
 }]);
+
 
 app.directive("navigationPanel", function() {
     return {

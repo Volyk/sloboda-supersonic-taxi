@@ -4,6 +4,10 @@ gem 'angularjs-rails'
 gem 'angular-ui-bootstrap-rails'
 gem 'bootstrap-sass'
 
+source 'https://rails-assets.org' do
+  gem 'rails-assets-angular-devise'
+end
+
 gem 'devise'
 gem 'turbolinks'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

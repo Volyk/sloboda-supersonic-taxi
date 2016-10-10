@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20161008200631) do
     t.integer  "trunk"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "number",                 default: "", null: false
+    t.string   "phone",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20161008200631) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.index ["number"], name: "index_drivers_on_number", unique: true, using: :btree
+    t.index ["phone"], name: "index_drivers_on_phone", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true, using: :btree
   end
 
