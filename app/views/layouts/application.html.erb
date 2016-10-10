@@ -9,8 +9,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  
-     <%= yield %>
+  <% if driver_signed_in? %>
+    <%= link_to "Sign out as a driver", destroy_driver_session_path, method: :delete %>
+  <% else %>
+     <%= link_to "Sign in as a driver", new_driver_session_path %> 
+  <% end %>
+  <%= yield %>
    
 </body>
 </html>
