@@ -9,6 +9,11 @@
   </head>
 
   <body>
+
+  <div id='notice_block'>
+    <%= notice %>
+  </div>
+
   <div id="admin_panel_login">
     <div id="login_form_wrapper">
 
@@ -31,7 +36,7 @@
         <br>
 
         <% if devise_mapping.rememberable? -%>
-          <div class="field">
+          <div class="field inline">
             <%= f.check_box :remember_me %>
             <%= f.label :remember_me %>
           </div>

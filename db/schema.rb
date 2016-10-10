@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161005162859) do
+ActiveRecord::Schema.define(version: 20161010082751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20161005162859) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "active"
     t.index ["login"], name: "index_admins_on_login", unique: true, using: :btree
   end
 
@@ -42,6 +43,7 @@ ActiveRecord::Schema.define(version: 20161005162859) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.boolean  "active"
     t.index ["email"], name: "index_dispatchers_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_dispatchers_on_reset_password_token", unique: true, using: :btree
   end
@@ -62,6 +64,7 @@ ActiveRecord::Schema.define(version: 20161005162859) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.boolean  "active"
     t.index ["number"], name: "index_drivers_on_number", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true, using: :btree
   end
@@ -84,12 +87,6 @@ ActiveRecord::Schema.define(version: 20161005162859) do
     t.integer  "driver_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-  end
-
-  create_table "widgets", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end

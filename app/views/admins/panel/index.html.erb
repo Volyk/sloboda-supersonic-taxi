@@ -17,33 +17,166 @@
       </div>
 
       <div id="admins_list">
-      <h4>Admins:</h4>
+      <h4>Admins: <span id="create_new_admin">Create New Admin</span></h4>
       <% @admins.each do |admin| %>
-      - <%= admin.login %><br><br>
+        <div class="list_container">
+          <span class="hidden"><%=admin.id%></span>
+          <span class="hidden">admin</span>
+          <span class="list_name"><%= admin.login %></span>
+          <% if admin.active == true %>
+            <span class="list_active">Active</span>
+          <% else %>
+            <span class="list_inactive">Inactive</span>
+          <% end %>
+          <div class="list_controls">
+            <span class="edit_button">Edit</span>
+            <% if admin.id != current_admin.id %>
+              <% if admin.active == true %>
+                <span class="disable_button">Deactivate</span>
+              <% else %>
+                <span class="enable_button">Activate</span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <br>
       <% end %>
       </div>
 
+      <div id="dispatchers_list">
+      <h4>Dispatchers: <span id="create_new_dispatcher">Create New Disp.</span></h4>
+      <% @dispatchers.each do |dispatcher| %>
+        <div class="list_container">
+          <span class="hidden"><%=dispatcher.id%></span>
+          <span class="hidden">dispatcher</span>
+          <span class="list_name"><%= dispatcher.email %></span>
+          <% if dispatcher.active == true %>
+            <span class="list_active">Active</span>
+          <% else %>
+            <span class="list_inactive">Inactive</span>
+          <% end %>
+          <div class="list_controls">
+            <span class="edit_button">Edit</span>
+              <% if dispatcher.active == true %>
+                <span class="disable_button">Deactivate</span>
+              <% else %>
+                <span class="enable_button">Activate</span>
+              <% end %>
+          </div>
+        </div>
+        <br>
+      <% end %>
+      </div>
+
+      <div id="drivers_list">
+      <h4>Drivers: <span id="create_new_driver">Create New Driver</span></h4>
+      <% @drivers.each do |driver| %>
+        <div class="list_container">
+          <span class="hidden"><%=driver.id%></span>
+          <span class="hidden">driver</span>
+          <span class="list_name"><%= driver.number %></span>
+          <% if driver.active == true %>
+            <span class="list_active">Active</span>
+          <% else %>
+            <span class="list_inactive">Inactive</span>
+          <% end %>
+          <div class="list_controls">
+            <span class="edit_button">Edit</span>
+              <% if driver.active == true %>
+                <span class="disable_button">Deactivate</span>
+              <% else %>
+                <span class="enable_button">Activate</span>
+              <% end %>
+          </div>
+        </div>
+        <br>
+      <% end %>
+      </div>
+
+      <div id="x_notice"></div>
+
+      <!--
       <div id="websocket_panel">
         <button id="ping">Test Websocket</button>
       </div>
+      -->
 
     </div>
 
     <script type="text/javascript">
 
     function load_handler() {
+
       var dispatcher = new WebSocketRails('localhost:3000/websocket');
 
-      dispatcher.bind('pong', function(data) {
-        alert(data.message);
-      });
-
-      function send_ping() {
-        var ping_msg = { title: 'Test connection.' }
-        dispatcher.trigger('ping', ping_msg);
+      function disable() {
+        var target = this.parentNode.parentNode.getElementsByTagName('span')[0].innerHTML;
+        var role = this.parentNode.parentNode.getElementsByTagName('span')[1].innerHTML;
+        this.parentNode.parentNode.getElementsByTagName('span')[3].innerHTML = 'Inactive';
+        this.parentNode.parentNode.getElementsByTagName('span')[3].className = 'list_inactive'
+        this.parentNode.parentNode.getElementsByTagName('span')[5].innerHTML = 'Activate';
+        this.parentNode.parentNode.getElementsByTagName('span')[5].className = 'enable_button';
+        this.parentNode.parentNode.getElementsByTagName('span')[5].removeEventListener('click', disable);
+        this.parentNode.parentNode.getElementsByTagName('span')[5].addEventListener('click', enable);
+        if (role === 'admin') {
+          dispatcher.trigger('disable_admin', { id: target });
+        } else if (role === 'dispatcher') {
+          dispatcher.trigger('disable_dispatcher', { id: target });
+        } else if (role === 'driver') {
+          dispatcher.trigger('disable_driver', { id: target });
+        }
       }
 
-      document.getElementById('ping').addEventListener('click', send_ping)
+      disable_buttons = document.getElementsByClassName('disable_button');
+      for (var i = 0; i < disable_buttons.length; i++) {
+        disable_buttons[i].addEventListener('click', disable)
+      }
+
+      function enable() {
+        var target = this.parentNode.parentNode.getElementsByTagName('span')[0].innerHTML;
+        var role = this.parentNode.parentNode.getElementsByTagName('span')[1].innerHTML;
+        this.parentNode.parentNode.getElementsByTagName('span')[3].innerHTML = 'Active';
+        this.parentNode.parentNode.getElementsByTagName('span')[3].className = 'list_active'
+        this.parentNode.parentNode.getElementsByTagName('span')[5].innerHTML = 'Deactivate';
+        this.parentNode.parentNode.getElementsByTagName('span')[5].className = 'disable_button';
+        this.parentNode.parentNode.getElementsByTagName('span')[5].removeEventListener('click', enable);
+        this.parentNode.parentNode.getElementsByTagName('span')[5].addEventListener('click', disable);
+        if (role === 'admin') {
+          dispatcher.trigger('enable_admin', { id: target });
+        } else if (role === 'dispatcher') {
+          dispatcher.trigger('enable_dispatcher', { id: target });
+        } else if (role === 'driver') {
+          dispatcher.trigger('enable_driver', { id: target });
+        }
+      }
+
+      enable_buttons = document.getElementsByClassName('enable_button');
+      for (var i = 0; i < enable_buttons.length; i++) {
+        enable_buttons[i].addEventListener('click', enable)
+      }
+
+
+
+      dispatcher.bind('xnotice', function(data) {
+        document.getElementById('x_notice').innerHTML = data.message;
+        document.getElementById('x_notice').style.display = 'inline-block';
+        setTimeout(function() {
+          document.getElementById('x_notice').style.display = 'none';
+          document.getElementById('x_notice').innerHTML = '';
+        }, 3000);
+      });
+
+      // Test section
+      // dispatcher.bind('pong', function(data) {
+      //   alert(data.message);
+      // });
+
+      // function send_ping() {
+      //   var ping_msg = { title: 'Test connection.' }
+      //   dispatcher.trigger('ping', ping_msg);
+      // }
+
+      // document.getElementById('ping').addEventListener('click', send_ping)
     }
 
     window.addEventListener('load', load_handler)

@@ -67,3 +67,202 @@
   top: 25px;
   left: 250px;
 }
+
+.inline input {
+  display: inline-block;
+}
+
+.inline label {
+  display: inline-block;
+}
+
+#notice_block {
+  display: inline-block;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.list_container {
+  display: inline-block;
+  width: 180px;
+  height: 50px;
+  background-color: #F8F8FF;
+  border: 1px solid #DCDCDC;
+  border-radius: 5px;
+  margin: 5px 0px 0px 0px;
+  position: relative;
+}
+
+.list_name {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal; /* для IE */
+  text-overflow: ellipsis;
+  top: 3px;
+  left: 10px;
+  color: black;
+  width: 110px;
+}
+
+.list_name:hover {
+  overflow: visible;
+  white-space: normal;
+  background-color: white;
+  width: 300px;
+  padding: 5px;
+  z-index: 2;
+  border: 1px solid black;
+}
+
+.list_active {
+  position: absolute;
+  top: 3px;
+  right: 10px;
+  color: green;
+}
+
+.list_inactive {
+  position: absolute;
+  top: 3px;
+  right: 7px;
+  color: red;
+}
+
+.list_controls {
+  position: absolute;
+  top: 26px;
+  left: 10px;
+  display: inline-block;
+  border-top: 1px solid #DCDCDC;
+  padding-top: 4px;
+  width: 160px;
+}
+
+.edit_button {
+  position: absolute;
+  left: 0px;
+  top: 3px;
+  color: grey;
+  -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  white-space: pre;
+  cursor: pointer;
+}
+
+.enable_button {
+  position: absolute;
+  right: 0px;
+  top: 3px;
+  color: grey;
+  -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  white-space: pre;
+  cursor: pointer;
+}
+
+.disable_button {
+  position: absolute;
+  right: 0px;
+  top: 3px;
+  color: grey;
+  -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  white-space: pre;
+  cursor: pointer;
+}
+
+#create_new_admin {
+  color: grey;
+  margin-left: 5px;
+  -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  white-space: pre;
+  cursor: pointer;
+}
+
+#dispatchers_list {
+  display: inline-block;
+  position: absolute;
+  top: 55px;
+  left: 250px;
+}
+
+#create_new_dispatcher {
+  color: grey;
+  margin-left: 5px;
+  -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  white-space: pre;
+  cursor: pointer;
+}
+
+#drivers_list {
+  display: inline-block;
+  position: absolute;
+  top: 55px;
+  left: 475px;
+}
+
+#create_new_driver {
+  color: grey;
+  margin-left: 5px;
+  -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  white-space: pre;
+  cursor: pointer;
+}
+
+#create_new_driver:hover {
+  text-decoration: underline;
+}
+
+#create_new_dispatcher:hover {
+  text-decoration: underline;
+}
+
+#create_new_admin:hover {
+  text-decoration: underline;
+}
+
+.edit_button:hover {
+  text-decoration: underline;
+}
+
+.enable_button:hover {
+  text-decoration: underline;
+}
+
+.disable_button:hover {
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
+}
+
+#x_notice {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 250px;
+  font-size: 14px;
+  background-color: #EEE9E9;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 5px 20px 5px 20px;
+}
