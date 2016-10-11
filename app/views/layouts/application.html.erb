@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<<<<<<< HEAD
 <head>
   <title>sloboda-supersonic-taxi</title>
   <meta charset="utf-8">
@@ -14,7 +15,17 @@
   <% else %>
      <%= link_to "Sign in as a driver", new_driver_session_path %> 
   <% end %>
+
+  <div align="right">
+      <% if current_dispatcher.present? %>
+        <%= link_to('Sign out', destroy_dispatcher_session_path, :method => :delete) %>
+      <% else %>
+        <%= link_to 'Sign up', new_dispatcher_registration_path %> / <%= link_to 'Sign in', new_dispatcher_session_path %>
+      <% end %>
+  </div>
+
   <%= yield %>
    
 </body>
 </html>
+

@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+
   before_action :get_order, except: [:index, :create, :new]
   respond_to :html, :json
 
@@ -52,5 +53,5 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     render json: {status: :not_found} unless @order
 	end
-	
+
 end

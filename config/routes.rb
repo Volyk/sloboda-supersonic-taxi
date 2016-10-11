@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-
-resources :orders
+  
+  devise_for :dispatchers
+  resources :orders
+  resources :orders_blogs
 
 root 'orders#index'
 

@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+
 gem 'angularjs-rails'
 gem 'angular-ui-bootstrap-rails'
 gem 'bootstrap-sass'
@@ -8,12 +9,16 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-angular-devise'
 end
 
-gem 'devise'
 gem 'turbolinks'
+gem 'devise'
+gem 'kaminari'
+gem 'paperclip'
+gem 'bootstrap-kaminari-views'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+#gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -40,6 +45,11 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'pg'
+
+gem 'faye-websocket', '0.10.0'
+
+gem 'websocket-rails', github: 'moaa/websocket-rails', branch: 'threadsocket-rails'
+gem 'websocket-rails-js', github: 'websocket-rails/websocket-rails-js', branch: 'sub_protocols'
 
 group :development, :test do
   gem "rspec-rails"

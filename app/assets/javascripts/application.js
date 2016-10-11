@@ -20,3 +20,5 @@
 //= require turbolinks
 //= require_tree .
 //= require angular-devise
+//= require websocket_rails/main
+

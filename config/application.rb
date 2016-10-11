@@ -28,5 +28,7 @@ module SlobodaTeam
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
 
+    config.middleware.delete Rack::Lock
+
   end
 end
