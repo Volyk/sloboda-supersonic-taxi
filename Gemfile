@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 gem 'angularjs-rails'
 gem 'angular-ui-bootstrap-rails'
 gem 'bootstrap-sass'
@@ -10,10 +9,11 @@ source 'https://rails-assets.org' do
 end
 
 gem 'turbolinks'
-gem 'devise'
+
 gem 'kaminari'
 gem 'paperclip'
 gem 'bootstrap-kaminari-views'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'

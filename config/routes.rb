@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  
   devise_for :dispatchers
   resources :orders
   resources :orders_blogs
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
 root 'orders#index'
 
 devise_for :drivers, skip: :all, controllers: { sessions: 'drivers/sessions' }
+
   as :driver do
     get 'driver' => 'devise/sessions#new', :as => :new_driver_session
     post 'driver' => 'devise/sessions#create', :as => :driver_session

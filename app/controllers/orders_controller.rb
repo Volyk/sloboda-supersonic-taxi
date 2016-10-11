@@ -1,5 +1,6 @@
-class OrdersController < ApplicationController
 
+class OrdersController < ApplicationController
+  before_action :authenticate_dispatcher!, only: [:index, :edit, :update]
   before_action :get_order, except: [:index, :create, :new]
   respond_to :html, :json
 
@@ -11,8 +12,8 @@ class OrdersController < ApplicationController
       format.json { render :json => @users.as_json }
       format.html
     end
-  end  
-
+  end 
+  
   def show
     respond_with(@order.as_json)
   end
@@ -21,20 +22,33 @@ class OrdersController < ApplicationController
     @order = Order.new
   end  
 
-	def create
-    @order = Order.new(order_params)
-    if @order.save
-      render json: @order
-    else
-      render json: @order.errors, status: :unprocessable_entity
+  def create
+    if current_dispatcher.present?
+      @dispatcher = Dispatcher.find(current_dispatcher.id)
+      @order = @dispatcher.orders.create(order_params)
+
+      respond_to do |format|
+        if @order.save
+          format.html { redirect_to @order, notice: 'Order was successfully created.' }
+          format.json { render :show, status: :created, location: @order }
+        else
+          format.html { render :new }
+          format.json { render json: @order.errors, status: :unprocessable_entity }
+        end
+      end
     end
   end  
 
   def update
-    if @order.update_attributes(order_params)
-      render json: @order.as_json, status: :ok 
-    else
-      render json: {user: @order.errors, status: :unprocessable_entity}
+    @order = @order.merge(dispatcher_id: current_dispatcher.id)
+    respond_to do |format|
+      if @order.update(order_params)
+        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
+        format.json { render :show, status: :ok, location: @order }
+      else
+        format.html { render :edit }
+        format.json { render json: @order.errors, status: :unprocessable_entity }
+      end
     end
   end
 

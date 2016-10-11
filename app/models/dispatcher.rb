@@ -4,5 +4,5 @@ class Dispatcher < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   #has_many :orders_sblogs
-  #has_many :orders
+  has_many :orders
 end

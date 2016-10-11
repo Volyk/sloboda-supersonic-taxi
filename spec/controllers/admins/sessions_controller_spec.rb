@@ -10,5 +10,4 @@ describe Admins::SessionsController do
       assert_response 200
     end
   end
-
 end

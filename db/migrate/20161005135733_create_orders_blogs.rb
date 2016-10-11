@@ -6,7 +6,7 @@ class CreateOrdersBlogs < ActiveRecord::Migration[5.0]
 
       t.integer :order_id     
       t.integer :dispatcher_id
-	    t.integer :driver_id
+	  t.integer :driver_id
       t.timestamps
     end
   end

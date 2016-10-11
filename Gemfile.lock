@@ -321,9 +321,7 @@ DEPENDENCIES
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
-
   sprockets (~> 3.0)
-
   therubyracer
   turbolinks
   tzinfo-data
