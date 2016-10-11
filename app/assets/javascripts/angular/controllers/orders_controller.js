@@ -19,6 +19,7 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
       }
     };
     $http.post('/orders', $scope.order).success(function(data){
+        alert('Ваш заказ принят!');
         $scope.order = {};
     });
     };

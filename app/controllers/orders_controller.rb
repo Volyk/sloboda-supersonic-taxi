@@ -23,18 +23,14 @@ class OrdersController < ApplicationController
   end  
 
   def create
-    if current_dispatcher.present?
-      @dispatcher = Dispatcher.find(current_dispatcher.id)
-      @order = @dispatcher.orders.create(order_params)
-
-      respond_to do |format|
-        if @order.save
-          format.html { redirect_to @order, notice: 'Order was successfully created.' }
-          format.json { render :show, status: :created, location: @order }
-        else
-          format.html { render :new }
-          format.json { render json: @order.errors, status: :unprocessable_entity }
-        end
+    @order = Order.new(order_params)
+    respond_to do |format|
+      if @order.save
+        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+        format.json { render :show, status: :created, location: @order }
+      else
+        format.html { render :new }
+        format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
   end  

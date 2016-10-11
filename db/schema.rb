@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20161008200631) do
 
   # These are extensions that must be enabled in order to support this database
@@ -30,7 +29,6 @@ ActiveRecord::Schema.define(version: 20161008200631) do
     t.index ["login"], name: "index_admins_on_login", unique: true, using: :btree
   end
 
-
   create_table "dispatchers", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -44,11 +42,9 @@ ActiveRecord::Schema.define(version: 20161008200631) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    
     t.index ["email"], name: "index_dispatchers_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_dispatchers_on_reset_password_token", unique: true, using: :btree
   end
-
 
   create_table "drivers", force: :cascade do |t|
     t.string   "car_type"
@@ -66,13 +62,11 @@ ActiveRecord::Schema.define(version: 20161008200631) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-
     t.index ["phone"], name: "index_drivers_on_phone", unique: true, using: :btree
-    #t.index ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true, using: :btree
   end
 
   create_table "orders", force: :cascade do |t|
-
     t.string   "phone"
     t.string   "start_point"
     t.string   "end_point"
@@ -80,15 +74,11 @@ ActiveRecord::Schema.define(version: 20161008200631) do
     t.integer  "client_id"
     t.integer  "driver_id"
     t.integer  "dispatcher_id"
-
-  end
-
-  create_table "posts", force: :cascade do |t|
-    t.string   "title"
-    t.text     "content"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "passengers"
+    t.boolean  "baggage"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "email"
   end
 
   create_table "orders_blogs", force: :cascade do |t|
