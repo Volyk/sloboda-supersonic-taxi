@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
   
+  
   devise_for :dispatchers
   resources :orders
   resources :orders_blogs
-
-  root 'orders#index'
 
   devise_for :drivers, skip: :all
   as :driver do

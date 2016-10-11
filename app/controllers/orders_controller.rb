@@ -1,10 +1,10 @@
-class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
-
+  class OrdersController < ApplicationController
+  before_action :set_order, only: [:show, :edit, :update]
+  before_action :authenticate_dispatcher!, only: [:index, :edit, :update]
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+      @orders = Order.all
   end
 
   # GET /orders/1
@@ -14,11 +14,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    if current_dispatcher.present?
       @order = Order.new
-    else 
-      redirect_to orders_path  
-    end 
   end
 
   # GET /orders/1/edit
@@ -29,7 +25,8 @@ class OrdersController < ApplicationController
   # POST /orders.json
   def create
     if current_dispatcher.present?
-      @order = Order.new(order_params)
+      @dispatcher = Dispatcher.find(current_dispatcher.id)
+      @order = @dispatcher.orders.create(order_params)
 
       respond_to do |format|
         if @order.save
@@ -40,14 +37,13 @@ class OrdersController < ApplicationController
           format.json { render json: @order.errors, status: :unprocessable_entity }
         end
       end
-    else
-      redirect_to orders_path  
     end
   end
 
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
+    @order = @order.merge(dispatcher_id: current_dispatcher.id)
     respond_to do |format|
       if @order.update(order_params)
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }

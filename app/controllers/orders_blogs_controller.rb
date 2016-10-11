@@ -77,6 +77,6 @@ class OrdersBlogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def orders_blog_params
-      params.require(:orders_blog).permit(:action)
+      params.require(:orders_blog).permit(:action, :dispatcher_id)
     end
 end

@@ -8,7 +8,7 @@
       <th>Start point</th>
       <th>End point</th>
       <th>Comment</th>
-      <th colspan="3"></th>
+      <th>Dispatcher</th>      
     </tr>
   </thead>
 
@@ -17,7 +17,8 @@
       <tr>
         <td><%= order.start_point %></td>
         <td><%= order.end_point %></td>
-        <td><%= order.comment %></td>
+        <td><%= order.comment %></td>    
+        <td><%= Dispatcher.find_for_authentication(:id => order.dispatcher_id).email %></td>    
         <td><%= link_to 'Show', order %></td>
         <td><%= link_to 'Edit', edit_order_path(order) %></td>
         <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
