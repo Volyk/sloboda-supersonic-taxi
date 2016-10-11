@@ -1,9 +1,18 @@
 Rails.application.routes.draw do
   
 root 'orders#index'
-devise_for :dispatchers
 resources :orders
 resources :orders_blogs
+devise_for :dispatchers
+
+=begin
+devise_for :dispatchers, path: 'dispatcher'
+  devise_scope :dispatcher do
+    get 'dispatcher' => 'dispatchers/sessions#new', :as => :new_dispatcher_session
+    post 'dispatcher' => 'dispatchers/sessions#create', :as => :dispatcher_session
+    delete 'dispatcher' => 'dispatchers/sessions#destroy', :as => :destroy_dispatcher_session
+  end
+=end  
 
 devise_for :drivers, skip: :all, controllers: { sessions: 'drivers/sessions' }
   as :driver do

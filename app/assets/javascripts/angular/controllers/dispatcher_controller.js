@@ -35,7 +35,7 @@ app.config(['$routeProvider', '$locationProvider', 'AuthProvider', function ($ro
     AuthProvider.resourceName('dispatcher');
     $locationProvider.html5Mode(true); 
     $routeProvider
-        .when('/dispatcher', {
+        .when('/dispatchers/sign_in', {
             templateUrl: 'templates/login.html',
             controller: 'DispatchersController'
         })
