@@ -1,6 +1,6 @@
 
 class OrdersController < ApplicationController
-  before_action :authenticate_dispatcher!, only: [:index, :edit, :update]
+  before_action :authenticate_dispatcher!, only: [:edit, :update]
   before_action :get_order, except: [:index, :create, :new]
   respond_to :html, :json
 

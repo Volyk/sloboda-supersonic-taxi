@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'devise'
 gem 'angularjs-rails'
 gem 'angular-ui-bootstrap-rails'
 gem 'bootstrap-sass'

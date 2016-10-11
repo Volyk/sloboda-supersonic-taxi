@@ -9,21 +9,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+
+  <%= yield %>
+
+  <!-- for Elizaveta, the best front-end developer in the world ^_^ -->
   <% if driver_signed_in? %>
     <%= link_to "Sign out as a driver", destroy_driver_session_path, method: :delete %>
   <% else %>
      <%= link_to "Sign in as a driver", new_driver_session_path %> 
   <% end %>
-
-  <div align="right">
-      <% if current_dispatcher.present? %>
-        <%= link_to('Sign out', destroy_dispatcher_session_path, :method => :delete) %>
-      <% else %>
-        <%= link_to 'Sign up', new_dispatcher_registration_path %> / <%= link_to 'Sign in', new_dispatcher_session_path %>
-      <% end %>
-  </div>
-
-  <%= yield %>
    
 </body>
 </html>
