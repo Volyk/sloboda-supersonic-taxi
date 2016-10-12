@@ -4,8 +4,6 @@ class OrdersController < ApplicationController
   before_action :get_order, except: [:index, :create, :new]
   respond_to :html, :json
 
-  # skip_before_action :verify_authenticity_token
-
   def index
     @users = Order.all
     respond_with(@orders) do |format|
