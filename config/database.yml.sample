@@ -26,4 +26,4 @@ test: &TEST
 
 production:
   adapter: postgresql
-prepared_statements: false
+  prepared_statements: false
