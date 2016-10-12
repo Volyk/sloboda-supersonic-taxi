@@ -12,7 +12,6 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
       {id: '7', name: '7'},
       {id: '8', name: '8'}    
     ];
-    $scope.order = {};
     $scope.phone_pattern = /(0)[0-9]{9}/;
     $scope.email_pattern = /^(.+)@(.+)$/;
 
