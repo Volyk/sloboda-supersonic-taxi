@@ -1,24 +1,24 @@
 Rails.application.routes.draw do
   
+  get 'dispatchers/profile'
+
 root 'orders#index'
 resources :orders
 resources :orders_blogs
 devise_for :dispatchers
-
-=begin
-devise_for :dispatchers, path: 'dispatcher'
-  devise_scope :dispatcher do
-    get 'dispatcher' => 'dispatchers/sessions#new', :as => :new_dispatcher_session
-    post 'dispatcher' => 'dispatchers/sessions#create', :as => :dispatcher_session
-    delete 'dispatcher' => 'dispatchers/sessions#destroy', :as => :destroy_dispatcher_session
-  end
-=end  
+  as :dispatcher do
+    get 'dispatcher' => 'devise/sessions#new', :as => :new_dispatchers_session
+    post 'dispatcher' => 'devise/sessions#create', :as => :dispatchers_session
+    delete 'dispatcher' => 'devise/sessions#destroy', :as => :destroy_dispatchers_session
+    get 'dispatchers/profile' => 'dispatchers/profile', :as => :dispatcher_root
+ end
 
 devise_for :drivers, skip: :all, controllers: { sessions: 'drivers/sessions' }
   as :driver do
     get 'driver' => 'devise/sessions#new', :as => :new_driver_session
     post 'driver' => 'devise/sessions#create', :as => :driver_session
     delete 'driver' => 'devise/sessions#destroy', :as => :destroy_driver_session
+    get 'drivers/profile' => 'drivers/profile', :as => :driver_root
   end
 
   devise_for :admins, path: 'admin', skip: :registrations, controllers: { sessions: 'admins/sessions' }
