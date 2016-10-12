@@ -9,7 +9,7 @@
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
     <div class="field">
       <%= f.label :phone %><br />
-      <%= f.text_field :phone, autofocus: true, :pattern => '/\A(0)[0-9]{9}\z/' %>
+      <%= f.text_field :phone, autofocus: true %>
     </div>
 
     <div class="field">

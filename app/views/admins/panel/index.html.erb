@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Admin Panel</title>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <link href="style/admin.css" rel="stylesheet">
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= csrf_meta_tags %>
@@ -17,33 +16,640 @@
       </div>
 
       <div id="admins_list">
-      <h4>Admins:</h4>
+      <h4>Admins: <span id="create_new_admin">Create New Admin</span></h4>
       <% @admins.each do |admin| %>
-      - <%= admin.login %><br><br>
+        <div class="list_container">
+          <span class="hidden"><%=admin.id%></span>
+          <span class="hidden">admin</span>
+          <span class="list_name"><%= admin.login %></span>
+          <% if admin.active == true %>
+            <span class="list_active">Active</span>
+          <% else %>
+            <span class="list_inactive">Inactive</span>
+          <% end %>
+          <div class="list_controls">
+            <span class="edit_button">Edit</span>
+            <% if admin.id != current_admin.id %>
+              <% if admin.active == true %>
+                <span class="disable_button">Deactivate</span>
+              <% else %>
+                <span class="enable_button">Activate</span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <br>
       <% end %>
       </div>
 
-      <div id="websocket_panel">
-        <button id="ping">Test Websocket</button>
+      <div id="dispatchers_list">
+      <h4>Dispatchers: <span id="create_new_dispatcher">Create New Disp.</span></h4>
+      <% @dispatchers.each do |dispatcher| %>
+        <div class="list_container">
+          <span class="hidden"><%=dispatcher.id%></span>
+          <span class="hidden">dispatcher</span>
+          <span class="list_name"><%= dispatcher.email %></span>
+          <% if dispatcher.active == true %>
+            <span class="list_active">Active</span>
+          <% else %>
+            <span class="list_inactive">Inactive</span>
+          <% end %>
+          <div class="list_controls">
+            <span class="edit_button">Edit</span>
+              <% if dispatcher.active == true %>
+                <span class="disable_button">Deactivate</span>
+              <% else %>
+                <span class="enable_button">Activate</span>
+              <% end %>
+          </div>
+        </div>
+        <br>
+      <% end %>
       </div>
+
+      <div id="drivers_list">
+      <h4>Drivers: <span id="create_new_driver">Create New Driver</span></h4>
+      <% @drivers.each do |driver| %>
+        <div class="list_container">
+          <span class="hidden"><%=driver.id%></span>
+          <span class="hidden">driver</span>
+          <div class="driver_name"><%=driver.name%></div>
+          <span class="list_name"><%= driver.phone %></span>
+          <% if driver.active == true %>
+            <span class="list_active">Active</span>
+          <% else %>
+            <span class="list_inactive">Inactive</span>
+          <% end %>
+          <div class="list_controls">
+            <span class="edit_button">Edit</span>
+            <div class="details_button">Details</div>
+              <% if driver.active == true %>
+                <span class="disable_button">Deactivate</span>
+              <% else %>
+                <span class="enable_button">Activate</span>
+              <% end %>
+          </div>
+        </div>
+        <br>
+      <% end %>
+      </div>
+
+      <div class="bg_shadow"></div>
+
+      <div id="admin_form">
+        <span class="title">Login:</span>
+        <br>
+        <input id="admin_login" type="text">
+        <br>
+        <span class="title">Password:</span>
+        <br>
+        <input id="admin_password" type="text">
+        <br>
+        <button class="cancel_form form_button">Cancel</button>
+        <button class="form_button" id="send_admin_params">Create</button>
+      </div>
+
+      <div id="edit_admin_form">
+        <span id="target_admin_id" class="hidden"></span>
+        <span class="title">Admin: <span id="target_admin"></span></span>
+        <br>
+        <span class="title">New password:</span>
+        <br>
+        <input id="edit_admin_password" type="text">
+        <br>
+        <button class="cancel_form form_button">Cancel</button>
+        <button class="form_button" id="send_edit_admin">Save</button>
+      </div>
+
+      <div id="dispatcher_form">
+        <span class="title">E-mail:</span>
+        <br>
+        <input id="dispatcher_email" type="text">
+        <br>
+        <span class="title">Password:</span>
+        <br>
+        <input id="dispatcher_password" type="text">
+        <br>
+        <button class="cancel_form form_button">Cancel</button>
+        <button class="form_button" id="send_dispatcher_params">Create</button>
+      </div>
+
+      <div id="edit_dispatcher_form">
+        <span id="target_dispatcher_id" class="hidden"></span>
+        <span id="target_dispatcher" class="hidden"></span>
+        <span class="title">E-mail: </span>
+        <br>
+        <input id="edit_dispatcher_email" type="text">
+        <br>
+        <span class="title">New password: (Optional)</span>
+        <br>
+        <input id="edit_dispatcher_password" type="text" placeholder="Left blank to not change">
+        <br>
+        <button class="cancel_form form_button">Cancel</button>
+        <button class="form_button" id="send_edit_dispatcher">Save</button>
+      </div>
+
+      <div id="driver_form">
+        <span class="title">Phone phone:</span>
+        <input id="driver_phone" type="text">
+        <br>
+        <span class="title">Password:</span>
+        <input id="driver_password" type="text">
+        <br>
+        <span class="title">Full Name:</span>
+        <input id="driver_full_name" type="text">
+        <br>
+        <span class="title">Car Type:</span>
+        <input id="driver_car_type" type="text">
+        <br>
+        <span class="title">Passengers:</span>
+        <input id="driver_passengers" type="phone" step=1 min=0>
+        <br>
+        <span class="title">Trunk (kg):</span>
+        <input id="driver_trunk" type="phone" step=1 min=0>
+        <br>
+        <button class="cancel_form form_button">Cancel</button>
+        <button class="form_button" id="send_driver_params">Create</button>
+      </div>
+
+      <div id="driver_details_form">
+        <span class="title">Details</span>
+        <br>
+        <span class="title">Phone number:</span>
+        <div id="dr_details_phone" class="details_value"></div>
+        <br>
+        <span class="title">Full Name:</span>
+        <div id="dr_details_name" class="details_value"></div>
+        <br>
+        <span class="title">Car Type:</span>
+        <div id="dr_details_car_type" class="details_value"></div>
+        <br>
+        <span class="title">Passengers:</span>
+        <div id="dr_details_passengers" class="details_value"></div>
+        <br>
+        <span class="title">Trunk (kg):</span>
+        <div id="dr_details_trunk" class="details_value"></div>
+        <br>
+        <button class="cancel_form form_button">Back</button>
+      </div>
+
+      <div id="edit_driver_form">
+        <div id="edit_driver_id" class="hidden"></div>
+        <span class="title">Phone phone:</span>
+        <input id="edit_driver_phone" type="text">
+        <br>
+        <span class="title">Password:</span>
+        <input id="edit_driver_password" type="text" placeholder="Left blank to not change">
+        <br>
+        <span class="title">Full Name:</span>
+        <input id="edit_driver_full_name" type="text">
+        <br>
+        <span class="title">Car Type:</span>
+        <input id="edit_driver_car_type" type="text">
+        <br>
+        <span class="title">Passengers:</span>
+        <input id="edit_driver_passengers" type="phone" step=1 min=0>
+        <br>
+        <span class="title">Trunk (kg):</span>
+        <input id="edit_driver_trunk" type="phone" step=1 min=0>
+        <br>
+        <button class="cancel_form form_button">Cancel</button>
+        <button class="form_button" id="send_edit_driver">Save</button>
+      </div>
+
+      <div id="x_notice"></div>
 
     </div>
 
     <script type="text/javascript">
 
     function load_handler() {
+
       var dispatcher = new WebSocketRails('localhost:3000/websocket');
 
-      dispatcher.bind('pong', function(data) {
-        alert(data.message);
-      });
-
-      function send_ping() {
-        var ping_msg = { title: 'Test connection.' }
-        dispatcher.trigger('ping', ping_msg);
+      function xnotice(data) {
+        clearTimeout(window.xnotice_timeout);
+        document.getElementById('x_notice').innerHTML = data.message;
+        document.getElementById('x_notice').style.display = 'inline-block';
+        window.xnotice_timeout = setTimeout(function() {
+          document.getElementById('x_notice').style.display = 'none';
+          document.getElementById('x_notice').innerHTML = '';
+        }, 3000);
       }
 
-      document.getElementById('ping').addEventListener('click', send_ping)
+      dispatcher.bind('xnotice', xnotice);
+
+      function new_line(where) {
+        var new_br = document.createElement('br');
+        document.getElementById(where).appendChild(new_br);
+      }
+
+      function create_unit(data) {
+        var new_unit = document.createElement('div');
+        new_unit.className = 'list_container';
+        new_unit_body = '<span class="hidden">' + data.id +
+        '</span><span class="hidden">' + data.type + '</span>';
+        if (data.type == 'driver') {
+          new_unit_body += '<div class="driver_name">' + data.name + '</div>';
+        }
+        new_unit_body += '<span class="list_name">' + data.login +
+        '</span><span class="list_active">Active</span>' +
+        '<div class="list_controls"><span class="edit_button">Edit</span>';
+        if (data.type == 'driver') {
+          new_unit_body += '<div class="details_button">Details</div>';
+        }
+        new_unit_body += '<span class="disable_button">Deactivate</span></div></div>';
+        new_unit.innerHTML = new_unit_body;
+        var parent_name = data.type + 's_list';
+        document.getElementById(parent_name).appendChild(new_unit);
+        new_line(parent_name);
+        addEventListeners();
+      }
+
+      function find_list_container(role, id) {
+        var block = '' + role + 's_list';
+        var lists = document.getElementById(block).getElementsByClassName('list_container');
+        for (var i = 0; i < lists.length; i++) {
+          if (lists[i].getElementsByTagName('span')[0].innerHTML == id) {
+            return lists[i];
+          }
+        }
+        return false;
+      }
+
+      function disable() {
+        var target = this.parentNode.parentNode.getElementsByTagName('span')[0].innerHTML;
+        var role = this.parentNode.parentNode.getElementsByTagName('span')[1].innerHTML;
+        this.parentNode.parentNode.getElementsByTagName('span')[3].innerHTML = 'Inactive';
+        this.parentNode.parentNode.getElementsByTagName('span')[3].className = 'list_inactive'
+        this.parentNode.parentNode.getElementsByTagName('span')[5].innerHTML = 'Activate';
+        this.parentNode.parentNode.getElementsByTagName('span')[5].className = 'enable_button';
+        this.parentNode.parentNode.getElementsByTagName('span')[5].removeEventListener('click', disable);
+        this.parentNode.parentNode.getElementsByTagName('span')[5].addEventListener('click', enable);
+        if (role === 'admin') {
+          dispatcher.trigger('disable_admin', { id: target });
+        } else if (role === 'dispatcher') {
+          dispatcher.trigger('disable_dispatcher', { id: target });
+        } else if (role === 'driver') {
+          dispatcher.trigger('disable_driver', { id: target });
+        }
+      }
+
+      function enable() {
+        var target = this.parentNode.parentNode.getElementsByTagName('span')[0].innerHTML;
+        var role = this.parentNode.parentNode.getElementsByTagName('span')[1].innerHTML;
+        this.parentNode.parentNode.getElementsByTagName('span')[3].innerHTML = 'Active';
+        this.parentNode.parentNode.getElementsByTagName('span')[3].className = 'list_active'
+        this.parentNode.parentNode.getElementsByTagName('span')[5].innerHTML = 'Deactivate';
+        this.parentNode.parentNode.getElementsByTagName('span')[5].className = 'disable_button';
+        this.parentNode.parentNode.getElementsByTagName('span')[5].removeEventListener('click', enable);
+        this.parentNode.parentNode.getElementsByTagName('span')[5].addEventListener('click', disable);
+        if (role === 'admin') {
+          dispatcher.trigger('enable_admin', { id: target });
+        } else if (role === 'dispatcher') {
+          dispatcher.trigger('enable_dispatcher', { id: target });
+        } else if (role === 'driver') {
+          dispatcher.trigger('enable_driver', { id: target });
+        }
+      }
+
+      function edit() {
+        var target = this.parentNode.parentNode.getElementsByTagName('span')[0].innerHTML;
+        var role = this.parentNode.parentNode.getElementsByTagName('span')[1].innerHTML;
+        if (role === 'admin') {
+          var admin_name = this.parentNode.parentNode.getElementsByTagName('span')[2].innerHTML;
+          document.getElementById('target_admin').innerHTML = admin_name;
+          document.getElementById('target_admin_id').innerHTML = target;
+          edit_admin();
+        } else if (role === 'dispatcher') {
+          var dispatcher_name = this.parentNode.parentNode.getElementsByTagName('span')[2].innerHTML;
+          document.getElementById('target_dispatcher').innerHTML = dispatcher_name;
+          document.getElementById('target_dispatcher_id').innerHTML = target;
+          edit_dispatcher(dispatcher_name);
+        } else if (role === 'driver') {
+          var target = this.parentNode.parentNode.getElementsByTagName('span')[0].innerHTML;
+          dispatcher.trigger('get_driver_data', { id: target, action: 'edit' });
+        }
+      }
+
+      function details() {
+        var target = this.parentNode.parentNode.getElementsByTagName('span')[0].innerHTML;
+        dispatcher.trigger('get_driver_data', { id: target, action: 'details' });
+      }
+
+      function show_bg_shadow() {
+        document.getElementsByClassName('bg_shadow')[0].style.width = document.documentElement.clientWidth + 'px';
+        document.getElementsByClassName('bg_shadow')[0].style.height = document.documentElement.clientHeight + 'px';
+        document.getElementsByClassName('bg_shadow')[0].style.display = 'inline-block';
+      }
+
+      function hide_bg_shadow() {
+        document.getElementsByClassName('bg_shadow')[0].style.display = 'none';
+        document.getElementById('admin_form').style.display = 'none';
+        document.getElementById('edit_admin_form').style.display = 'none';
+        document.getElementById('dispatcher_form').style.display = 'none';
+        document.getElementById('edit_dispatcher_form').style.display = 'none';
+        document.getElementById('driver_form').style.display = 'none';
+        document.getElementById('driver_details_form').style.display = 'none';
+        document.getElementById('edit_driver_form').style.display = 'none';
+      }
+
+      document.getElementsByClassName('bg_shadow')[0].addEventListener('click', hide_bg_shadow);
+
+      function get_left_margin(obj_width) {
+        var diff = Math.floor((document.documentElement.clientWidth - obj_width) / 2);
+        if (diff > 0) {
+          return diff;
+        } else {
+          return 0;
+        }
+      }
+
+      function get_top_margin(obj_height) {
+        var diff = Math.floor((document.documentElement.clientHeight - obj_height) / 2);
+        if (diff > 0) {
+          return diff;
+        } else {
+          return 0;
+        }
+      }
+
+
+      function create_admin() {
+        show_bg_shadow();
+        document.getElementById('admin_form').style.display = 'inline-block';
+        document.getElementById('admin_form').style.left = get_left_margin(300) + 'px';
+        document.getElementById('admin_form').style.top = get_top_margin(200) +  'px';
+        document.getElementById('admin_login').value = '';
+        document.getElementById('admin_password').value = '';
+      }
+
+      document.getElementById('create_new_admin').addEventListener('click', create_admin);
+
+      function send_new_admin() {
+        var a_login = '' + document.getElementById('admin_login').value;
+        var a_password = '' + document.getElementById('admin_password').value;
+        if ((a_login.length < 3) || (a_password.length < 3)) {
+          xnotice({ message: 'Login and password must be at least 3 characters' });
+        } else {
+          if (confirm('You want to create new admin with login: ' + a_login + ' ?')) {
+            dispatcher.trigger('new_admin', { login: a_login, password: a_password });
+          }
+        }
+      }
+
+      dispatcher.bind('get_new_admin_data', function(data) {
+        hide_bg_shadow();
+        create_unit(data);
+      });
+
+      document.getElementById('send_admin_params').addEventListener('click', send_new_admin)
+
+
+      function send_admin_edit_params() {
+        var target = document.getElementById('target_admin_id').innerHTML;
+        var new_pass = '' + document.getElementById('edit_admin_password').value;
+        if (new_pass.length < 3) {
+          xnotice({ message: 'Password should be at least 3 characters' });
+        } else {
+          conf_msg = 'Change password for admin: ' + document.getElementById('target_admin').innerHTML + ' ?';
+          if (confirm(conf_msg)) {
+            dispatcher.trigger('edit_admin', { id: target, password: new_pass });
+            hide_bg_shadow();
+          }
+        }
+      }
+
+      document.getElementById('send_edit_admin').addEventListener('click', send_admin_edit_params);
+
+      function edit_admin() {
+        show_bg_shadow();
+        document.getElementById('edit_admin_form').style.display = 'inline-block';
+        document.getElementById('edit_admin_form').style.left = get_left_margin(300) + 'px';
+        document.getElementById('edit_admin_form').style.top = get_top_margin(200) +  'px';
+        document.getElementById('edit_admin_password').value = '';
+      }
+
+
+      function create_dispatcher() {
+        show_bg_shadow();
+        document.getElementById('dispatcher_form').style.display = 'inline-block';
+        document.getElementById('dispatcher_form').style.left = get_left_margin(300) + 'px';
+        document.getElementById('dispatcher_form').style.top = get_top_margin(200) +  'px';
+        document.getElementById('dispatcher_email').value = '';
+        document.getElementById('dispatcher_password').value = '';
+      }
+
+      document.getElementById('create_new_dispatcher').addEventListener('click', create_dispatcher);
+
+      function send_new_dispatcher() {
+        var d_email = '' + document.getElementById('dispatcher_email').value;
+        var d_password = '' + document.getElementById('dispatcher_password').value;
+        if ((d_email.length < 3) || (d_password.length < 8)) {
+          xnotice({ message: 'Email should be at least 3 chrs. Password - at least 8.' });
+        } else {
+          if (confirm('You want to create new dispatcher with email: ' + d_email + ' ?')) {
+            dispatcher.trigger('new_dispatcher', { email: d_email, password: d_password });
+          }
+        }
+      }
+
+      dispatcher.bind('get_new_dispatcher_data', function(data) {
+        hide_bg_shadow();
+        create_unit(data);
+      });
+
+      document.getElementById('send_dispatcher_params').addEventListener('click', send_new_dispatcher);
+
+      function send_dispatcher_edit_params() {
+        var target = document.getElementById('target_dispatcher_id').innerHTML;
+        var new_email = '' + document.getElementById('edit_dispatcher_email').value;
+        var old_email = '' + document.getElementById('target_dispatcher').innerHTML;
+        var new_pass = '' + document.getElementById('edit_dispatcher_password').value;
+        var params = { id: target };
+        if (new_pass.length > 0) {
+          params.password = new_pass;
+        }
+        if (new_email != old_email) {
+          params.email = new_email;
+        }
+        if (((params.password != undefined) && (params.password.length < 8)) || ((params.email != undefined) && (params.email.length < 3))) {
+          xnotice({ message: 'Email should be at least 3 chrs. Password - at least 8.' });
+        } else if ((params.password == undefined) && (params.email == undefined)) {
+          xnotice({ message: 'No changes detected' });
+        } else {
+          conf_msg = 'Save changes for dispatcher: ' + old_email + ' ?';
+          if (confirm(conf_msg)) {
+            dispatcher.trigger('edit_dispatcher', params);
+          }
+        }
+      }
+
+      dispatcher.bind('get_edit_dispatcher_data', function(data) {
+        hide_bg_shadow();
+        if (data.email != undefined) {
+          var target = find_list_container('dispatcher', data.id);
+          target.getElementsByTagName('span')[2].innerHTML = data.email;
+        }
+      });
+
+      document.getElementById('send_edit_dispatcher').addEventListener('click', send_dispatcher_edit_params);
+
+      function edit_dispatcher(name) {
+        show_bg_shadow();
+        document.getElementById('edit_dispatcher_form').style.display = 'inline-block';
+        document.getElementById('edit_dispatcher_form').style.left = get_left_margin(300) + 'px';
+        document.getElementById('edit_dispatcher_form').style.top = get_top_margin(200) +  'px';
+        document.getElementById('edit_dispatcher_email').value = name;
+        document.getElementById('edit_dispatcher_password').value = '';
+      }
+
+
+      function create_driver() {
+        show_bg_shadow();
+        document.getElementById('driver_form').style.display = 'inline-block';
+        document.getElementById('driver_form').style.left = get_left_margin(400) + 'px';
+        document.getElementById('driver_form').style.top = get_top_margin(325) +  'px';
+        document.getElementById('driver_phone').value = '';
+        document.getElementById('driver_password').value = '';
+        document.getElementById('driver_full_name').value = '';
+        document.getElementById('driver_car_type').value = '';
+        document.getElementById('driver_passengers').value = 0;
+        document.getElementById('driver_trunk').value = 0;
+      }
+
+      document.getElementById('create_new_driver').addEventListener('click', create_driver);
+
+      function send_new_driver() {
+        var dr_phone = '' + document.getElementById('driver_phone').value;
+        var dr_pass = '' + document.getElementById('driver_password').value;
+        var dr_name = '' + document.getElementById('driver_full_name').value;
+        var dr_car_type = '' + document.getElementById('driver_car_type').value;
+        var dr_passengers = +document.getElementById('driver_passengers').value;
+        var dr_trunk = +document.getElementById('driver_trunk').value;
+        if ((dr_phone.length != 10) || (dr_pass.length < 6)) {
+          xnotice({ message: 'phone should be in format 0503334455 | Pass. at least 6 chars.' });
+        } else {
+          if (confirm('You want to create new driver with phone: ' + dr_phone + ' ?')) {
+            dr_params = {};
+            dr_params.phone = dr_phone;
+            dr_params.password = dr_pass;
+            dr_params.name = dr_name;
+            dr_params.car_type = dr_car_type;
+            dr_params.passengers = dr_passengers;
+            dr_params.trunk = dr_trunk;
+            dispatcher.trigger('new_driver', dr_params);
+          }
+        }
+      }
+
+      dispatcher.bind('get_new_driver_data', function(data) {
+        hide_bg_shadow();
+        create_unit(data);
+      });
+
+      document.getElementById('send_driver_params').addEventListener('click', send_new_driver);
+
+
+      dispatcher.bind('open_details', function(data) {
+        show_bg_shadow();
+        document.getElementById('driver_details_form').style.display = 'inline-block';
+        document.getElementById('driver_details_form').style.left = get_left_margin(400) + 'px';
+        document.getElementById('driver_details_form').style.top = get_top_margin(325) +  'px';
+        document.getElementById('dr_details_phone').innerHTML = data.phone;
+        document.getElementById('dr_details_name').innerHTML = data.name;
+        document.getElementById('dr_details_car_type').innerHTML = data.car_type;
+        document.getElementById('dr_details_passengers').innerHTML = data.passengers;
+        document.getElementById('dr_details_trunk').innerHTML = data.trunk;
+      });
+
+
+      dispatcher.bind('edit_driver', function(data) {
+        show_bg_shadow();
+        document.getElementById('edit_driver_form').style.display = 'inline-block';
+        document.getElementById('edit_driver_form').style.left = get_left_margin(400) + 'px';
+        document.getElementById('edit_driver_form').style.top = get_top_margin(325) +  'px';
+        document.getElementById('edit_driver_phone').value = data.phone;
+        document.getElementById('edit_driver_password').value = '';
+        document.getElementById('edit_driver_full_name').value = data.name;
+        document.getElementById('edit_driver_car_type').value = data.car_type;
+        document.getElementById('edit_driver_passengers').value = data.passengers;
+        document.getElementById('edit_driver_trunk').value = data.trunk;
+        document.getElementById('edit_driver_id').innerHTML = data.id;
+      });
+
+      function send_driver_edit_params() {
+        var target = document.getElementById('edit_driver_id').innerHTML;
+        var dr_phone = '' + document.getElementById('edit_driver_phone').value;
+        var dr_pass = '' + document.getElementById('edit_driver_password').value;
+        var dr_name = '' + document.getElementById('edit_driver_full_name').value;
+        var dr_car_type = '' + document.getElementById('edit_driver_car_type').value;
+        var dr_passengers = +document.getElementById('edit_driver_passengers').value;
+        var dr_trunk = +document.getElementById('edit_driver_trunk').value;
+        var dr_old_phone = find_list_container('driver', target).getElementsByTagName('span')[2].innerHTML;
+        if ((dr_phone.length != 10) || ((dr_pass.length > 0) && (dr_pass.length < 6))) {
+          xnotice({ message: 'phone should be in format 0503334455 | Pass. at least 6 chars.' });
+        } else {
+          if (confirm('Save changes for driver with phone: ' + dr_old_phone + ' ?')) {
+            dr_params = { id: target };
+            if (dr_phone != dr_old_phone) {
+              dr_params.phone = dr_phone;
+            }
+            if (dr_pass.length > 0) {
+              dr_params.password = dr_pass;
+            }
+            dr_params.name = dr_name;
+            dr_params.car_type = dr_car_type;
+            dr_params.passengers = dr_passengers;
+            dr_params.trunk = dr_trunk;
+            dispatcher.trigger('edit_driver', dr_params);
+          }
+        }
+      }
+
+      dispatcher.bind('get_edit_driver_data', function(data) {
+        hide_bg_shadow();
+        var target = find_list_container('driver', data.id);
+        target.getElementsByTagName('div')[0].innerHTML = data.name;
+        if (data.phone != undefined) {
+          target.getElementsByTagName('span')[2].innerHTML = data.phone;
+        }
+      });
+
+      document.getElementById('send_edit_driver').addEventListener('click', send_driver_edit_params);
+
+
+      var cancel_forms = document.getElementsByClassName('cancel_form');
+      for (var i = 0; i < cancel_forms.length; i++) {
+        cancel_forms[i].addEventListener('click', hide_bg_shadow)
+      }
+
+      function addEventListeners() {
+
+        var disable_buttons = document.getElementsByClassName('disable_button');
+        for (var i = 0; i < disable_buttons.length; i++) {
+          disable_buttons[i].addEventListener('click', disable);
+        }
+
+        var enable_buttons = document.getElementsByClassName('enable_button');
+        for (var i = 0; i < enable_buttons.length; i++) {
+          enable_buttons[i].addEventListener('click', enable);
+        }
+
+        var edit_buttons = document.getElementsByClassName('edit_button');
+        for (var i = 0; i < edit_buttons.length; i++) {
+          edit_buttons[i].addEventListener('click', edit);
+        }
+
+        var details_buttons = document.getElementsByClassName('details_button');
+        for (var i = 0; i < details_buttons.length; i++) {
+          details_buttons[i].addEventListener('click', details);
+        }
+      }
+
+      addEventListeners();
+
+
     }
 
     window.addEventListener('load', load_handler)

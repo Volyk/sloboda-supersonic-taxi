@@ -10,12 +10,15 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
       {id: '5', name: '5'},
       {id: '6', name: '6'},
       {id: '7', name: '7'},
-      {id: '8', name: '8'}    
+      {id: '8', name: '8'}
     ];
     $scope.phone_pattern = /(0)[0-9]{9}/;
     $scope.email_pattern = /^(.+)@(.+)$/;
 
     $scope.addOrder = function() {
+    if ($scope.order.email == undefined) {
+      $scope.order.email = '';
+    }
     $scope.order = {
       'order': {
         'phone'  : $scope.order.phone,
