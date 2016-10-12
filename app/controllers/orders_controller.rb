@@ -9,18 +9,18 @@ class OrdersController < ApplicationController
   def index
     @users = Order.all
     respond_with(@orders) do |format|
-      format.json { render :json => @users.as_json }
+      format.json { render json: @users.as_json }
       format.html
     end
-  end 
-  
+  end
+
   def show
     respond_with(@order.as_json)
   end
 
   def new
     @order = Order.new
-  end  
+  end
 
   def create
     @order = Order.new(order_params)
@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
-  end  
+  end
 
   def update
     @order = @order.merge(dispatcher_id: current_dispatcher.id)
