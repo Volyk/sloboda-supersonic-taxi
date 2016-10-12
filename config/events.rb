@@ -22,6 +22,12 @@ WebsocketRails::EventMap.describe do
   subscribe :enable_dispatcher, to: Admins::WsPanelController, with_method: :enable_dispatcher
   subscribe :disable_driver, to: Admins::WsPanelController, with_method: :disable_driver
   subscribe :enable_driver, to: Admins::WsPanelController, with_method: :enable_driver
-
+  subscribe :new_admin, to: Admins::WsPanelController, with_method: :new_admin
+  subscribe :edit_admin, to: Admins::WsPanelController, with_method: :edit_admin
+  subscribe :new_dispatcher, to: Admins::WsPanelController, with_method: :new_dispatcher
+  subscribe :edit_dispatcher, to: Admins::WsPanelController, with_method: :edit_dispatcher
+  subscribe :new_driver, to: Admins::WsPanelController, with_method: :new_driver
+  subscribe :get_driver_data, to: Admins::WsPanelController, with_method: :get_driver_data
+  subscribe :edit_driver, to: Admins::WsPanelController, with_method: :edit_driver
 
 end
