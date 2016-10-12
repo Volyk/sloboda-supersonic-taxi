@@ -102,7 +102,7 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       @admin = Admin.find_for_authentication(id: message[:id])
       @admin.encrypted_password = Admin.new(password: message[:password]).encrypted_password
       if @admin.save
-        send_message :xnotice, 'message' => 'Password chenged successfully'
+        send_message :xnotice, 'message' => 'Password changed successfully'
       else
         send_message :xnotice, 'message' => 'Changing password: ERROR'
       end
