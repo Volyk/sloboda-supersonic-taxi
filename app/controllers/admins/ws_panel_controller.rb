@@ -10,9 +10,9 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       @admin = Admin.find_for_authentication(id: message[:id])
       @admin.active = false
       if current_admin.id != @admin.id && @admin.save
-        send_message :xnotice, { 'message' => 'Status: Inactive - success.' }
+        send_message :xnotice, 'message' => 'Status: Inactive - success.'
       else
-        send_message :xnotice, { 'message' => 'Status: Inactive - ERROR' }
+        send_message :xnotice, 'message' => 'Status: Inactive - ERROR'
       end
     end
   end
@@ -22,9 +22,9 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       @admin = Admin.find_for_authentication(id: message[:id])
       @admin.active = true
       if @admin.save
-        send_message :xnotice, { 'message' => 'Status: Active - success.' }
+        send_message :xnotice, 'message' => 'Status: Active - success.'
       else
-        send_message :xnotice, { 'message' => 'Status: Active - ERROR' }
+        send_message :xnotice, 'message' => 'Status: Active - ERROR'
       end
     end
   end
@@ -34,9 +34,9 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       @dispatcher = Dispatcher.find_for_authentication(id: message[:id])
       @dispatcher.active = false
       if @dispatcher.save
-        send_message :xnotice, { 'message' => 'Status: Inactive - success.' }
+        send_message :xnotice, 'message' => 'Status: Inactive - success.'
       else
-        send_message :xnotice, { 'message' => 'Status: Inactive - ERROR' }
+        send_message :xnotice, 'message' => 'Status: Inactive - ERROR'
       end
     end
   end
@@ -46,9 +46,9 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       @dispatcher = Dispatcher.find_for_authentication(id: message[:id])
       @dispatcher.active = true
       if @dispatcher.save
-        send_message :xnotice, { 'message' => 'Status: Active - success.' }
+        send_message :xnotice, 'message' => 'Status: Active - success.'
       else
-        send_message :xnotice, { 'message' => 'Status: Active - ERROR' }
+        send_message :xnotice, 'message' => 'Status: Active - ERROR'
       end
     end
   end
@@ -58,9 +58,9 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       @driver = Driver.find_for_authentication(id: message[:id])
       @driver.active = false
       if @driver.save
-        send_message :xnotice, { 'message' => 'Status: Inactive - success.' }
+        send_message :xnotice, 'message' => 'Status: Inactive - success.'
       else
-        send_message :xnotice, { 'message' => 'Status: Inactive - ERROR' }
+        send_message :xnotice, 'message' => 'Status: Inactive - ERROR'
       end
     end
   end
@@ -70,9 +70,9 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       @driver = Driver.find_for_authentication(id: message[:id])
       @driver.active = true
       if @driver.save
-        send_message :xnotice, { 'message' => 'Status: Active - success.' }
+        send_message :xnotice, 'message' => 'Status: Active - success.'
       else
-        send_message :xnotice, { 'message' => 'Status: Active - ERROR' }
+        send_message :xnotice, 'message' => 'Status: Active - ERROR'
       end
     end
   end
@@ -81,16 +81,16 @@ class Admins::WsPanelController < WebsocketRails::BaseController
   def new_admin
     if !current_admin.nil? && current_admin.active == true
       if !Admin.find_for_authentication(login: message[:login]).nil?
-        send_message :xnotice, { 'message' => 'Admin with this login already exists' }
+        send_message :xnotice, 'message' => 'Admin with this login already exists'
       else
         @admin = Admin.new(login: message[:login], password: message[:password])
         @admin.active = true
         if @admin.save
-          send_message :xnotice, { 'message' => 'New admin successfully created' }
+          send_message :xnotice, 'message' => 'New admin successfully created'
           admin_data = { 'type' => 'admin', 'login' => @admin.login, 'id' => @admin.id }
           send_message :get_new_admin_data, admin_data
         else
-          send_message :xnotice, { 'message' => 'Creating admin: ERROR' }
+          send_message :xnotice, 'message' => 'Creating admin: ERROR'
         end
       end
     end
@@ -102,9 +102,9 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       @admin = Admin.find_for_authentication(id: message[:id])
       @admin.encrypted_password = Admin.new(password: message[:password]).encrypted_password
       if @admin.save
-        send_message :xnotice, { 'message' => 'Password chenged successfully' }
+        send_message :xnotice, 'message' => 'Password chenged successfully'
       else
-        send_message :xnotice, { 'message' => 'Changing password: ERROR' }
+        send_message :xnotice, 'message' => 'Changing password: ERROR'
       end
     end
   end
@@ -113,16 +113,16 @@ class Admins::WsPanelController < WebsocketRails::BaseController
   def new_dispatcher
     if !current_admin.nil? && current_admin.active == true
       if !Dispatcher.find_for_authentication(email: message[:email]).nil?
-        send_message :xnotice, { 'message' => 'Dispatcher with this email already exists' }
+        send_message :xnotice, 'message' => 'Dispatcher with this email already exists'
       else
         @dispatcher = Dispatcher.new(email: message[:email], password: message[:password])
         @dispatcher.active = true
         if @dispatcher.save
-          send_message :xnotice, { 'message' => 'New Dispatcher successfully created' }
+          send_message :xnotice, 'message' => 'New Dispatcher successfully created'
           dispatcher_data = { 'type' => 'dispatcher', 'login' => @dispatcher.email, 'id' => @dispatcher.id }
           send_message :get_new_dispatcher_data, dispatcher_data
         else
-          send_message :xnotice, { 'message' => 'Creating dispatcher: ERROR' }
+          send_message :xnotice, 'message' => 'Creating dispatcher: ERROR'
         end
       end
     end
@@ -132,7 +132,7 @@ class Admins::WsPanelController < WebsocketRails::BaseController
   def edit_dispatcher
     if !current_admin.nil? && current_admin.active == true
       if !message[:email].nil? && !Dispatcher.find_for_authentication(email: message[:email]).nil?
-        send_message :xnotice, { 'message' => 'Dispatcher with this email already exists' }
+        send_message :xnotice, 'message' => 'Dispatcher with this email already exists'
       else
         @dispatcher = Dispatcher.find_for_authentication(id: message[:id])
         dispatcher_data = { 'id' => @dispatcher.id }
@@ -144,10 +144,10 @@ class Admins::WsPanelController < WebsocketRails::BaseController
           @dispatcher.encrypted_password = Dispatcher.new(password: message[:password]).encrypted_password
         end
         if @dispatcher.save
-          send_message :xnotice, { 'message' => 'Changes successfully saved' }
+          send_message :xnotice, 'message' => 'Changes successfully saved'
           send_message :get_edit_dispatcher_data, dispatcher_data
         else
-          send_message :xnotice, { 'message' => 'Changing dispatcher: ERROR' }
+          send_message :xnotice, 'message' => 'Changing dispatcher: ERROR'
         end
       end
     end
@@ -157,7 +157,7 @@ class Admins::WsPanelController < WebsocketRails::BaseController
   def new_driver
     if !current_admin.nil? && current_admin.active == true
       if !Driver.find_for_authentication(number: message[:number]).nil?
-        send_message :xnotice, { 'message' => 'Driver with this number already exists' }
+        send_message :xnotice, 'message' => 'Driver with this number already exists'
       else
         @driver = Driver.new(number: message[:number], password: message[:password])
         @driver.active = true
@@ -166,12 +166,12 @@ class Admins::WsPanelController < WebsocketRails::BaseController
         @driver.passengers = message[:passengers].to_i
         @driver.trunk = message[:trunk].to_i
         if @driver.save
-          send_message :xnotice, { 'message' => 'New Driver successfully created' }
+          send_message :xnotice, 'message' => 'New Driver successfully created'
           driver_data = { 'type' => 'driver', 'login' => @driver.number, 'id' => @driver.id }
           driver_data[:name] = @driver.name
           send_message :get_new_driver_data, driver_data
         else
-          send_message :xnotice, { 'message' => 'Creating driver: ERROR' }
+          send_message :xnotice, 'message' => 'Creating driver: ERROR'
         end
       end
     end
@@ -200,7 +200,7 @@ class Admins::WsPanelController < WebsocketRails::BaseController
   def edit_driver
     if !current_admin.nil? && current_admin.active == true
       if !message[:number].nil? && !Driver.find_for_authentication(number: message[:number]).nil?
-        send_message :xnotice, { 'message' => 'Driver with this number already exists' }
+        send_message :xnotice, 'message' => 'Driver with this number already exists'
       else
         @driver = Driver.find_for_authentication(id: message[:id])
         driver_data = { 'id' => @driver.id }
@@ -217,10 +217,10 @@ class Admins::WsPanelController < WebsocketRails::BaseController
         @driver.passengers = message[:passengers].to_i
         @driver.trunk = message[:trunk].to_i
         if @driver.save
-          send_message :xnotice, { 'message' => 'Changes successfully saved' }
+          send_message :xnotice, 'message' => 'Changes successfully saved'
           send_message :get_edit_driver_data, driver_data
         else
-          send_message :xnotice, { 'message' => 'Changing driver: ERROR' }
+          send_message :xnotice, 'message' => 'Changing driver: ERROR'
         end
       end
     end
