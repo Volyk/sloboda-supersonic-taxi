@@ -8,4 +8,5 @@
 
   Admin.where(login: 'admin').first_or_create do |state|
     state.password = 'admin'
+    state.active = true
   end

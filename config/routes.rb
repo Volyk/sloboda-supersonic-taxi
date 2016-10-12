@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   get 'dispatchers/profile'
 
 root 'orders#index'
