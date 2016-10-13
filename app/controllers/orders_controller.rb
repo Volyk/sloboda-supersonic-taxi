@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @order = Order.new
+    redirect_to '/'
   end
 
   def create
