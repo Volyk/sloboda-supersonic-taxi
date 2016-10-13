@@ -13,7 +13,11 @@ class OrdersController < ApplicationController
   end
 
   def show
-    respond_with(@order.as_json)
+    if !current_driver.nil? || !current_dispatcher.nil?
+      respond_with(@order.as_json)
+    else
+      redirect_to '/'
+    end
   end
 
   def new
@@ -24,7 +28,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new }

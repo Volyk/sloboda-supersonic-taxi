@@ -4,20 +4,10 @@ var app = angular.module('taxi', ['ngRoute']);
 app.controller('CreateOrderController', ['$scope', '$http', function($scope, $http) {
     $scope.phone_pattern = /(0)[0-9]{9}/;
     $scope.email_pattern = /^(.+)@(.+)$/;
-
     $scope.addOrder = function() {
-    if ($scope.order.email == undefined) {
+    if (!$scope.order.email) {
       $scope.order.email = '';
     }
-    $scope.order = {
-      'phone'  : $scope.order.phone,
-      'email'   : $scope.order.email.toLowerCase(),
-      'start_point'  : $scope.order.start_point,
-      'end_point'   : $scope.order.end_point,
-      'passengers'  : $scope.order.passengers,
-      'baggage'   : $scope.order.baggage,
-      'comment'   : $scope.order.comment
-    };
     $http.post('/orders', $scope.order).success(function(data){
         alert('Ваш заказ принят!');
         $scope.order = {};
