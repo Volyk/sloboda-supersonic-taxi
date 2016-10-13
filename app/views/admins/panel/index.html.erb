@@ -225,7 +225,7 @@
 
     function load_handler() {
 
-      var dispatcher = new WebSocketRails('localhost:3000/websocket');
+      var dispatcher = new WebSocketRails(window.location.host + '/websocket');
 
       function xnotice(data) {
         clearTimeout(window.xnotice_timeout);
