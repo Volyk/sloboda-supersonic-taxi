@@ -10,20 +10,20 @@ class DriverTest < ActiveSupport::TestCase
     assert @driver.valid?
   end
 
-  test 'invalid without number' do
-    @driver.number = nil
-    refute @driver.valid?, 'saved driver without a number'
-    assert_not_nil @driver.errors[:number]
+  test 'invalid without phone' do
+    @driver.phone = nil
+    refute @driver.valid?, 'saved driver without a phone'
+    assert_not_nil @driver.errors[:phone]
   end
 
-  test 'update driver with a correct number' do
-    @driver.number = '0508801392'
+  test 'update driver with a correct phone' do
+    @driver.phone = '0508801392'
     assert @driver.valid?
   end
 
-  test 'update driver with an incorrect number' do
-    @driver.number = 'lol'
-    refute @driver.valid?, 'saved driver with an incorrect number'
-    assert_not_nil @driver.errors[:number]
+  test 'update driver with an incorrect phone' do
+    @driver.phone = 'lol'
+    refute @driver.valid?, 'saved driver with an incorrect phone'
+    assert_not_nil @driver.errors[:phone]
   end
 end

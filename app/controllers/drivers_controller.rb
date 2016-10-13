@@ -1,5 +1,7 @@
 class DriversController < ApplicationController
+before_action :authenticate_driver!, only: [:profile]	
+
   def profile
-  	@driver = Driver.find_by(params[:id])
+ 
   end
 end

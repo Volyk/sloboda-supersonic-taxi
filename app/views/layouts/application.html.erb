@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>SlobodaTeam</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title>sloboda-supersonic-taxi</title>
+  <meta charset="utf-8">
+  <base href='/' />
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head> 
+  <%= yield %>
 
-  <div align="right">
-    <% if current_dispatcher.present? %>
-      <%= link_to('Sign out as a dispatcher', destroy_dispatcher_session_path, :method => :delete) %>
-    <% end %>
-  </div>
-
-  <body>
-    <%= yield %>
-  </body>
+</body>
 </html>

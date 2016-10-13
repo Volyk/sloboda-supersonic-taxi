@@ -7,9 +7,19 @@ layout false
   end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    @admin = Admin.find_by_login(params[:admin][:login])
+    if @admin != nil
+      if !@admin.active
+        flash[:notice] = "#{ @admin.login } do not have access."
+        redirect_to new_session_path(Admin)
+      else
+        super
+      end
+    else
+      super
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy

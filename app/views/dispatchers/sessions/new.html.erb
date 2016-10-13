@@ -1,5 +1,11 @@
-<h2>Log in</h2>
-
+<% if dispatcher_signed_in? %>
+    <%= link_to "Sign out", destroy_dispatcher_session_path, method: :delete %>
+    <div ng-app="dispatcher">
+    <div class="view-container">
+      <div ng-view class="view-frame animate-view"></div>
+    </div>
+    </div>
+<% else %>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
     <%= f.label :email %><br />
@@ -24,3 +30,4 @@
 <% end %>
 
 <%= render "dispatchers/shared/links" %>
+<% end %>

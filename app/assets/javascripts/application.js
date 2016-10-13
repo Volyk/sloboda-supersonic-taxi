@@ -12,7 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require angular
+//= require angular-route
+//= require angular-resource
+//= require angular-ui-bootstrap
+//= require bootstrap
 //= require turbolinks
 //= require_tree .
+//= require angular-devise
 //= require websocket_rails/main
 

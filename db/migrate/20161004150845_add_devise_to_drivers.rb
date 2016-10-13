@@ -2,7 +2,7 @@ class AddDeviseToDrivers < ActiveRecord::Migration[5.0]
   def self.up
     change_table :drivers do |t|
       ## Database authenticatable
-      t.string :number,              null: false, default: ""
+      t.string :phone,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
       ## Recoverable
@@ -35,15 +35,16 @@ class AddDeviseToDrivers < ActiveRecord::Migration[5.0]
       # t.timestamps null: false
     end
 
-    add_index :drivers, :number,               unique: true
+    add_index :drivers, :phone,               unique: true
     add_index :drivers, :reset_password_token, unique: true
     # add_index :drivers, :confirmation_token,   unique: true
     # add_index :drivers, :unlock_token,         unique: true
   end
-
+=begin
   def self.down
     # By default, we don't want to make any assumption about how to roll back a migration when your
     # model already existed. Please edit below which fields you would like to remove in this migration.
     raise ActiveRecord::IrreversibleMigration
   end
+=end  
 end

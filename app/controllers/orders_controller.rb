@@ -1,47 +1,42 @@
-  class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update]
-  before_action :authenticate_dispatcher!, only: [:index, :edit, :update]
-  # GET /orders
-  # GET /orders.json
+
+class OrdersController < ApplicationController
+  before_action :authenticate_dispatcher!, only: [:edit, :update]
+  before_action :get_order, except: [:index, :create, :new]
+  respond_to :html, :json
+
   def index
-      @orders = Order.all
+    @users = Order.all
+    respond_with(@orders) do |format|
+      format.json { render json: @users.as_json }
+      format.html
+    end
   end
 
-  # GET /orders/1
-  # GET /orders/1.json
   def show
+    if !current_driver.nil? || !current_dispatcher.nil?
+      respond_with(@order.as_json)
+    else
+      redirect_to '/'
+    end
   end
 
-  # GET /orders/new
   def new
-      @order = Order.new
+    @order = Order.new
   end
 
-  # GET /orders/1/edit
-  def edit
-  end
-
-  # POST /orders
-  # POST /orders.json
   def create
-    if current_dispatcher.present?
-      @dispatcher = Dispatcher.find(current_dispatcher.id)
-      @order = @dispatcher.orders.create(order_params)
-
-      respond_to do |format|
-        if @order.save
-          format.html { redirect_to @order, notice: 'Order was successfully created.' }
-          format.json { render :show, status: :created, location: @order }
-        else
-          format.html { render :new }
-          format.json { render json: @order.errors, status: :unprocessable_entity }
-        end
+    @order = Order.new(order_params)
+    respond_to do |format|
+      if @order.save
+        format.html { redirect_to root_path, notice: 'Order was successfully created.' }
+        format.json { render :show, status: :created, location: @order }
+      else
+        format.html { render :new }
+        format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /orders/1
-  # PATCH/PUT /orders/1.json
   def update
     @order = @order.merge(dispatcher_id: current_dispatcher.id)
     respond_to do |format|
@@ -55,24 +50,20 @@
     end
   end
 
-  # DELETE /orders/1
-  # DELETE /orders/1.json
   def destroy
     @order.destroy
-    respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    render json: {status: :ok}
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def order_params
-      params.require(:order).permit(:start_point, :end_point, :comment)
-    end
+  def order_params
+    params.require(:order).permit(:phone, :email, :start_point, :end_point, :comment, :passengers, :baggage)
+  end
+
+  def get_order
+    @order = Order.find(params[:id])
+    render json: {status: :not_found} unless @order
+	end
+
 end

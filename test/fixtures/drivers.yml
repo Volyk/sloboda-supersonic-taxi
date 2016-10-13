@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  number: '0501231231'
+  phone: '0501231231'
   car_type: Batmobile
   passengers: 1
   trunk: 1
 
 two:
-  number: '0501231232'
+  phone: '0501231232'
   car_type: bicycle
   passengers: 2
   trunk: 2
