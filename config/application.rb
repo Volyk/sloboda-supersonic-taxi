@@ -1,4 +1,3 @@
-Figaro.load
 require_relative 'boot'
 require 'rails/all'
 
@@ -8,9 +7,9 @@ Bundler.require(*Rails.groups)
 
 module SlobodaTeam
   class Application < Rails::Application
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    Figaro.load
+    ENV['SET_BY_FIGARO'] # => nil
+    Figaro.env.SET_BY_FIGARO
 
      config.action_mailer.raise_delivery_errors = false
      config.action_mailer.delivery_method = :smtp

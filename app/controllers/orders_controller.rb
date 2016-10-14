@@ -28,6 +28,9 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     respond_to do |format|
       if @order.save
+        # sends email to client when order is created.
+        OrderMailer.order_email(@order).deliver
+
         format.html { redirect_to root_path, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }
       else
