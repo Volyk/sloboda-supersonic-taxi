@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'figaro'
 gem 'devise'
 gem 'angularjs-rails'
 gem 'angular-ui-bootstrap-rails'
@@ -10,7 +11,6 @@ source 'https://rails-assets.org' do
 end
 
 gem 'turbolinks'
-
 gem 'kaminari'
 gem 'paperclip'
 gem 'bootstrap-kaminari-views'
