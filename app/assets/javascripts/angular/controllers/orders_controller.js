@@ -15,8 +15,61 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
     };
 }]);
 
+
 app.controller('DriversController', ['$scope', '$http', function($scope, $http) {
-  //will get and show data in template
+  $scope.empty = true;
+  // for angular to show different buttons
+  $scope.status = function() { 
+    if ($scope.order.status == 'waiting') {
+      $scope.waiting = true;
+      $scope.accepted = false;
+      $scope.arrived = false;
+    } else if ($scope.order.status == 'accepted') {
+      $scope.waiting = false;
+      $scope.accepted = true;
+      $scope.arrived = false;
+    } else if ($scope.order.status == 'arrived') {
+      $scope.waiting = false;
+      $scope.accepted = false;
+      $scope.arrived = true;
+    } 
+  };
+
+  $http.get('/drivers/orders.json').success(function(data){
+    $scope.order = data[0];
+    $scope.order.status = 'waiting';
+    if ($scope.order.phone) { 
+      $scope.empty = false;
+    }
+    $scope.status();
+  });
+
+  $scope.acceptOrder = function() {
+    $scope.order.status = 'accepted';
+    $http.post('/drivers/orders', $scope.order).success(function(){
+      $scope.status();
+    });
+  };
+
+  $scope.declineOrder = function() {
+    $scope.order.status = 'declined';
+    $http.post('/drivers/orders', $scope.order).success(function(){
+      $scope.empty = true;
+    });
+  };
+  $scope.arrivedToOrder = function() {
+    $scope.order.status = 'arrived';
+    $http.post('/drivers/orders', $scope.order).success(function(){
+      $scope.status();
+    });
+  };
+  $scope.orderFulfilled = function() {
+    $scope.order.status = 'fulfilled';
+    $http.post('/drivers/orders', $scope.order).success(function(){
+      $scope.status();
+    });
+  };
+
 }]);
 
 app.controller('DispatchersController', ['$scope', '$http', function($scope, $http) {
@@ -30,11 +83,11 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       templateUrl: 'templates/home.html',
       controller: 'CreateOrderController'
     })
-    .when('/drivers/profile', {
+    .when('/drivers/orders', {
       templateUrl: 'templates/driver.html',
       controller: 'DriversController'
     })
-    .when('/dispatchers/profile', {
+    .when('/dispatchers/orders', {
       templateUrl: 'templates/dispatcher.html',
       controller: 'DispatchersController'
     })
