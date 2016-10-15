@@ -18,7 +18,7 @@ devise_for :drivers, skip: :all, controllers: { sessions: 'drivers/sessions' }
     get 'driver' => 'devise/sessions#new', :as => :new_driver_session
     post 'driver' => 'devise/sessions#create', :as => :driver_session
     delete 'driver' => 'devise/sessions#destroy', :as => :destroy_driver_session
-    get 'drivers/profile' => 'drivers/profile', :as => :driver_root
+    get 'drivers/orders' => 'drivers/orders', :as => :driver_root
   end
 
   devise_for :admins, path: 'admin', skip: :registrations, controllers: { sessions: 'admins/sessions' }

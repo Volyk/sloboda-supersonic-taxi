@@ -6,4 +6,5 @@ class Order < ApplicationRecord
 	validates :baggage, presence: true, allow_blank: false
 
   	has_many :orders_blogs
+  	belongs_to :driver
 end
