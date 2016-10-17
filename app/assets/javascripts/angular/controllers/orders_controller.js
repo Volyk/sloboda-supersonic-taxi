@@ -29,7 +29,7 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
   };
 
   $scope.putMethod = function(data) {
-    var url = '/orders/' + data.id;
+    var url = '/drivers/orders/' + data.id;
     $http.put(url, data);
   };
 

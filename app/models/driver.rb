@@ -7,6 +7,7 @@ class Driver < ApplicationRecord
   
   has_many :orders
 
+  
   def active_for_authentication?
   	super && active?
   end	

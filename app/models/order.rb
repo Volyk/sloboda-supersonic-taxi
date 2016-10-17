@@ -7,14 +7,14 @@ class Order < ApplicationRecord
 
   has_many :orders_blogs
 
-
   def as_json(options={})
-    options[:accepted] ||= true if status == 1
-    options[:arrived] ||= true if status == 2
-    options[:declined] ||= true if status == 3
-    options[:done] ||= true if status == 4
-    options[:waiting] ||= true if status == 5
-    options[:new] ||= true if status == 6 
-    super
+    hash = Hash.new
+    hash[:accepted] ||= true if status == 'accepted'
+    hash[:arrived] ||= true if status == 'arrived'
+    hash[:declined] ||= true if status == 'declined'
+    hash[:done] ||= true if status == 'done'
+    hash[:waiting] ||= true if status == 'waiting'
+    hash[:new] ||= true if status == 'new' 
+    super.as_json(options).merge(hash)
   end
 end

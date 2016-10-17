@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
 root 'orders#index'
-resources :orders
+resources :orders, except: [:update]
 resources :orders_blogs
 
 devise_for :dispatchers
@@ -17,8 +17,8 @@ devise_for :drivers, skip: :all, controllers: { sessions: 'drivers/sessions' }
     get 'driver' => 'devise/sessions#new', :as => :new_driver_session
     post 'driver' => 'devise/sessions#create', :as => :driver_session
     delete 'driver' => 'devise/sessions#destroy', :as => :destroy_driver_session
-    get 'drivers/orders' => 'drivers/orders', :as => :driver_root
-    put 'drivers/orders' => 'drivers/update_orders'
+    get 'drivers/orders', :as => :driver_root
+    put 'drivers/orders/:id' => 'drivers#update_order'
   end
 
 devise_for :admins, path: 'admin', skip: :registrations, controllers: { sessions: 'admins/sessions' }
