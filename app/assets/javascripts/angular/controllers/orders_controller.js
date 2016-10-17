@@ -20,33 +20,49 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
   $scope.empty = true;
 
   $http.get('/drivers/orders.json').success(function(data){
-    console.log(data);
     $scope.orders = data;
-    if (data[0].phone) { 
+    angular.forEach($scope.orders, function(order, key) {
+      order.waiting = true;
+    })
+    if ($scope.orders[0]) { 
       $scope.empty = false;
     }
   });
 
+  $scope.deleteOrder = function(order) {
+    var index = $scope.orders.indexOf(order);
+    $scope.orders.splice(index, 1);
+    if ($scope.orders[0]) { 
+      $scope.empty = false;
+    } else {
+      $scope.empty = true;
+    } 
+  }
+
   $scope.acceptOrder = function(order) {
     order.waiting = false;
     order.accepted = true;
-    $http.post('/drivers/orders', order);
+    $http.patch('/drivers/orders', order);
   };
 
   $scope.declineOrder = function(order) {
     order.waiting = false;
     order.declined = true;
-    $http.post('/drivers/orders', order);
+    $http.patch('/drivers/orders', order);
+    $scope.deleteOrder(order);    
   };
 
   $scope.arrivedToOrder = function(order) {
+    order.accepted = false;
     order.arrived = true;
-    $http.post('/drivers/orders', order);
+    $http.patch('/drivers/orders', order);
   };
 
   $scope.orderFulfilled = function(order) {
+    order.arrived = false;
     order.done = true;
-    $http.post('/drivers/orders', order);
+    $http.patch('/drivers/orders', order);
+    $scope.deleteOrder(order);
   };
 
 }]);

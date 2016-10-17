@@ -1,3 +1,16 @@
+<script type="text/ng-template" id="decline.html">
+	<button type="button" class="btn btn-danger" ng-click="decline = !decline">Отклонить</button>
+	<div ng-if="decline">
+		<form novalidate class="decline_order" name="order_comment">
+     	<div class="form-group">
+				<textarea rows='2' name="decline" placeholder="Введите комментарий" ng-model="order.decline_order" required>></textarea><br />
+				<button type="button" class="btn btn-success" ng-disabled="order_comment.$invalid" ng-click="declineOrder(order)">Отправить</button>
+			</div>
+		</form>
+	</div>
+</script>
+
+
 <div class="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 order">
 	<div ng-show="empty">
 		<h3>Нет текущих заказов</h3>
@@ -9,14 +22,11 @@
 			<p>{{order.comment}}</p>
 			<div ng-if="order.waiting">
 				<button type="button" class="btn btn-primary" ng-click="acceptOrder(order)">Принять</button>
-				<button type="button" class="btn btn-danger" ng-click="decline = !decline">Отклонить</button>
-				<div ng-if="decline">
-					<textarea rows='2' name="decline" placeholder="Введите комментарий" ng-model="order.decline_order" required>></textarea><
-					<button type="button" class="btn btn-success" ng-click="declineOrder(order)">Отправить</button>
-				</div>
+				<span ng-include="'decline.html'"></span>
 			</div>
 			<div ng-if="order.accepted">
 				<button type="button" class="btn btn-success" ng-click="arrivedToOrder(order)">На месте</button>
+				<span ng-include="'decline.html'"></span>
 			</div>
 			<div ng-if="order.arrived">
 				<button type="button" class="btn btn-success" ng-click="orderFulfilled(order)">Заказ выполнен</button>
