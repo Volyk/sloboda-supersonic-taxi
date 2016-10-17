@@ -1,6 +1,6 @@
 #
 ActiveRecord::Schema.define(version: 20161011133401) do
-  enable_extension 'plpgsql"'
+  enable_extension 'plpgsql'
 
   create_table "admins", force: :cascade do |t|
     t.string   "login",               default: "", null: false
