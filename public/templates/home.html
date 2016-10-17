@@ -7,7 +7,7 @@
         </div>
         <div class="form-group">
             <label for="email" class="col-sm-4 control-label">Email</label>
-            <div class="col-sm-8"><input type="text" ng-pattern="email_pattern" ng-model="order.email" class="form-control" id="email" placeholder="example@email.com"></div>
+            <div class="col-sm-8"><input type="text" ng-pattern="email_pattern" ng-model="order.email"|tolowercase}}" class="form-control" id="email" placeholder="example@email.com"></div>
         </div>
         <div class="form-group">
             <label for="start_point" class="col-sm-4 control-label">Откуда<span class="required">*</span></label>
