@@ -5,9 +5,9 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
     $scope.phone_pattern = /(0)[0-9]{9}/;
     $scope.email_pattern = /^(.+)@(.+)$/;
     $scope.addOrder = function() {
-    if (!$scope.order.email) {
-      $scope.order.email = '';
-    }
+    // if (!$scope.order.email) {
+    // $scope.order.email = '';
+    // }
     $http.post('/orders', $scope.order).success(function(data){
         alert('Ваш заказ принят!');
         $scope.order = {};
