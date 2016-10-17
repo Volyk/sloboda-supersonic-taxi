@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011133401) do
+ActiveRecord::Schema.define(version: 20161017090045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,12 @@ ActiveRecord::Schema.define(version: 20161011133401) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "email"
+    t.boolean  "new"
+    t.boolean  "accepted"
+    t.boolean  "arrived"
+    t.boolean  "declined"
+    t.boolean  "waiting"
+    t.boolean  "done"
   end
 
   create_table "orders_blogs", force: :cascade do |t|
