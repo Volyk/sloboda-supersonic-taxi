@@ -3,22 +3,24 @@
 		<h3>Нет текущих заказов</h3>
 	</div>
 	<div ng-show="!empty">
-		<h3>{{order.start_point}} - {{order.end_point}}</h3>
-		<p>Номер телефона: {{order.phone}}</p>
-		<p>{{order.comment}}</p>
-		<div ng-if="waiting">
-			<button type="button" class="btn btn-primary" ng-click="acceptOrder()">Принять</button>
-			<button type="button" class="btn btn-danger" ng-click="decline = !decline">Отклонить</button>
-			<div ng-if="decline">
-				<textarea rows='2' name="decline" placeholder="Введите комментарий" ng-model="order.decline_order" required>></textarea><br />
-				<button type="button" class="btn btn-success" ng-click="declineOrder()">Отправить</button>
+		<div ng-repeat="order in orders">
+			<h3>{{order.start_point}} - {{order.end_point}}</h3>
+			<p>Номер телефона: {{order.phone}}</p>
+			<p>{{order.comment}}</p>
+			<div ng-if="order.waiting">
+				<button type="button" class="btn btn-primary" ng-click="acceptOrder(order)">Принять</button>
+				<button type="button" class="btn btn-danger" ng-click="decline = !decline">Отклонить</button>
+				<div ng-if="decline">
+					<textarea rows='2' name="decline" placeholder="Введите комментарий" ng-model="order.decline_order" required>></textarea><
+					<button type="button" class="btn btn-success" ng-click="declineOrder(order)">Отправить</button>
+				</div>
 			</div>
-		</div>
-		<div ng-if="accepted">
-			<button type="button" class="btn btn-success" ng-click="arrivedToOrder()">На месте</button>
-		</div>
-		<div ng-if="arrived">
-			<button type="button" class="btn btn-success" ng-click="orderFulfilled()">Заказ выполнен</button>
+			<div ng-if="order.accepted">
+				<button type="button" class="btn btn-success" ng-click="arrivedToOrder(order)">На месте</button>
+			</div>
+			<div ng-if="order.arrived">
+				<button type="button" class="btn btn-success" ng-click="orderFulfilled(order)">Заказ выполнен</button>
+			</div>
 		</div>
 	</div>
 </div>
