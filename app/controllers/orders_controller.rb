@@ -1,6 +1,6 @@
 
 class OrdersController < ApplicationController
-  before_action :authenticate_dispatcher!, only: [:edit, :update]
+  before_action :authenticate_dispatcher!, only: [:edit]
   before_action :get_order, except: [:index, :create, :new]
   respond_to :html, :json
 
@@ -41,7 +41,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order = @order.merge(dispatcher_id: current_dispatcher.id)
+   
     respond_to do |format|
       if @order.update(order_params)
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
@@ -61,7 +61,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:phone, :email, :start_point, :end_point, :comment, :passengers, :baggage)
+    params.require(:order).permit(:phone, :email, :start_point, :end_point, :comment, :passengers, :baggage, :new, :accepted, :arrived, :declined, :waiting, :done)
   end
 
   def get_order
