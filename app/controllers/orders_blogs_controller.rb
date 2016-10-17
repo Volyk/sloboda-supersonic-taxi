@@ -1,3 +1,4 @@
+#
 class OrdersBlogsController < ApplicationController
   before_action :set_orders_blog, only: [:show, :edit, :update, :destroy]
 
@@ -16,9 +17,9 @@ class OrdersBlogsController < ApplicationController
   def new
     if current_dispatcher.present?
       @orders_blog = OrdersBlog.new
-    else 
-      redirect_to orders_path  
-    end 
+    else
+      redirect_to orders_path
+    end
   end
 
   # GET /orders_blogs/1/edit
@@ -41,7 +42,7 @@ class OrdersBlogsController < ApplicationController
         end
       end
     else
-      redirect_to orders_path  
+      redirect_to orders_path
     end
   end
 
@@ -70,13 +71,12 @@ class OrdersBlogsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_orders_blog
-      @orders_blog = OrdersBlog.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def orders_blog_params
-      params.require(:orders_blog).permit(:action, :dispatcher_id)
-    end
+  def set_orders_blog
+    @orders_blog = OrdersBlog.find(params[:id])
+  end
+
+  def orders_blog_params
+    params.require(:orders_blog).permit(:action, :dispatcher_id)
+  end
 end

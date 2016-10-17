@@ -1,5 +1,4 @@
 class Admins::WsPanelController < WebsocketRails::BaseController
-
   def initialize_session
     # perform application setup here
     controller_store[:message_count] = 0
@@ -77,7 +76,6 @@ class Admins::WsPanelController < WebsocketRails::BaseController
     end
   end
 
-
   def new_admin
     if !current_admin.nil? && current_admin.active == true
       if !Admin.find_for_authentication(login: message[:login]).nil?
@@ -96,7 +94,6 @@ class Admins::WsPanelController < WebsocketRails::BaseController
     end
   end
 
-
   def edit_admin
     if !current_admin.nil? && current_admin.active == true
       @admin = Admin.find_for_authentication(id: message[:id])
@@ -108,7 +105,6 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       end
     end
   end
-
 
   def new_dispatcher
     if !current_admin.nil? && current_admin.active == true
@@ -127,7 +123,6 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       end
     end
   end
-
 
   def edit_dispatcher
     if !current_admin.nil? && current_admin.active == true
@@ -153,7 +148,6 @@ class Admins::WsPanelController < WebsocketRails::BaseController
     end
   end
 
-
   def new_driver
     if !current_admin.nil? && current_admin.active == true
       if !Driver.find_for_authentication(phone: message[:phone]).nil?
@@ -177,7 +171,6 @@ class Admins::WsPanelController < WebsocketRails::BaseController
     end
   end
 
-
   def get_driver_data
     if !current_admin.nil? && current_admin.active == true
       @driver = Driver.find_for_authentication(id: message[:id])
@@ -195,7 +188,6 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       end
     end
   end
-
 
   def edit_driver
     if !current_admin.nil? && current_admin.active == true
@@ -225,5 +217,4 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       end
     end
   end
-
 end
