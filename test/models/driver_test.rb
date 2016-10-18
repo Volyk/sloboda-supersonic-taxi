@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class DriverTest < ActiveSupport::TestCase
-
   def setup
     @driver = drivers(:one)
   end
