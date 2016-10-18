@@ -9,8 +9,11 @@
 				<p>Количество пассажиров: {{order.passengers}}</p>
 				<p>Багаж: <span ng-if="order.baggage">есть</span><span ng-if="!order.baggage">нет</span></p>
 				<p>Комментарий: {{order.comment}}</p>
-				<p><a href="/edit-order/{{order.id}}" class="btn btn-default">Редактировать</a></p>
+				<p><button class="btn btn-default" ng-click="update(order)">Редактировать</button></p>
 			</li>
 		</div>
 	</ul>
 </div>
+
+<!-- will be on navigation panel -->
+<div class="col-sm-4 col-sm-offset-2"><button class="btn btn-default" ng-click="create()">Новый заказ</button></div>
