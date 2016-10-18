@@ -20,11 +20,7 @@
         <div class="form-group">
             <label for="passengers" class="col-sm-4 control-label">Пассажиры<span class="required">*</span></label>
             <div class="col-sm-2">
-                <select class="form-control" id="passengers" ng-model="order.passengers" required>
-                    <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option>
-                    <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-                    <option value="7">7</option><option value="8">8</option>
-                </select>
+                <select class="form-control" id="passengers" ng-model="data.selectedOption" ng-options="option.id for option in data.availableOptions track by option.id"></select>
             </div>
             <div class="checkbox col-xs-6">
             <label for="baggage">

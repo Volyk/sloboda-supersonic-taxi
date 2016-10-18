@@ -80,10 +80,10 @@ ActiveRecord::Schema.define(version: 20161017135520) do
     t.integer  "dispatcher_id"
     t.integer  "passengers"
     t.boolean  "baggage"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "email"
-    t.string   "status"
+    t.string   "status",        default: "new"
   end
 
   create_table "orders_blogs", force: :cascade do |t|

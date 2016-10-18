@@ -14,10 +14,10 @@ devise_for :dispatchers
 
 devise_for :drivers, skip: :all, controllers: { sessions: 'drivers/sessions' }
   as :driver do
-    get 'driver' => 'devise/sessions#new', :as => :new_driver_session
-    post 'driver' => 'devise/sessions#create', :as => :driver_session
-    delete 'driver' => 'devise/sessions#destroy', :as => :destroy_driver_session
-    get 'drivers/orders', :as => :driver_root
+    get 'driver' => 'devise/sessions#new', as: :new_driver_session
+    post 'driver' => 'devise/sessions#create', as: :driver_session
+    delete 'driver' => 'devise/sessions#destroy', as: :destroy_driver_session
+    get 'drivers/orders', as: :driver_root
     put 'drivers/orders/:id' => 'drivers#update_order'
   end
 

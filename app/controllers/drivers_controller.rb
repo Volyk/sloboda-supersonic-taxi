@@ -1,11 +1,11 @@
 class DriversController < ApplicationController
-	before_action :authenticate_driver!, only: [:orders]	
+  before_action :authenticate_driver!, only: [:orders]
   before_action :set_order, except: [:orders]
-	respond_to :html, :json
+  respond_to :html, :json
 
   def orders
-  	@driver = current_driver
-  	@orders = @driver.orders.all
+    @driver = current_driver
+    @orders = @driver.orders.all
     respond_with(@orders) do |format|
       format.json { render json: @orders.as_json }
       format.html
@@ -18,7 +18,7 @@ class DriversController < ApplicationController
     else
       render json: @order.errors, status: :unprocessable_entity
     end
-  end        
+  end
 
   private
 
@@ -28,7 +28,7 @@ class DriversController < ApplicationController
 
   def set_order
     @order = Order.find(params[:id])
-    render json: {status: :not_found} unless @order
+    render json: {status: => :not_found} unless @order
   end
 
 end

@@ -21,16 +21,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  # def update
-  #   respond_to do |format|
-  #     if @order.update(order_params)
-  #       format.json { render :show, status: :ok, location: @order }
-  #     else
-  #       format.json { render json: @order.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
   def destroy
     @order.destroy
     render json: {status: :ok}
@@ -39,12 +29,12 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:phone, :email, :start_point, :end_point, :comment, :passengers, :baggage, :new, :accepted, :arrived, :declined, :waiting, :done)
+    params.require(:order).permit(:phone, :email, :start_point, :end_point,
+                                  :comment, :passengers, :baggage)
   end
 
   def get_order
     @order = Order.find(params[:id])
     render json: {status: :not_found} unless @order
 	end
-
 end
