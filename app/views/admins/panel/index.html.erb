@@ -71,6 +71,11 @@
       <h4>Drivers: <span id="create_new_driver">Create New Driver</span></h4>
       <% @drivers.each do |driver| %>
         <div class="list_container">
+          <% if driver.avatar? %>
+            <img class="driver_photo" src=<%= driver.avatar.url(:thumb) %>>
+          <% else %>
+            <img class="driver_photo" src="/style/no_avatar.png">
+          <% end %>
           <span class="hidden"><%=driver.id%></span>
           <span class="hidden">driver</span>
           <div class="driver_name"><%=driver.name%></div>
@@ -194,27 +199,31 @@
       </div>
 
       <div id="edit_driver_form">
-        <div id="edit_driver_id" class="hidden"></div>
-        <span class="title">Phone phone:</span>
-        <input id="edit_driver_phone" type="text">
-        <br>
-        <span class="title">Password:</span>
-        <input id="edit_driver_password" type="text" placeholder="Left blank to not change">
-        <br>
-        <span class="title">Full Name:</span>
-        <input id="edit_driver_full_name" type="text">
-        <br>
-        <span class="title">Car Type:</span>
-        <input id="edit_driver_car_type" type="text">
-        <br>
-        <span class="title">Passengers:</span>
-        <input id="edit_driver_passengers" type="phone" step=1 min=0>
-        <br>
-        <span class="title">Trunk (kg):</span>
-        <input id="edit_driver_trunk" type="phone" step=1 min=0>
-        <br>
-        <button class="cancel_form form_button">Cancel</button>
-        <button class="form_button" id="send_edit_driver">Save</button>
+        <img id="driver_photo_container">
+        <div id="edit_driver_photo">Edit photo</div>
+        <div id="driver_info_container">
+          <div id="edit_driver_id" class="hidden"></div>
+          <span class="title">Phone phone:</span>
+          <input id="edit_driver_phone" type="text">
+          <br>
+          <span class="title">Password:</span>
+          <input id="edit_driver_password" type="text" placeholder="Left blank to not change">
+          <br>
+          <span class="title">Full Name:</span>
+          <input id="edit_driver_full_name" type="text">
+          <br>
+          <span class="title">Car Type:</span>
+          <input id="edit_driver_car_type" type="text">
+          <br>
+          <span class="title">Passengers:</span>
+          <input id="edit_driver_passengers" type="phone" step=1 min=0>
+          <br>
+          <span class="title">Trunk (kg):</span>
+          <input id="edit_driver_trunk" type="phone" step=1 min=0>
+          <br>
+          <button class="cancel_form form_button">Cancel</button>
+          <button class="form_button" id="send_edit_driver">Save</button>
+        </div>
       </div>
 
       <div id="x_notice"></div>
@@ -224,6 +233,8 @@
     <script type="text/javascript">
 
     function load_handler() {
+
+      // System functions
 
       var dispatcher = new WebSocketRails(window.location.host + '/websocket');
 
@@ -247,7 +258,11 @@
       function create_unit(data) {
         var new_unit = document.createElement('div');
         new_unit.className = 'list_container';
-        new_unit_body = '<span class="hidden">' + data.id +
+        var new_unit_body = '';
+        if (data.type == 'driver') {
+          new_unit_body += '<img class="driver_photo" src="/style/no_avatar.png">';
+        }
+        new_unit_body += '<span class="hidden">' + data.id +
         '</span><span class="hidden">' + data.type + '</span>';
         if (data.type == 'driver') {
           new_unit_body += '<div class="driver_name">' + data.name + '</div>';
@@ -276,6 +291,8 @@
         }
         return false;
       }
+
+      // Profile menu handlers
 
       function disable() {
         var target = this.parentNode.parentNode.getElementsByTagName('span')[0].innerHTML;
@@ -337,6 +354,8 @@
         dispatcher.trigger('get_driver_data', { id: target, action: 'details' });
       }
 
+      // Pop-up form functions
+
       function show_bg_shadow() {
         document.getElementsByClassName('bg_shadow')[0].style.width = document.documentElement.clientWidth + 'px';
         document.getElementsByClassName('bg_shadow')[0].style.height = document.documentElement.clientHeight + 'px';
@@ -356,6 +375,11 @@
 
       document.getElementsByClassName('bg_shadow')[0].addEventListener('click', hide_bg_shadow);
 
+      var cancel_forms = document.getElementsByClassName('cancel_form');
+      for (var i = 0; i < cancel_forms.length; i++) {
+        cancel_forms[i].addEventListener('click', hide_bg_shadow)
+      }
+
       function get_left_margin(obj_width) {
         var diff = Math.floor((document.documentElement.clientWidth - obj_width) / 2);
         if (diff > 0) {
@@ -374,6 +398,7 @@
         }
       }
 
+      // Admin-related functions
 
       function create_admin() {
         show_bg_shadow();
@@ -425,6 +450,7 @@
         document.getElementById('edit_admin_password').value = '';
       }
 
+      // Dispatcher-related functions
 
       function create_dispatcher() {
         show_bg_shadow();
@@ -494,6 +520,7 @@
         document.getElementById('edit_dispatcher_password').value = '';
       }
 
+      // Driver-related functions
 
       function create_driver() {
         show_bg_shadow();
@@ -555,7 +582,7 @@
       dispatcher.bind('edit_driver', function(data) {
         show_bg_shadow();
         document.getElementById('edit_driver_form').style.display = 'inline-block';
-        document.getElementById('edit_driver_form').style.left = get_left_margin(400) + 'px';
+        document.getElementById('edit_driver_form').style.left = get_left_margin(700) + 'px';
         document.getElementById('edit_driver_form').style.top = get_top_margin(325) +  'px';
         document.getElementById('edit_driver_phone').value = data.phone;
         document.getElementById('edit_driver_password').value = '';
@@ -564,6 +591,7 @@
         document.getElementById('edit_driver_passengers').value = data.passengers;
         document.getElementById('edit_driver_trunk').value = data.trunk;
         document.getElementById('edit_driver_id').innerHTML = data.id;
+        document.getElementById('driver_photo_container').src = data.avatar;
       });
 
       function send_driver_edit_params() {
@@ -604,11 +632,28 @@
 
       document.getElementById('send_edit_driver').addEventListener('click', send_driver_edit_params);
 
+      function edit_driver_photo_handler() {
+        window.dr_photo_window = window.open('/admin/panel/driver_photo/' + document.getElementById('edit_driver_id').innerHTML);
 
-      var cancel_forms = document.getElementsByClassName('cancel_form');
-      for (var i = 0; i < cancel_forms.length; i++) {
-        cancel_forms[i].addEventListener('click', hide_bg_shadow)
       }
+
+      document.getElementById('edit_driver_photo').addEventListener('click', edit_driver_photo_handler)
+
+      window.update_driver_avatar = function(target) {
+        setTimeout(function(t) {
+          dispatcher.trigger('get_dr_avatar', { id: t });
+        }, 200, target);
+      }
+
+      dispatcher.bind('update_avatar', function(data) {
+        if (document.getElementsByClassName('bg_shadow')[0].style.display == 'inline-block') {
+          document.getElementById('driver_photo_container').src = data.medium;
+        }
+        var target = find_list_container('driver', data.id);
+        target.getElementsByTagName('img')[0].src = data.thumb;
+      });
+
+      // Event listeners
 
       function addEventListeners() {
 

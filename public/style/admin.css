@@ -420,10 +420,12 @@ label {
 
 #drivers_list .list_container {
   height: 75px;
+  width: 255px;
 }
 
 #drivers_list .list_name {
   top: 28px;
+  left: 85px;
 }
 
 #drivers_list .list_active {
@@ -436,6 +438,7 @@ label {
 
 #drivers_list .list_controls {
   top: 51px;
+  left: 85px;
 }
 
 .driver_name {
@@ -446,7 +449,7 @@ label {
   word-wrap: normal; /* для IE */
   text-overflow: ellipsis;
   top: 3px;
-  left: 10px;
+  left: 85px;
   color: #363636;
   width: 160px;
   height: 20px;
@@ -534,12 +537,11 @@ label {
 #edit_driver_form {
   position: fixed;
   background-color: white;
-  width: 400px;
+  width: 700px;
   height: 325px;
   border: 1px solid black;
   border-radius: 5px;
   display: none;
-  text-align: center;
   padding-top: 20px;
 }
 
@@ -557,4 +559,90 @@ label {
 #edit_driver_form button {
   display: inline-block;
   width: 80px;
+}
+
+#edit_driver_form .cancel_form {
+  margin-left: 80px;
+}
+
+.driver_photo {
+  position: absolute;
+  top: 5px;
+  left: 7px;
+  width: 65px;
+  height: 65px;
+  border-radius: 10px;
+}
+
+#driver_photo_container {
+  position: absolute;
+  left: 25px;
+  top: 25px;
+  width: 250px;
+  height: 250px;
+  border-radius: 25px;
+}
+
+#driver_info_container {
+  position: absolute;
+  top: 20px;
+  left: 300px;
+}
+
+#edit_driver_form #edit_driver_photo {
+  position: absolute;
+  left: 115px;
+  top: 300px;
+  color: grey;
+  font-size: 16px;
+  -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  white-space: pre;
+  cursor: pointer;
+}
+
+#edit_driver_form #edit_driver_photo:hover {
+  text-decoration: underline;
+}
+
+#photo_form_container {
+  text-align: center;
+}
+
+#save_driver_photo {
+  font-size: 16px;
+  width: 100px;
+  padding: 3px 10px 3px 10px;
+}
+
+#photo_preview {
+  display: inline-block;
+  width: 250px;
+  height: 250px;
+  border-radius: 25px;
+  margin-bottom: 25px;
+}
+
+#driver_avatar_file {
+  margin-bottom: 20px;
+}
+
+#dr_id {
+  display: none;
+}
+
+#photo_form_container button {
+  font-size: 16px;
+  width: 100px;
+  padding: 3px 10px 3px 10px;
+  margin-right: 20px;
+}
+
+#delete_driver_photo {
+  font-size: 16px;
+  width: 100px;
+  padding: 3px 10px 3px 10px;
+  margin-right: 20px;
 }

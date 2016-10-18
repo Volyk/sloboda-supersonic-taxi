@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Choose photo</title>
+    <link href="/style/admin.css" rel="stylesheet">
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+
+  <div id="photo_form_container">
+
+  <h2>Driver: <%= @driver.name %></h2>
+  <h2>( <%= @driver.phone %> )</h2>
+
+  <% if @driver.avatar? %>
+    <img id="photo_preview" src=<%=@driver.avatar.url(:medium)%>>
+  <% else %>
+    <img id="photo_preview" src="/style/no_avatar.png">
+  <% end %>
+
+    <form enctype="multipart/form-data" method="post">
+      <input id="driver_avatar_file" type="file" name="avatar">
+      <br>
+      <button onclick="window.close();">Cancel</button>
+      <input id="delete_driver_photo" name="submit" type="submit" value="Delete">
+      <input id="save_driver_photo" name="submit" type="submit" value="Save">
+    </form>
+
+  </div>
+
+  <script type="text/javascript">
+
+  function load_handler() {
+
+    function preview() {
+      var reader = new FileReader;
+      reader.readAsDataURL(document.getElementById('driver_avatar_file').files[0]);
+      reader.onload = function(e) {
+        document.getElementById('photo_preview').src = e.target.result;
+      }
+    }
+
+    document.getElementById('driver_avatar_file').addEventListener('change', preview);
+  }
+
+  window.addEventListener('load', load_handler);
+
+  </script>
+
+  </body>
+  </html>
