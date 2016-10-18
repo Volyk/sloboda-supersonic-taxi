@@ -20,7 +20,7 @@
       <div class="form-group">
         <label for="passengers" class="col-sm-4 control-label">Пассажиры<span class="required">*</span></label>
         <div class="col-sm-2">
-          <select class="form-control" id="passengers" ng-model="data.selectedOption" ng-options="option.id for option in data.availableOptions track by option.id"></select>
+          <select class="form-control" id="passengers" ng-model="data.selectedOption" ng-options="option.value for option in data.availableOptions track by option.value"></select>
         </div>
         <div class="checkbox col-xs-6">
           <label for="baggage">
