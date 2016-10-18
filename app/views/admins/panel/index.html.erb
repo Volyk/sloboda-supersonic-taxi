@@ -252,7 +252,8 @@
 
       function new_line(where) {
         var new_br = document.createElement('br');
-        document.getElementById(where).appendChild(new_br);
+        var container = document.getElementById(where);
+        container.insertBefore(new_br, container.children[2]);
       }
 
       function create_unit(data) {
@@ -276,7 +277,8 @@
         new_unit_body += '<span class="disable_button">Deactivate</span></div></div>';
         new_unit.innerHTML = new_unit_body;
         var parent_name = data.type + 's_list';
-        document.getElementById(parent_name).appendChild(new_unit);
+        var container = document.getElementById(parent_name);
+        container.insertBefore(new_unit, container.children[1]);
         new_line(parent_name);
         addEventListeners();
       }
