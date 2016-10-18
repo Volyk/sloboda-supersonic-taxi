@@ -11,14 +11,10 @@ class Admins::PanelController < Devise::SessionsController
   end
 
   def edit_driver_photo
-    if request.get?
-      @driver = Driver.find_for_authentication(id: params[:id])
-    elsif request.post?
-      @driver = Driver.find_for_authentication(id: params[:id])
+    @driver = Driver.find_for_authentication(id: params[:id])
+    if request.post?
       if params[:submit] == 'Save'
-        if params[:avatar] != nil
-          @driver.avatar = params[:avatar]
-        end
+        @driver.avatar = params[:avatar] unless params[:avatar].nil?
       elsif params[:submit] == 'Delete'
         @driver.avatar = nil
       end
