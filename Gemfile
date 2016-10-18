@@ -11,8 +11,6 @@ end
 
 gem 'turbolinks'
 
-gem 'pry-rails', group: :development
-
 gem 'kaminari'
 gem 'paperclip'
 gem 'bootstrap-kaminari-views'
@@ -58,6 +56,7 @@ end
 group :development do
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
+  gem 'pry-rails'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
