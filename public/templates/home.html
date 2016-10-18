@@ -1,49 +1,45 @@
 <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-    <div>
-        <form novalidate class="form-horizontal order-form" name="order">
-        <div class="form-group">
-            <label for="phone" class="col-sm-4 control-label">Номер телефона<span class="required">*</span></label>
-            <div class="col-sm-8"><input type="text" maxlength="10" ng-pattern="phone_pattern" ng-model="order.phone" class="form-control" id="phone" placeholder="0987654321" required><p class='help-block'>в формате 0987654321</p></div>
+  <div>
+    <form novalidate class="form-horizontal order-form" name="order">
+      <div class="form-group">
+        <label for="phone" class="col-sm-4 control-label">Номер телефона<span class="required">*</span></label>
+        <div class="col-sm-8"><input type="text" maxlength="10" ng-pattern="phone_pattern" ng-model="order.phone" class="form-control" id="phone" placeholder="0987654321" required><p class='help-block'>в формате 0987654321</p></div>
+      </div>
+      <div class="form-group">
+        <label for="email" class="col-sm-4 control-label">Email</label>
+        <div class="col-sm-8"><input type="text" ng-pattern="email_pattern" ng-model="order.email" class="form-control" id="email" placeholder="example@email.com"></div>
+      </div>
+      <div class="form-group">
+        <label for="start_point" class="col-sm-4 control-label">Откуда<span class="required">*</span></label>
+        <div class="col-sm-8"><input type="text" ng-model="order.start_point" class="form-control" id="start_point" placeholder="Введите адрес" required></div>
+      </div>
+      <div class="form-group">
+        <label for="end_point" class="col-sm-4 control-label">Куда<span class="required">*</span></label>
+        <div class="col-sm-8"><input type="text" ng-model="order.end_point" class="form-control" id="end_point" placeholder="Введите адрес" required></div>
+      </div>
+      <div class="form-group">
+        <label for="passengers" class="col-sm-4 control-label">Пассажиры<span class="required">*</span></label>
+        <div class="col-sm-2">
+          <select class="form-control" id="passengers" ng-model="data.selectedOption" ng-options="option.id for option in data.availableOptions track by option.id"></select>
         </div>
-        <div class="form-group">
-            <label for="email" class="col-sm-4 control-label">Email</label>
-            <div class="col-sm-8"><input type="text" ng-pattern="email_pattern" ng-model="order.email"|tolowercase}}" class="form-control" id="email" placeholder="example@email.com"></div>
+        <div class="checkbox col-sm-6">
+          <label for="baggage">
+          <input id="baggage" type="checkbox" ng-model="order.baggage" value="true">Наличие багажа
+          </label>
         </div>
-        <div class="form-group">
-            <label for="start_point" class="col-sm-4 control-label">Откуда<span class="required">*</span></label>
-            <div class="col-sm-8"><input type="text" ng-model="order.start_point" class="form-control" id="start_point" placeholder="Введите адрес" required></div>
+      </div>
+      <div class="form-group">
+        <label for="comment" class="col-sm-4 control-label">Комментарий</label>
+        <div class="col-sm-8"><textarea class="form-control" rows="2" id="comment" ng-model="order.comment"></textarea></div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-2 col-sm-offset-6 col-xs-3 col-xs-offset-3">
+          <button type="submit" ng-disabled="order.$invalid" class="btn btn-lg btn-success" ng-click="addOrder()">Отправить</button>
         </div>
-        <div class="form-group">
-            <label for="end_point" class="col-sm-4 control-label">Куда<span class="required">*</span></label>
-            <div class="col-sm-8"><input type="text" ng-model="order.end_point" class="form-control" id="end_point" placeholder="Введите адрес" required></div>
-        </div>
-        <div class="form-group">
-            <label for="passengers" class="col-sm-4 control-label">Пассажиры<span class="required">*</span></label>
-            <div class="col-sm-2">
-                <select class="form-control" id="passengers" ng-model="order.passengers" required>
-                    <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option>
-                    <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-                    <option value="7">7</option><option value="8">8</option>
-                </select>
-            </div>
-            <div class="checkbox col-xs-6">
-            <label for="baggage">
-                <input id="baggage" type="checkbox" ng-model="order.baggage" value="true">Наличие багажа
-            </label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="comment" class="col-sm-4 control-label">Комментарий</label>
-            <div class="col-sm-8"><textarea class="form-control" rows="2" id="comment" ng-model="order.comment"></textarea></div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-2 col-sm-offset-6 col-xs-3 col-xs-offset-3">
-                <button type="submit" ng-disabled="order.$invalid" class="btn btn-lg btn-success" ng-click="addOrder()">Отправить</button>
-            </div>
-        </div>
-        </form>
-    </div>
+      </div>
+    </form>
+  </div>
 
-    <div class="phone_us col-sm-2 col-sm-offset-5"><a href="tel:+380987654321">Позвонить: +380987654321</div>
+  <div class="phone_us col-sm-2 col-sm-offset-5"><a href="tel:+380987654321">Позвонить: +380987654321</div>
 
 </div>

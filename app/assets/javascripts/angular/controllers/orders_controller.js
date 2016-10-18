@@ -1,24 +1,33 @@
 (function() {
-var app = angular.module('taxi', ['ngRoute']);
+var app = angular.module('taxi', ['ngRoute', 'ngDialog']);
 
 app.controller('CreateOrderController', ['$scope', '$http', function($scope, $http) {
-    $scope.phone_pattern = /(0)[0-9]{9}/;
-    $scope.email_pattern = /^(.+)@(.+)$/;
-    $scope.addOrder = function() {
-      if (!$scope.order.email) {
-        $scope.order.email = '';
-      }
-      $scope.order.email = $scope.order.email.toLowerCase();      
-      $http.post('/orders', $scope.order).success(function(data){
-          alert('Ваш заказ принят!');
-          $scope.order = {};
-      });
-    };
+  $scope.data = {
+    availableOptions: [
+      {id: '1'}, {id: '2'}, {id: '3'}, {id: '4'}, 
+      {id: '5'}, {id: '6'}, {id: '7'}, {id: '8'}
+    ],
+    selectedOption: {id: '1'}
+  };
+  $scope.phone_pattern = /(0)[0-9]{9}/;
+  $scope.email_pattern = /^(.+)@(.+)$/;
+  $scope.addOrder = function() {
+    if (!$scope.order.email) {
+      $scope.order.email = '';
+    }
+    $scope.order.email = $scope.order.email.toLowerCase(); 
+    $scope.order.passengers = $scope.data.selectedOption.id;     
+    $http.post('/orders', $scope.order).success(function(data){
+      alert('Ваш заказ принят!');
+      $scope.order = {};
+    });
+  };
+
 }]);
 
 
 app.controller('DriversController', ['$scope', '$http', function($scope, $http) {
-
+  
   $http.get('/drivers/orders.json').success(function(data){
     $scope.orders = data;
   });
@@ -61,13 +70,9 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
 
 }]);
 
-app.controller('DispatchersController', ['$scope', '$http', function($scope, $http) {
+app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
 
-  $http.get('/dispatchers/orders.json').success(function(data){
-    $scope.orders = data;
-  });
-
-
+  
 
 }]);
 
@@ -82,7 +87,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       templateUrl: 'templates/driver.html',
       controller: 'DriversController'
     })
-    .when('/dispatchers/orders', {
+    .when('/dispatchers/profile', {
       templateUrl: 'templates/dispatcher.html',
       controller: 'DispatchersController'
     })
