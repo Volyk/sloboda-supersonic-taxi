@@ -15,16 +15,16 @@
     <h3>{{order.start_point}} - {{order.end_point}}</h3>
     <p>Номер телефона: {{order.phone}}</p>
     <p>{{order.comment}}</p>
-    <div ng-if="order.waiting">
+    <div ng-if="order.status == 'waiting'">
       <button type="button" class="btn btn-primary" ng-click="acceptOrder(order)">Принять</button>
       <span ng-include="'decline.html'"></span>
     </div>
-    <div ng-if="order.accepted">
-      <button type="button" class="btn btn-success" ng-click="arrivedToOrder(order)">На месте</button>
+    <div ng-if="order.status == 'accepted'">
+      <button type="button" class="btn btn-success" ng-click="arrivedToOrder(order)">Приехал</button>
       <span ng-include="'decline.html'"></span>
     </div>
-    <div ng-if="order.arrived">
-      <button type="button" class="btn btn-success" ng-click="orderFulfilled(order)">Заказ выполнен</button>
+    <div ng-if="order.status == 'arrived'">
+      <button type="button" class="btn btn-success" ng-click="orderFulfilled(order)">Заказ выполнил</button>
     </div>
   </div>
 </div>

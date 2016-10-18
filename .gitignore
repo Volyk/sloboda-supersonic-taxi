@@ -19,12 +19,14 @@ passenger.3000*
 config/secrets.yml
 config/database.yml
 config/sidekiq.yml
+config/application.yml
 
 # Doc files
 doc/
 
 # JetBrains.
 .idea/
+.byebug_history
 
 # Node & Bower
 /node_modules/
@@ -37,6 +39,3 @@ npm-debug.log
  *.map
 # Lib
 #/lib/tasks/
-
-# Ignore application configuration
-/config/application.yml
