@@ -392,9 +392,7 @@
         if ((a_login.length < 3) || (a_password.length < 3)) {
           xnotice({ message: 'Login and password must be at least 3 characters' });
         } else {
-          if (confirm('You want to create new admin with login: ' + a_login + ' ?')) {
-            dispatcher.trigger('new_admin', { login: a_login, password: a_password });
-          }
+          dispatcher.trigger('new_admin', { login: a_login, password: a_password });
         }
       }
 
@@ -412,11 +410,8 @@
         if (new_pass.length < 3) {
           xnotice({ message: 'Password should be at least 3 characters' });
         } else {
-          conf_msg = 'Change password for admin: ' + document.getElementById('target_admin').innerHTML + ' ?';
-          if (confirm(conf_msg)) {
-            dispatcher.trigger('edit_admin', { id: target, password: new_pass });
-            hide_bg_shadow();
-          }
+          dispatcher.trigger('edit_admin', { id: target, password: new_pass });
+          hide_bg_shadow();
         }
       }
 
@@ -448,9 +443,7 @@
         if ((d_email.length < 3) || (d_password.length < 8)) {
           xnotice({ message: 'Email should be at least 3 chrs. Password - at least 8.' });
         } else {
-          if (confirm('You want to create new dispatcher with email: ' + d_email + ' ?')) {
-            dispatcher.trigger('new_dispatcher', { email: d_email, password: d_password });
-          }
+          dispatcher.trigger('new_dispatcher', { email: d_email, password: d_password });
         }
       }
 
@@ -478,10 +471,7 @@
         } else if ((params.password == undefined) && (params.email == undefined)) {
           xnotice({ message: 'No changes detected' });
         } else {
-          conf_msg = 'Save changes for dispatcher: ' + old_email + ' ?';
-          if (confirm(conf_msg)) {
-            dispatcher.trigger('edit_dispatcher', params);
-          }
+          dispatcher.trigger('edit_dispatcher', params);
         }
       }
 
@@ -530,16 +520,14 @@
         if ((dr_phone.length != 10) || (dr_pass.length < 6)) {
           xnotice({ message: 'phone should be in format 0503334455 | Pass. at least 6 chars.' });
         } else {
-          if (confirm('You want to create new driver with phone: ' + dr_phone + ' ?')) {
-            dr_params = {};
-            dr_params.phone = dr_phone;
-            dr_params.password = dr_pass;
-            dr_params.name = dr_name;
-            dr_params.car_type = dr_car_type;
-            dr_params.passengers = dr_passengers;
-            dr_params.trunk = dr_trunk;
-            dispatcher.trigger('new_driver', dr_params);
-          }
+          dr_params = {};
+          dr_params.phone = dr_phone;
+          dr_params.password = dr_pass;
+          dr_params.name = dr_name;
+          dr_params.car_type = dr_car_type;
+          dr_params.passengers = dr_passengers;
+          dr_params.trunk = dr_trunk;
+          dispatcher.trigger('new_driver', dr_params);
         }
       }
 
@@ -590,20 +578,18 @@
         if ((dr_phone.length != 10) || ((dr_pass.length > 0) && (dr_pass.length < 6))) {
           xnotice({ message: 'phone should be in format 0503334455 | Pass. at least 6 chars.' });
         } else {
-          if (confirm('Save changes for driver with phone: ' + dr_old_phone + ' ?')) {
-            dr_params = { id: target };
-            if (dr_phone != dr_old_phone) {
-              dr_params.phone = dr_phone;
-            }
-            if (dr_pass.length > 0) {
-              dr_params.password = dr_pass;
-            }
-            dr_params.name = dr_name;
-            dr_params.car_type = dr_car_type;
-            dr_params.passengers = dr_passengers;
-            dr_params.trunk = dr_trunk;
-            dispatcher.trigger('edit_driver', dr_params);
+          dr_params = { id: target };
+          if (dr_phone != dr_old_phone) {
+            dr_params.phone = dr_phone;
           }
+          if (dr_pass.length > 0) {
+            dr_params.password = dr_pass;
+          }
+          dr_params.name = dr_name;
+          dr_params.car_type = dr_car_type;
+          dr_params.passengers = dr_passengers;
+          dr_params.trunk = dr_trunk;
+          dispatcher.trigger('edit_driver', dr_params);
         }
       }
 
