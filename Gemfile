@@ -6,10 +6,6 @@ gem 'angularjs-rails'
 gem 'angular-ui-bootstrap-rails'
 gem 'bootstrap-sass'
 
-source 'https://rails-assets.org' do
-  gem 'rails-assets-angular-devise'
-end
-
 gem 'turbolinks'
 gem 'kaminari'
 gem 'paperclip'
