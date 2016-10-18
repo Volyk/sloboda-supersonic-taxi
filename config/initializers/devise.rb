@@ -1,3 +1,4 @@
+# Use this hook to configure devise mailer, warden hooks and so forth
 Devise.setup do |config|
   # config.secret_key = '2983140bc23815c53f5e4e8cf97a61b0baca90363ae70657f825cebb807d2b793f8b5ed14d551769e8e24526e0efa9da12d213bd6a85ea4542becb93553b6a99'
   config.scoped_views = true # DO NOT DELETE!!!!!!
