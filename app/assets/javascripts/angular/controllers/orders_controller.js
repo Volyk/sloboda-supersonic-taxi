@@ -8,7 +8,8 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
       if (!$scope.order.email) {
         $scope.order.email = '';
       }
-      $scope.order.email = $scope.order.email.toLowerCase();      
+      $scope.order.email = $scope.order.email.toLowerCase();
+      console.log($scope.order);      
       $http.post('/orders', $scope.order).success(function(data){
           alert('Ваш заказ принят!');
           $scope.order = {};
@@ -21,6 +22,7 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
 
   $http.get('/drivers/orders.json').success(function(data){
     $scope.orders = data;
+    console.log(data);
   });
 
   $scope.deleteOrder = function(order) {
@@ -28,33 +30,29 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
     $scope.orders.splice(index, 1);
   };
 
-  $scope.putMethod = function(data) {
-    var url = '/drivers/orders/' + data.id;
-    $http.put(url, data);
+  $scope.putMethod = function(order) {
+    var url = '/drivers/orders/' + order.id;
+    $http.put(url, {order: order});
   };
 
   $scope.acceptOrder = function(order) {
-    order.waiting = false;
-    order.accepted = true;
+    order.status = 'accepted';
     $scope.putMethod(order);
   };
 
   $scope.declineOrder = function(order) {
-    order.waiting = false;
-    order.declined = true;
+    order.status = 'declined';
     $scope.putMethod(order);
     $scope.deleteOrder(order);    
   };
 
   $scope.arrivedToOrder = function(order) {
-    order.accepted = false;
-    order.arrived = true;
+    order.status = 'arrived';
     $scope.putMethod(order);
   };
 
   $scope.orderFulfilled = function(order) {
-    order.arrived = false;
-    order.done = true;
+    order.status = 'done';
     $scope.putMethod(order);
     $scope.deleteOrder(order);
   };

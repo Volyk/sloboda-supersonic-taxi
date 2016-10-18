@@ -13,12 +13,6 @@ class DriversController < ApplicationController
   end
 
   def update_order
-    params[:order][:status] = :accepted if params[:order].delete(:accepted) == 'true' 
-    params[:order][:status] = :arrived if params[:order].delete(:arrived) == 'true'
-    params[:order][:status] = :declined if params[:order].delete(:declined) == 'true'
-    params[:order][:status] = :done if params[:order].delete(:done) == 'true'
-    params[:order][:status] = :waiting if params[:order].delete(:waiting) == 'true'
-    params[:order][:status] = :new if params[:order].delete(:new) == 'true'
     if @order.update(order_params)
       render json: @order.as_json
     else

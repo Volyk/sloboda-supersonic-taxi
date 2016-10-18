@@ -6,15 +6,4 @@ class Order < ApplicationRecord
 	validates :baggage, presence: true, allow_blank: true, allow_nil: false
 
   has_many :orders_blogs
-
-  def as_json(options={})
-    hash = Hash.new
-    hash[:accepted] ||= true if status == 'accepted'
-    hash[:arrived] ||= true if status == 'arrived'
-    hash[:declined] ||= true if status == 'declined'
-    hash[:done] ||= true if status == 'done'
-    hash[:waiting] ||= true if status == 'waiting'
-    hash[:new] ||= true if status == 'new' 
-    super.as_json(options).merge(hash)
-  end
 end
