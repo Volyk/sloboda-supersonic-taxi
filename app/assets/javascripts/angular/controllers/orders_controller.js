@@ -86,18 +86,20 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
 
   $scope.addOrder = function(){
     $scope.order.passengers = $scope.options.selectedOption.value;
-    $http.post('/orders', $scope.order); //need to heck url
+    $http.post('/orders', $scope.order); //need to check url
   };
 
   $scope.update = function(order){
     ngDialog.open({ template: 'templates/updateOrder.html', data: order, controller: 'DispatchersController', className: 'ngdialog-theme-default' });
   };
 
-  $scope.updateOrder = function() {
+  $scope.updateOrder = function(data) {
+    $scope.order = data;
+    $scope.order.driver_id = data.driver_id.id;
     $http.put('/orders/', $scope.order).success(function(data){
       console.log(data);
-    })
-  }
+    });
+  };
  // $http.get('/dispatchers/orders.json').success(function(data){
  //   $scope.orders = data;
  // });
