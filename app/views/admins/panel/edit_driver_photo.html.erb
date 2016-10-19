@@ -16,7 +16,7 @@
   <% if @driver.avatar? %>
     <img id="photo_preview" src=<%=@driver.avatar.url(:medium)%>>
   <% else %>
-    <img id="photo_preview" src="/style/no_avatar.png">
+    <img id="photo_preview" src="/avatars/original/missing.png">
   <% end %>
 
     <form enctype="multipart/form-data" method="post">
