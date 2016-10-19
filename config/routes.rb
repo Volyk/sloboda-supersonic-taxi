@@ -23,6 +23,8 @@ devise_for :drivers, skip: :all, controllers: { sessions: 'drivers/sessions' }
 
 devise_for :admins, path: 'admin', skip: :registrations, controllers: { sessions: 'admins/sessions' }
   devise_scope :admin do
+    get '/admin/panel/driver_photo/:id', to: 'admins/panel#edit_driver_photo'
+    post '/admin/panel/driver_photo/:id', to: 'admins/panel#update_driver_photo'
     get '/admin', to: 'admins/sessions#new'
     get '/admins' => 'admins/panel#index', as: :admin_root
   end
