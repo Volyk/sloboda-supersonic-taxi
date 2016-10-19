@@ -29,6 +29,6 @@ WebsocketRails::EventMap.describe do
   subscribe :new_driver, to: Admins::WsPanelController, with_method: :new_driver
   subscribe :get_driver_data, to: Admins::WsPanelController, with_method: :get_driver_data
   subscribe :edit_driver, to: Admins::WsPanelController, with_method: :edit_driver
-  subscribe :get_dr_avatar, to: Admins::WsPanelController, with_method: :get_dr_avatar
+  subscribe :driver_avatar, to: Admins::WsPanelController, with_method: :driver_avatar
 
 end

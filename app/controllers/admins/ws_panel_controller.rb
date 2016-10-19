@@ -227,7 +227,7 @@ class Admins::WsPanelController < WebsocketRails::BaseController
     end
   end
 
-  def get_dr_avatar
+  def driver_avatar
     if !current_admin.nil? && current_admin.active == true
       @driver = Driver.find_for_authentication(id: message[:id])
       driver_data = { 'id' => @driver.id }

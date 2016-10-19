@@ -639,7 +639,7 @@
 
       window.update_driver_avatar = function(target) {
         setTimeout(function(t) {
-          dispatcher.trigger('get_dr_avatar', { id: t });
+          dispatcher.trigger('driver_avatar', { id: t });
         }, 200, target);
       }
 
