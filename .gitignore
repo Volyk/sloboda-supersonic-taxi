@@ -39,3 +39,6 @@ npm-debug.log
  *.map
 # Lib
 #/lib/tasks/
+
+# Ignore application configuration
+/config/application.yml
