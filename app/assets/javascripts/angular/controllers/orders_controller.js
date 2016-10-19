@@ -17,7 +17,7 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
     }
     $scope.order.email = $scope.order.email.toLowerCase();
     $scope.order.passengers = $scope.data.selectedOption.value;
-    $http.post('/orders', $scope.order).success(function(data){
+    $http.post('/orders', { order: $scope.order }).success(function(data){
       alert('Ваш заказ принят!');
       $scope.order = {};
     });
