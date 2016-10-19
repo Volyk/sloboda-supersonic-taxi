@@ -10,14 +10,10 @@
 
   <div id="photo_form_container">
 
-  <h2>Driver: <%= @driver.name %></h2>
-  <h2>( <%= @driver.phone %> )</h2>
+    <h2>Driver: <%= @driver.name %></h2>
+    <h2>( <%= @driver.phone %> )</h2>
 
-  <% if @driver.avatar? %>
     <img id="photo_preview" src=<%=@driver.avatar.url(:medium)%>>
-  <% else %>
-    <img id="photo_preview" src="/avatars/original/missing.png">
-  <% end %>
 
     <form enctype="multipart/form-data" method="post">
       <input id="driver_avatar_file" type="file" name="avatar">

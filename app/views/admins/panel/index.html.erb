@@ -71,11 +71,7 @@
       <h4>Drivers: <span id="create_new_driver">Create New Driver</span></h4>
       <% @drivers.each do |driver| %>
         <div class="list_container">
-          <% if driver.avatar? %>
-            <img class="driver_photo" src=<%= driver.avatar.url(:thumb) %>>
-          <% else %>
-            <img class="driver_photo" src="/avatars/original/missing.png">
-          <% end %>
+          <img class="driver_photo" src=<%= driver.avatar.url(:thumb) %>>
           <span class="hidden"><%=driver.id%></span>
           <span class="hidden">driver</span>
           <div class="driver_name"><%=driver.name%></div>
@@ -261,7 +257,7 @@
         new_unit.className = 'list_container';
         var new_unit_body = '';
         if (data.type == 'driver') {
-          new_unit_body += '<img class="driver_photo" src="/avatars/original/missing.png">';
+          new_unit_body += '<img class="driver_photo" src="/avatars/thumb/missing.png">';
         }
         new_unit_body += '<span class="hidden">' + data.id +
         '</span><span class="hidden">' + data.type + '</span>';

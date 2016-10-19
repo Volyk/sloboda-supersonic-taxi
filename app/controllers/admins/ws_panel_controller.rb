@@ -188,11 +188,7 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       driver_data[:car_type] = @driver.car_type
       driver_data[:passengers] = @driver.passengers
       driver_data[:trunk] = @driver.trunk
-      if @driver.avatar?
-        driver_data[:avatar] = @driver.avatar.url(:medium)
-      else
-        driver_data[:avatar] = '/avatars/original/missing.png'
-      end
+      driver_data[:avatar] = @driver.avatar.url(:medium)
       if message[:action] == 'details'
         send_message :open_details, driver_data
       elsif message[:action] == 'edit'
@@ -235,13 +231,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
     if !current_admin.nil? && current_admin.active == true
       @driver = Driver.find_for_authentication(id: message[:id])
       driver_data = { 'id' => @driver.id }
-      if @driver.avatar?
-        driver_data[:thumb] = @driver.avatar.url(:thumb)
-        driver_data[:medium] = @driver.avatar.url(:medium)
-      else
-        driver_data[:thumb] = '/avatars/original/missing.png'
-        driver_data[:medium] = '/avatars/original/missing.png'
-      end
+      driver_data[:thumb] = @driver.avatar.url(:thumb)
+      driver_data[:medium] = @driver.avatar.url(:medium)
       send_message :update_avatar, driver_data
     end
   end
