@@ -4,7 +4,7 @@ var app = angular.module('taxi', ['ngRoute', 'ngDialog']);
 app.controller('CreateOrderController', ['$scope', '$http', function($scope, $http) {
   $scope.options = {
     availableOptions: [
-      {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'}, 
+      {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'},
       {value: '5'}, {value: '6'}, {value: '7'}, {value: '8'}
     ],
     selectedOption: {value: '1'}
@@ -32,7 +32,7 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
 
 
 app.controller('DriversController', ['$scope', '$http', function($scope, $http) {
-  
+
   $http.get('/drivers/orders.json').success(function(data){
     $scope.orders = data;
   });
@@ -97,8 +97,10 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
 
   $scope.addOrder = function(){
     $scope.ngDialogData.passengers = $scope.options.selectedOption.value;
-    $scope.ngDialogData.driver_id = ngDialogData/driver_id.id;
-    $scope.ngDialogData.status = 'waiting';
+    if ($scope.ngDialogData.driver_id) {
+      $scope.ngDialogData.driver_id = $scope.ngDialogData.driver_id.id;
+      $scope.ngDialogData.status = 'waiting';
+    }
     $http.post('/orders', {order: $scope.ngDialogData}); //need to check url
     return true;
   };
@@ -109,8 +111,10 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
   };
 
   $scope.updateOrder = function() {
-    $scope.ngDialogData.driver_id = $scope.ngDialogData.driver_id.id;
-    $scope.ngDialogData.status = 'waiting';
+    if ($scope.ngDialogData.driver_id) {
+      $scope.ngDialogData.driver_id = $scope.ngDialogData.driver_id.id;
+      $scope.ngDialogData.status = 'waiting';
+    }
     $http.put('/orders/', {order: $scope.ngDialogData});
     return true;
   };
@@ -172,7 +176,6 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
      name: 'Firstname-2'
    }
   ];
-
 
 }]);
 

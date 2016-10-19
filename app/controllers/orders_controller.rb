@@ -21,6 +21,20 @@ class OrdersController < ApplicationController
     end
   end
 
+  def update
+    @order = @order.merge(dispatcher_id:
+                          current_dispatcher.id) if current_dispatcher.present?
+    respond_to do |format|
+      if @order.update(order_params)
+        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
+        format.json { render :show, status: :ok, location: @order }
+      else
+        format.html { render :edit }
+        format.json { render json: @order.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     @order.destroy
     render json: {status: :ok}

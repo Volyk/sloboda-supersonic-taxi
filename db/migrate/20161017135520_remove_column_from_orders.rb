@@ -6,6 +6,6 @@ class RemoveColumnFromOrders < ActiveRecord::Migration[5.0]
     remove_column :orders, :declined, :boolean
     remove_column :orders, :waiting, :boolean
     remove_column :orders, :done, :boolean
-    add_column :orders, :status, :string, default: 'new'
+    add_column :orders, :status, :string, default: 'incoming'
   end
 end

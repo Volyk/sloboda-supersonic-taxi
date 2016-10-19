@@ -10,7 +10,7 @@ gem 'turbolinks'
 gem 'kaminari'
 gem 'paperclip'
 gem 'bootstrap-kaminari-views'
-
+gem 'rufus-scheduler'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
@@ -49,11 +49,11 @@ gem 'websocket-rails-js', github: 'websocket-rails/websocket-rails-js', branch: 
 
 group :development, :test do
   gem "rspec-rails"
-  gem "factory_girl_rails", require: false
+  gem "factory_girl_rails"
+  gem "faker"
 end
 
 group :test do
-  gem "faker"
   gem "capybara"
   gem "database_cleaner"
   gem "launchy"
