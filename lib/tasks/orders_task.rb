@@ -2,7 +2,7 @@
 class OrdersTask < OrdersController
   def time_check
     @orders = Order.where(status: 'waiting')
-    return unless @orders.nil?
+    return if @orders.nil?
     @orders.each do |order|
       if Time.now.utc - order.updated_at > 300
         order.update(status: 'declined', driver_id: nil)
