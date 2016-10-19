@@ -9,7 +9,9 @@
 				<p>Количество пассажиров: {{order.passengers}}</p>
 				<p>Багаж: <span ng-if="order.baggage">есть</span><span ng-if="!order.baggage">нет</span></p>
 				<p>Комментарий: {{order.comment}}</p>
-				<p><button class="btn btn-default" ng-click="update(order)">Редактировать</button></p>
+				<p><button class="btn btn-default" ng-click="update(order)">Редактировать</button>
+				   <button class="btn btn-danger" ng-click="cancelOrder(order)">Отменить заказ</button>
+				</p>
 			</li>
 		</div>
 	</ul>

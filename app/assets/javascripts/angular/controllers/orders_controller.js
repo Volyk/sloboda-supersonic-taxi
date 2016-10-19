@@ -11,6 +11,8 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
   };
   $scope.phone_pattern = /(0)[0-9]{9}/;
   $scope.email_pattern = /^(.+)@(.+)$/;
+  $scope.disabled = false;
+
   $scope.addOrder = function() {
     if (!$scope.order.email) {
       $scope.order.email = '';
@@ -20,6 +22,7 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
     $http.post('/orders', $scope.order).success(function(data){
       alert('Ваш заказ принят!');
       $scope.order = {};
+      $scope.disabled = true;
     });
   };
 
@@ -96,10 +99,22 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
   $scope.updateOrder = function(data) {
     $scope.order = data;
     $scope.order.driver_id = data.driver_id.id;
+    $scope.order.status = 'waiting';
     $http.put('/orders/', $scope.order).success(function(data){
       console.log(data);
     });
   };
+
+  $scope.cancelOrder = function(order) {
+    order.status = 'canceled';
+    $http.put('/orders/', order).success(function(data){
+      console.log(data);
+      var index = $scope.orders.indexOf(order);
+      $scope.orders.splice(index, 1);
+    });
+  };
+
+
  // $http.get('/dispatchers/orders.json').success(function(data){
  //   $scope.orders = data;
  // });

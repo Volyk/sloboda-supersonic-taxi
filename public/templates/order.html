@@ -40,7 +40,7 @@
   </div>
   <div class="form-group">
     <div class="col-sm-2 col-sm-offset-5 col-xs-3 col-xs-offset-3">
-      <button type="submit" ng-disabled="order.$invalid" class="btn btn-lg btn-success" ng-click="addOrder()">Отправить</button>
+      <button type="submit" ng-disabled="order.$invalid || disabled" class="btn btn-lg btn-success" ng-click="addOrder()">Отправить</button>
     </div>
   </div>
 </form>
