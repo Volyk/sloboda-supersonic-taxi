@@ -14,17 +14,17 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
   $scope.disabled = false;
 
   $scope.addOrder = function() {
-    if (!$scope.order.email) {
-      $scope.order.email = '';
+    if (!$scope.ngDialogData.email) {
+      $scope.ngDialogData.email = '';
     }
-    $scope.order.email = $scope.order.email.toLowerCase();
-    $scope.order.passengers = $scope.options.selectedOption.value;
-    $http.post('/orders', $scope.order).success(function(data){
+    $scope.ngDialogData.email = $scope.ngDialogData.email.toLowerCase();
+    $scope.ngDialogData.passengers = $scope.options.selectedOption.value;
+    $http.post('/orders', {order: $scope.ngDialogData}).success(function(data){
       alert('Ваш заказ принят!');
       $scope.disabled = true;
-      $scope.order.$setPristine();
-      $scope.order.$setUntouched();
-      $scope.order = {};
+      $scope.orderForm.$setPristine();
+      $scope.orderForm.$setUntouched();
+      $scope.ngDialogData = {};
     });
   };
 
@@ -35,7 +35,6 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
   
   $http.get('/drivers/orders.json').success(function(data){
     $scope.orders = data;
-    console.log(data);
   });
 
   $scope.deleteOrder = function(order) {
@@ -82,48 +81,52 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
   };
   $scope.phone_pattern = /(0)[0-9]{9}/;
   $scope.email_pattern = /^(.+)@(.+)$/;
-  
   $scope.isDispatcher = true;
+
+  $http.get('/dispatchers/orders.json').success(function(data){
+    $scope.orders = data;
+  });
+
+  $http.get('/drivers.json').success(function(data){
+    $scope.drivers = data;
+  });
 
   $scope.create = function(){
     ngDialog.open({ template: 'templates/order.html', controller: 'DispatchersController', className: 'ngdialog-theme-default' });
   };
 
   $scope.addOrder = function(){
-    $scope.order.passengers = $scope.options.selectedOption.value;
-    $http.post('/orders', $scope.order); //need to check url
+    $scope.ngDialogData.passengers = $scope.options.selectedOption.value;
+    $scope.ngDialogData.driver_id = ngDialogData/driver_id.id;
+    $scope.ngDialogData.status = 'waiting';
+    $http.post('/orders', {order: $scope.ngDialogData}); //need to check url
+    return true;
   };
 
   $scope.update = function(order){
-    ngDialog.open({ template: 'templates/updateOrder.html', data: order, controller: 'DispatchersController', className: 'ngdialog-theme-default' });
+    order.isUpdating = true;
+    ngDialog.open({ template: 'templates/order.html', data: order, controller: 'DispatchersController', className: 'ngdialog-theme-default' });
   };
 
-  $scope.updateOrder = function(data) {
-    $scope.order = data;
-    $scope.order.driver_id = data.driver_id.id;
-    $scope.order.status = 'waiting';
-    $http.put('/orders/', $scope.order).success(function(data){
-      console.log(data);
-    });
+  $scope.updateOrder = function() {
+    $scope.ngDialogData.driver_id = $scope.ngDialogData.driver_id.id;
+    $scope.ngDialogData.status = 'waiting';
+    $http.put('/orders/', {order: $scope.ngDialogData});
+    return true;
   };
 
-  $scope.cancelOrder = function(order) {
-    order.status = 'canceled';
-    $http.put('/orders/', order).success(function(data){
-      console.log(data);
-      var index = $scope.orders.indexOf(order);
+  $scope.confirmCancel = function(order){
+    ngDialog.open({ template: 'confirm', data: order, controller: 'DispatchersController', className: 'ngdialog-theme-default' });
+  }
+
+  $scope.cancelOrder = function() {
+    $scope.ngDialogData.status = 'canceled'; 
+    $http.put('/orders/', {order: $scope.ngDialogData}).success(function(data){
+      var index = $scope.orders.indexOf(data);
       $scope.orders.splice(index, 1);
     });
+    return true;
   };
-
-
- // $http.get('/dispatchers/orders.json').success(function(data){
- //   $scope.orders = data;
- // });
-
-  // $http.get('/drivers.json').success(function(data){
-  //   $scope.drivers = data;
-  // });
 
 // will be received by $http methods (need to check url's), just to test
   $scope.orders = [
@@ -158,7 +161,8 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
      comment: 'comment 3'
     }
   ];
- $scope.drivers = [
+
+  $scope.drivers = [
    {
      id: 1,
      name: 'Firstname-1'
@@ -167,7 +171,7 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
      id: 2,
      name: 'Firstname-2'
    }
- ];
+  ];
 
 
 }]);

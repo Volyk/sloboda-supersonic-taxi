@@ -9,13 +9,19 @@
 				<p>Количество пассажиров: {{order.passengers}}</p>
 				<p>Багаж: <span ng-if="order.baggage">есть</span><span ng-if="!order.baggage">нет</span></p>
 				<p>Комментарий: {{order.comment}}</p>
-				<p><button class="btn btn-default" ng-click="update(order)">Редактировать</button>
-				   <button class="btn btn-danger" ng-click="cancelOrder(order)">Отменить заказ</button>
+				<p><button class="btn btn-success" ng-click="update(order)">Редактировать</button>
+				   <button class="btn btn-danger" ng-click="confirmCancel(order)">Отменить заказ</button>
 				</p>
 			</li>
 		</div>
 	</ul>
 </div>
+
+<script type="text/ng-template" id="confirm">
+    <p ng-model="ngDialogData">Вы уверены, что хотите отметить этот заказ?</p>
+    <button class="btn btn-success col-sm-offset-4" ng-click="cancelOrder() && closeThisDialog()">Да</button>
+    <button class="btn btn-default" ng-click="closeThisDialog()">Отмена</button>
+</script>
 
 <!-- will be on navigation panel -->
 <div class="col-sm-4 col-sm-offset-2"><button class="btn btn-default" ng-click="create()">Новый заказ</button></div>
