@@ -1,16 +1,12 @@
 source 'https://rubygems.org'
 
+gem 'figaro'
 gem 'devise'
 gem 'angularjs-rails'
 gem 'angular-ui-bootstrap-rails'
 gem 'bootstrap-sass'
 
-source 'https://rails-assets.org' do
-  gem 'rails-assets-angular-devise'
-end
-
 gem 'turbolinks'
-
 gem 'kaminari'
 gem 'paperclip'
 gem 'bootstrap-kaminari-views'
@@ -53,7 +49,7 @@ gem 'websocket-rails-js', github: 'websocket-rails/websocket-rails-js', branch: 
 
 group :development, :test do
   gem "rspec-rails"
-  gem "factory_girl_rails"
+  gem "factory_girl_rails", require: false
   gem "faker"
 end
 
