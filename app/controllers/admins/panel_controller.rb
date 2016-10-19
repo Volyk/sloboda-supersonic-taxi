@@ -15,7 +15,7 @@ class Admins::PanelController < Devise::SessionsController
     @driver = Driver.find_for_authentication(id: params[:id])
   end
 
-  #
+  # Updates database
   def update_driver_photo
     @driver = Driver.find_for_authentication(id: params[:id])
     if params[:submit] == 'Save'
