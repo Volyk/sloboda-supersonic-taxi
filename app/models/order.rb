@@ -6,4 +6,8 @@ class Order < ApplicationRecord
 	validates :baggage, presence: true, allow_blank: true, allow_nil: false
 
   has_many :orders_blogs
+
+  enum status: {new: 'new', waiting: 'waiting', arrived: 'arrived',
+                accepted: 'accepted', declined: 'declined', done: 'done'}
+
 end

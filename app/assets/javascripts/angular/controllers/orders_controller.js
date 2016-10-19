@@ -1,10 +1,10 @@
 (function() {
-var app = angular.module('taxi', ['ngRoute', 'ngDialog']);
+var app = angular.module('taxi', ['ngRoute']);
 
 app.controller('CreateOrderController', ['$scope', '$http', function($scope, $http) {
   $scope.data = {
     availableOptions: [
-      {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'}, 
+      {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'},
       {value: '5'}, {value: '6'}, {value: '7'}, {value: '8'}
     ],
     selectedOption: {value: '1'}
@@ -27,7 +27,7 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
 
 
 app.controller('DriversController', ['$scope', '$http', function($scope, $http) {
-  
+
   $http.get('/drivers/orders.json').success(function(data){
     $scope.orders = data;
     console.log(data);
@@ -69,7 +69,7 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
 
 app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
 
-  
+
 
 }]);
 
