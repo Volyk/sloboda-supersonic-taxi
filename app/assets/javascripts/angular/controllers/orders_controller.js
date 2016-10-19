@@ -21,8 +21,10 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
     $scope.order.passengers = $scope.options.selectedOption.value;
     $http.post('/orders', $scope.order).success(function(data){
       alert('Ваш заказ принят!');
-      $scope.order = {};
       $scope.disabled = true;
+      $scope.order.$setPristine();
+      $scope.order.$setUntouched();
+      $scope.order = {};
     });
   };
 
