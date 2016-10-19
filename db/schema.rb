@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20161018135512) do
 
   # These are extensions that must be enabled in order to support this database
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 20161018135512) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "email"
+    t.string   "status"
   end
 
   create_table "orders_blogs", force: :cascade do |t|
