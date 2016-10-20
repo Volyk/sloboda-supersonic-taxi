@@ -170,11 +170,12 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
    {
     id: 1,
     name: 'Вася Иванов',
-    avatar: 'avatars/cat.jpg',
+    avatar: null,
     phone: '0998855221',
     car_type: 'Lada Priora',
     passengers: '4',
-    trunk: '2'
+    trunk: '2',
+    status: 'busy'
    },
    {
     id: 2,
@@ -183,7 +184,8 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
     phone: '0955142356',
     car_type: 'Lada Sedan',
     passengers: '4',
-    trunk: '2'
+    trunk: '2',
+    status: 'available'
    }
   ];
 
