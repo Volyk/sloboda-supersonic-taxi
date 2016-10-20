@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Redirect</title>
+  </head>
+  <body>
+
+  <script type="text/javascript">
+
+  window.opener.update_driver_avatar(<%= @driver.id.to_s %>);
+  window.close();
+
+  </script>
+
+  </body>
+  </html>
