@@ -82,6 +82,23 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
 }]);
 
 app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
+
+  var dispatcher = new WebSocketRails(window.location.host + '/websocket');
+
+  $http.get('/dispatchers/orders.json').success(function(data){
+    $scope.orders = data;
+  });
+
+  $http.get('/dispatchers/drivers.json').success(function(data){
+    $scope.drivers = data;
+  });
+
+  dispatcher.bind('get_drivers', function(data) {
+    $http.get('/drivers.json').success(function(data){
+      $scope.drivers = data;
+    });
+  });
+
   $scope.options = {
     availableOptions: [
       {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'}, 
@@ -93,13 +110,6 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
   $scope.email_pattern = /^(.+)@(.+)$/;
   $scope.isDispatcher = true;
 
-  $http.get('/dispatchers/orders.json').success(function(data){
-    $scope.orders = data;
-  });
-
-  $http.get('/drivers.json').success(function(data){
-    $scope.drivers = data;
-  });
 
   $scope.create = function(){
     ngDialog.open({ template: 'templates/order.html', controller: 'DispatchersController', className: 'ngdialog-theme-default' });
@@ -111,7 +121,9 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
       $scope.ngDialogData.driver_id = $scope.ngDialogData.driver_id.id;
       $scope.ngDialogData.status = 'waiting';
     }
-    $http.post('/orders', {order: $scope.ngDialogData}); //need to check url
+    $http.post('/orders', {order: $scope.ngDialogData}).success(function() { //need to check url
+      dispatcher.trigger('update_order', { id: order.id });
+    });
     return true;
   };
 
@@ -125,7 +137,9 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
       $scope.ngDialogData.driver_id = $scope.ngDialogData.driver_id.id;
       $scope.ngDialogData.status = 'waiting';
     }
-    $http.put('/orders/', {order: $scope.ngDialogData});
+    $http.put('/orders', {order: $scope.ngDialogData}).success(function(){
+      dispatcher.trigger('update_order', { id: order.id });
+    });
     return true;
   };
 

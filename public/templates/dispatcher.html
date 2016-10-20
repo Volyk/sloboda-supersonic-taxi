@@ -27,7 +27,6 @@
   <ul class="list-group">
     <div ng-repeat="driver in drivers">
       <li class="list-group-item">
-      <div ng-class="driver.status">
         <div class="row">
           <div class="col-sm-4 avatar">
             <img ng-if="driver.avatar" ng-src={{driver.avatar}}>
@@ -41,7 +40,6 @@
             <p>Вместимость багажника: {{driver.trunk}}</p>
           </div>
         </div>
-      </div>
       </li>
     </div>
   </ul>
