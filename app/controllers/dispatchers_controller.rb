@@ -16,7 +16,7 @@ class DispatchersController < ApplicationController
   end
 
   def drivers
-    @drivers = Driver.where(active: true)
+    @drivers = Driver.where(status: 'available')
     respond_with(@drivers) do |format|
       format.json { render json: @drivers.as_json }
       format.html
