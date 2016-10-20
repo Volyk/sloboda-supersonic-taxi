@@ -96,8 +96,14 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
   });
 
   dispatcher.bind('get_drivers', function(data) {
-    $http.get('/drivers.json').success(function(data){
+    $http.get('/dispatchers/drivers.json').success(function(data){
       $scope.drivers = data;
+    });
+  });
+
+  dispatcher.bind('get_orders', function(data) {
+    $http.get('/dispatchers/orders.json').success(function(data){
+      $scope.orders = data;
     });
   });
 
@@ -112,7 +118,6 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
   $scope.email_pattern = /^(.+)@(.+)$/;
   $scope.isDispatcher = true;
 
-
   $scope.create = function(){
     ngDialog.open({ template: 'templates/order.html', controller: 'DispatchersController', className: 'ngdialog-theme-default' });
   };
@@ -123,7 +128,7 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
       $scope.ngDialogData.driver_id = $scope.ngDialogData.driver_id.id;
       $scope.ngDialogData.status = 'waiting';
     }
-    $http.post('/orders', {order: $scope.ngDialogData}).success(function() { //need to check url
+    $http.post('/orders', {order: $scope.ngDialogData}).success(function() {
       dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
     });
     return true;
