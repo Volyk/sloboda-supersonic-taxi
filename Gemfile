@@ -55,6 +55,7 @@ group :test do
 end
 
 group :development do
+  gem 'capistrano-secrets-yml'
   gem 'capistrano',         require: false
   gem 'capistrano-rvm',     require: false
   gem 'capistrano-rails',   require: false
