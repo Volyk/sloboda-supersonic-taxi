@@ -10,6 +10,8 @@ class Driver < ApplicationRecord
 
   has_many :orders
 
+  enum status: { available: 'available', busy: 'busy', offline: 'offline' }
+
   def active_for_authentication?
     super && active?
   end
