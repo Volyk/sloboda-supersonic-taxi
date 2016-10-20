@@ -33,8 +33,16 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
 
 app.controller('DriversController', ['$scope', '$http', function($scope, $http) {
 
+  var dispatcher = new WebSocketRails(window.location.host + '/websocket');
+
   $http.get('/drivers/orders.json').success(function(data){
     $scope.orders = data;
+  });
+
+  dispatcher.bind('get_new_order', function(data) {
+    $http.get('/drivers/orders.json').success(function(data){
+      $scope.orders = data;
+    });
   });
 
   $scope.deleteOrder = function(order) {
@@ -44,7 +52,9 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
 
   $scope.putMethod = function(order) {
     var url = '/drivers/orders/' + order.id;
-    $http.put(url, {order: order});
+    $http.put(url, {order: order}).success(function(){
+      dispatcher.trigger('update_order', { id: order.id });
+    });
   };
 
   $scope.acceptOrder = function(order) {
