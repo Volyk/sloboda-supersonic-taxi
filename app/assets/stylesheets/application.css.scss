@@ -16,7 +16,7 @@
 @import 'bootstrap';
 
 body {
-	background-image: url(asset_path('wallpaper.jpg', image));
+	background-image: url('wallpaper.jpg');
 }
 .order-form input.ng-invalid.ng-dirty {
     border-color: #FA787E;
