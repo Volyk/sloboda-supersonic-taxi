@@ -168,12 +168,22 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
 
   $scope.drivers = [
    {
-     id: 1,
-     name: 'Firstname-1'
+    id: 1,
+    name: 'Вася Иванов',
+    avatar: 'avatars/cat.jpg',
+    phone: '0998855221',
+    car_type: 'Lada Priora',
+    passengers: '4',
+    trunk: '2'
    },
    {
-     id: 2,
-     name: 'Firstname-2'
+    id: 2,
+    name: 'Петя Сидоров',
+    avatar: null,
+    phone: '0955142356',
+    car_type: 'Lada Sedan',
+    passengers: '4',
+    trunk: '2'
    }
   ];
 

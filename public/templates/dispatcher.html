@@ -1,27 +1,40 @@
-<div class="col-sm-6">
-	<ul class="list-group">
-		<div ng-repeat="order in orders">
-			<li class="list-group-item">
-				<h3>Заявка №{{order.id}}, {{order.created_at}}</h3>
-				<p>Номер телефона: {{order.phone}}</p>
-				<p>Откуда: {{order.start_point}}</p>
-				<p>Куда: {{order.end_point}}</p>
-				<p>Количество пассажиров: {{order.passengers}}</p>
-				<p>Багаж: <span ng-if="order.baggage">есть</span><span ng-if="!order.baggage">нет</span></p>
-				<p>Комментарий: {{order.comment}}</p>
-				<p><button class="btn btn-success" ng-click="update(order)">Редактировать</button>
-				   <button class="btn btn-danger" ng-click="confirmCancel(order)">Отменить заказ</button>
-				</p>
-			</li>
-		</div>
-	</ul>
-</div>
-
 <script type="text/ng-template" id="confirm">
-    <p ng-model="ngDialogData">Вы уверены, что хотите отметить этот заказ?</p>
-    <button class="btn btn-success col-sm-offset-4" ng-click="cancelOrder() && closeThisDialog()">Да</button>
-    <button class="btn btn-default" ng-click="closeThisDialog()">Отмена</button>
+  <p ng-model="ngDialogData">Вы уверены, что хотите отметить этот заказ?</p>
+  <button class="btn btn-success col-sm-offset-4" ng-click="cancelOrder() && closeThisDialog()">Да</button>
+  <button class="btn btn-default" ng-click="closeThisDialog()">Отмена</button>
 </script>
 
-<!-- will be on navigation panel -->
-<div class="col-sm-4 col-sm-offset-2"><button class="btn btn-default" ng-click="create()">Новый заказ</button></div>
+<div class="col-sm-6">
+  <ul class="list-group">
+    <div ng-repeat="order in orders">
+      <li class="list-group-item">
+        <h3>Заявка №{{order.id}}, {{order.created_at}}</h3>
+        <p>Номер телефона: {{order.phone}}</p>
+        <p>Откуда: {{order.start_point}}</p>
+        <p>Куда: {{order.end_point}}</p>
+        <p>Количество пассажиров: {{order.passengers}}</p>
+        <p>Багаж: <span ng-if="order.baggage">есть</span><span ng-if="!order.baggage">нет</span></p>
+        <p>Комментарий: {{order.comment}}</p>
+        <p><button class="btn btn-success" ng-click="update(order)">Редактировать</button>
+           <button class="btn btn-danger" ng-click="confirmCancel(order)">Отменить заказ</button>
+        </p>
+      </li>
+    </div>
+  </ul>
+</div>
+
+<div class="col-sm-6">
+  <ul class="list-group">
+    <div ng-repeat="driver in drivers">
+      <li class="list-group-item">
+        <img ng-if="driver.avatar" ng-src={{driver.avatar}}>
+        <img ng-if="!driver.avatar" ng-src='avatars/original/missing.png'>
+        <h3>{{driver.name}}</h3>
+        <p>Номер телефона: {{driver.phone}}</p>
+        <p>Машина: {{driver.car_type}}</p>
+        <p>Количество пассажиров: {{driver.passengers}}</p>
+        <p>Вместимость багажника: {{driver.trunk}}</p>
+      </li>
+    </div>
+  </ul>
+</div>
