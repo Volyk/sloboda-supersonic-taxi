@@ -132,63 +132,6 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
     return true;
   };
 
-// will be received by $http methods (need to check url's), just to test
-  $scope.orders = [
-    {
-     phone: '0987654321',
-     id: 1,
-     created_at: "17.10.2016 18:15",
-     start_point: 'start point 1',
-     end_point: 'end point 1',
-     passengers: '3',
-     baggage: true,
-     comment: 'comment 1'  
-    },
-    {
-     phone: '0932323221',
-     id: 2,
-     created_at: "17.10.2016 18:05",
-     start_point: 'start point 2',
-     end_point: 'end point 2',
-     passengers: '1',
-     baggage: false,
-     comment: 'comment 2'
-    },
-    {
-     phone: '0988585541',
-     id: 3,
-     created_at: "17.10.2016 17:55",
-     start_point: 'start point 3',
-     end_point: 'end point 3',
-     passengers: '2',
-     baggage: true,
-     comment: 'comment 3'
-    }
-  ];
-
-  $scope.drivers = [
-   {
-    id: 1,
-    name: 'Вася Иванов',
-    avatar: null,
-    phone: '0998855221',
-    car_type: 'Lada Priora',
-    passengers: '4',
-    trunk: '2',
-    status: 'busy'
-   },
-   {
-    id: 2,
-    name: 'Петя Сидоров',
-    avatar: null,
-    phone: '0955142356',
-    car_type: 'Lada Sedan',
-    passengers: '4',
-    trunk: '2',
-    status: 'available'
-   }
-  ];
-
 }]);
 
 app.directive('orderForm', function(){
