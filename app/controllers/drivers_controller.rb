@@ -5,7 +5,9 @@ class DriversController < ApplicationController
 
   def orders
     @driver = current_driver
-    @orders = @driver.orders.all
+    @orders = @driver.orders.where(status: %w(waiting arrived accepted))
+    @orders = @driver.orders.where('updated_at >=? AND status =?',
+                                   Date.yesterday, 'done') if @orders.blank?
     respond_with(@orders) do |format|
       format.json { render json: @orders.as_json }
       format.html

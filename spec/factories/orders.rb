@@ -1,12 +1,10 @@
 FactoryGirl.define do
   factory :order do
-    start_point "MyString"
-    end_point "MyString"
-    comment "MyText"
-    client_id 1
-    driver_id 1
-    dispatcher_id 1
-    passengers 1
-    baggage false
+    baggage { Faker::Boolean.boolean }
+    end_point { Faker::Address.street_address }
+    comment { Faker::Lorem.paragraph }
+    passengers { Faker::Number.between(1, 8) }
+    phone { '0' + Faker::Number.number(9) }
+    start_point { Faker::Address.street_address }
   end
 end
