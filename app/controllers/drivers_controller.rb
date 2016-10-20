@@ -25,7 +25,7 @@ class DriversController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:status)
+    params.require(:order).permit(:status, :driver_id)
   end
 
   def set_order

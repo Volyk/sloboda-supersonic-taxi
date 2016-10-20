@@ -109,7 +109,7 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
 
   $scope.options = {
     availableOptions: [
-      {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'}, 
+      {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'},
       {value: '5'}, {value: '6'}, {value: '7'}, {value: '8'}
     ],
     selectedOption: {value: '1'}
@@ -144,7 +144,8 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
       $scope.ngDialogData.driver_id = $scope.ngDialogData.driver_id.id;
       $scope.ngDialogData.status = 'waiting';
     }
-    $http.put('/orders', {order: $scope.ngDialogData}).success(function(){
+    var url = '/drivers/orders/' + $scope.ngDialogData.id;
+    $http.put(url, {order: $scope.ngDialogData}).success(function(){
       dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
     });
     return true;
@@ -155,8 +156,10 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
   }
 
   $scope.cancelOrder = function() {
-    $scope.ngDialogData.status = 'canceled'; 
-    $http.put('/orders/', {order: $scope.ngDialogData}).success(function(data){
+    $scope.ngDialogData.status = 'canceled';
+    var url = '/drivers/orders/' + $scope.ngDialogData.id;
+    $http.put(url, {order: $scope.ngDialogData}).success(function(data){
+      dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
       var index = $scope.orders.indexOf(data);
       $scope.orders.splice(index, 1);
     });
