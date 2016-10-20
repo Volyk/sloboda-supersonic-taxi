@@ -10,11 +10,7 @@ class WsConnectionController < WebsocketRails::BaseController
     WebsocketRails.users[current_driver.id] = connection
     @orders = Order.where(status: %w(waiting arrived accepted)) \
                    .where(driver_id: current_driver.id)
-    if @orders.length == 0
-      current_driver.status = 'available'
-    else
-      current_driver.status = 'busy'
-    end
+    current_driver.status = @orders.empty? ? 'available' : 'busy'
     current_driver.save
   end
 
