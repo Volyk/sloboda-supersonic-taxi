@@ -1,20 +1,18 @@
 source 'https://rubygems.org'
 
+gem 'figaro'
 gem 'devise'
 gem 'angularjs-rails'
 gem 'angular-ui-bootstrap-rails'
 gem 'bootstrap-sass'
 
-source 'https://rails-assets.org' do
-  gem 'rails-assets-angular-devise'
-end
-
 gem 'turbolinks'
-
 gem 'kaminari'
 gem 'paperclip'
 gem 'bootstrap-kaminari-views'
+gem 'rufus-scheduler'
 
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
@@ -39,10 +37,10 @@ gem 'websocket-rails-js', github: 'websocket-rails/websocket-rails-js',
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'faker'
 end
 
 group :test do
-  gem 'faker'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'

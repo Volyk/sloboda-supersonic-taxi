@@ -181,6 +181,7 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       driver_data[:car_type] = @driver.car_type
       driver_data[:passengers] = @driver.passengers
       driver_data[:trunk] = @driver.trunk
+      driver_data[:avatar] = @driver.avatar.url(:medium)
       if message[:action] == 'details'
         send_message :open_details, driver_data
       elsif message[:action] == 'edit'
@@ -215,6 +216,16 @@ class Admins::WsPanelController < WebsocketRails::BaseController
           send_message :xnotice, 'message' => 'Changing driver: ERROR'
         end
       end
+    end
+  end
+
+  def driver_avatar
+    if !current_admin.nil? && current_admin.active == true
+      @driver = Driver.find_for_authentication(id: message[:id])
+      driver_data = { 'id' => @driver.id }
+      driver_data[:thumb] = @driver.avatar.url(:thumb)
+      driver_data[:medium] = @driver.avatar.url(:medium)
+      send_message :update_avatar, driver_data
     end
   end
 end
