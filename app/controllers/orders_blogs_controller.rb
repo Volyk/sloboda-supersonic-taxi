@@ -72,10 +72,12 @@ class OrdersBlogsController < ApplicationController
 
   private
 
+  # Use callbacks to share common setup or constraints between actions.
   def set_orders_blog
     @orders_blog = OrdersBlog.find(params[:id])
   end
 
+  # Never trust parameters from the scary internet, only allow the white list through.
   def orders_blog_params
     params.require(:orders_blog).permit(:action, :dispatcher_id)
   end
