@@ -34,6 +34,7 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
 app.controller('DriversController', ['$scope', '$http', function($scope, $http) {
 
   var dispatcher = new WebSocketRails(window.location.host + '/websocket');
+  var notification = document.getElementById("notification");
 
   $http.get('/drivers/orders.json').success(function(data){
     $scope.orders = data;
@@ -84,6 +85,7 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
 app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
 
   var dispatcher = new WebSocketRails(window.location.host + '/websocket');
+  var notification = document.getElementById("notification");
 
   $http.get('/dispatchers/orders.json').success(function(data){
     $scope.orders = data;
@@ -122,7 +124,7 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
       $scope.ngDialogData.status = 'waiting';
     }
     $http.post('/orders', {order: $scope.ngDialogData}).success(function() { //need to check url
-      dispatcher.trigger('update_order', { id: order.id });
+      dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
     });
     return true;
   };
@@ -138,7 +140,7 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
       $scope.ngDialogData.status = 'waiting';
     }
     $http.put('/orders', {order: $scope.ngDialogData}).success(function(){
-      dispatcher.trigger('update_order', { id: order.id });
+      dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
     });
     return true;
   };
