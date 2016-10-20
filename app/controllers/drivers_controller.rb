@@ -1,4 +1,3 @@
-#
 class DriversController < ApplicationController
   before_action :authenticate_driver!, only: [:orders]
   before_action :set_order, except: [:orders]
@@ -29,6 +28,7 @@ class DriversController < ApplicationController
 
   def set_order
     @order = Order.find(params[:id])
-    render json: { status: :not_found } unless @order
+    render json: {status: :not_found} unless @order
   end
+
 end

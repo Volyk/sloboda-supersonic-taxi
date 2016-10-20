@@ -1,3 +1,4 @@
+
 class OrdersController < ApplicationController
   before_action :authenticate_dispatcher!, only: [:edit]
   before_action :get_order, except: [:index, :create, :new]
@@ -36,18 +37,18 @@ class OrdersController < ApplicationController
 
   def destroy
     @order.destroy
-    render json: { status: :ok }
+    render json: {status: :ok}
   end
 
   private
 
   def order_params
-    params.require(:order).permit(:phone, :email, :start_point,
-                                  :end_point, :comment, :passengers, :baggage)
+    params.require(:order).permit(:phone, :email, :start_point, :end_point,
+                                  :comment, :passengers, :baggage)
   end
 
   def get_order
     @order = Order.find(params[:id])
-    render json: { status: :not_found } unless @order
+    render json: {status: :not_found} unless @order
   end
 end

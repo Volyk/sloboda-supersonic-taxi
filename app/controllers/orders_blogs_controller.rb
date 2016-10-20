@@ -1,4 +1,3 @@
-#
 class OrdersBlogsController < ApplicationController
   before_action :set_orders_blog, only: [:show, :edit, :update, :destroy]
 
