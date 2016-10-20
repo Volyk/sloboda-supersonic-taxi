@@ -13,9 +13,9 @@ WebsocketRails::EventMap.describe do
   # The above will handle an event triggered on the client like `product.new`.
 
   # Connection controller
-  subscribe :client_connected, :to => WsConnectionController, :with_method => :client_connected
-  subscribe :client_disconnected, :to => WsConnectionController, :with_method => :delete_user
-  subscribe :connection_closed, :to => WsConnectionController, :with_method => :delete_user
+  subscribe :client_connected, to: WsConnectionController, :with_method => :client_connected
+  subscribe :client_disconnected, to: WsConnectionController, :with_method => :delete_user
+  subscribe :connection_closed, to: WsConnectionController, :with_method => :delete_user
 
   # Admin section
   subscribe :disable_admin, to: Admins::WsPanelController, with_method: :disable_admin
