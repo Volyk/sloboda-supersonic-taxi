@@ -44,7 +44,8 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:phone, :email, :start_point, :end_point,
-                                  :comment, :passengers, :baggage)
+                                  :comment, :passengers, :baggage, :driver_id,
+                                  :status)
   end
 
   def get_order

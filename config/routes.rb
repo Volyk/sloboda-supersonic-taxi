@@ -6,6 +6,8 @@ resources :orders_blogs
 
 devise_for :dispatchers
   as :dispatcher do
+    get 'dispatchers/orders'
+    get 'dispatchers/drivers'
     get 'dispatcher' => 'devise/sessions#new', :as => :new_dispatchers_session
     post 'dispatcher' => 'devise/sessions#create', :as => :dispatchers_session
     delete 'dispatcher' => 'devise/sessions#destroy', :as => :destroy_dispatchers_session
@@ -19,6 +21,7 @@ devise_for :drivers, skip: :all, controllers: { sessions: 'drivers/sessions' }
     delete 'driver' => 'devise/sessions#destroy', as: :destroy_driver_session
     get 'drivers/orders', as: :driver_root
     put 'drivers/orders/:id' => 'drivers#update_order'
+    get 'driver/history', as: :history_driver
   end
 
 devise_for :admins, path: 'admin', skip: :registrations, controllers: { sessions: 'admins/sessions' }
