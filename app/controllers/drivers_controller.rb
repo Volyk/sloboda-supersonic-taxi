@@ -15,6 +15,15 @@ class DriversController < ApplicationController
     end
   end
 
+  def history_orders
+    @driver = current_driver
+    @history_orders = @driver.history_orders.where('status =?', 'done') if @history_orders.blank?
+    respond_with(@history_orders) do |format|
+      format.json { render json: @history_orders.as_json }
+      format.html
+    end
+  end
+
   def update_order
     if @order.update(order_params)
       render json: @order.as_json

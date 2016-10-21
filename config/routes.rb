@@ -21,6 +21,7 @@ devise_for :drivers, skip: :all, controllers: { sessions: 'drivers/sessions' }
     delete 'driver' => 'devise/sessions#destroy', as: :destroy_driver_session
     get 'drivers/orders', as: :driver_root
     put 'drivers/orders/:id' => 'drivers#update_order'
+    get 'driver/history', as: :history_driver
   end
 
 devise_for :admins, path: 'admin', skip: :registrations, controllers: { sessions: 'admins/sessions' }
