@@ -25,7 +25,6 @@ body {
     border-color: #78FA89;
 }
 .order-form {
-	width: 500px;
 	margin-top: 50px;
 }
 .order-form span.required {
@@ -36,4 +35,21 @@ body {
 }
 .decline_order {
 	margin-top: 10px;
+}
+.passengers {
+	max-width: 100px;
+}
+.logout {
+	margin-right: 20px;
+	margin-left: 20px;
+}
+.avatar img {
+	height: 150px;
+	width: 150px;
+}
+.driver-info h3 {
+	margin-top: 0px;
+}
+.hideme {
+	display: none;
 }

@@ -9,5 +9,6 @@ class Order < ApplicationRecord
   has_many :orders_blogs
 
   enum status: { incoming: 'incoming', waiting: 'waiting', arrived: 'arrived',
-                 accepted: 'accepted', declined: 'declined', done: 'done' }
+                 accepted: 'accepted', declined: 'declined', done: 'done',
+                 canceled: 'canceled' }
 end

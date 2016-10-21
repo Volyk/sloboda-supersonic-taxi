@@ -12,8 +12,10 @@ WebsocketRails::EventMap.describe do
   #   end
   # The above will handle an event triggered on the client like `product.new`.
 
-  # Test controller
-  subscribe :ping, to: WebsocketTestController, with_method: :ping
+  # Connection controller
+  subscribe :client_connected, to: WsConnectionController, with_method: :client_connected
+  subscribe :client_disconnected, to: WsConnectionController, with_method: :delete_user
+  subscribe :connection_closed, to: WsConnectionController, with_method: :delete_user
 
   # Admin section
   subscribe :disable_admin, to: Admins::WsPanelController, with_method: :disable_admin

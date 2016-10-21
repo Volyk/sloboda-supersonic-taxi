@@ -6,6 +6,8 @@ resources :orders_blogs
 
 devise_for :dispatchers
   as :dispatcher do
+    get 'dispatchers/orders'
+    get 'dispatchers/drivers'
     get 'dispatcher' => 'devise/sessions#new', :as => :new_dispatchers_session
     post 'dispatcher' => 'devise/sessions#create', :as => :dispatchers_session
     delete 'dispatcher' => 'devise/sessions#destroy', :as => :destroy_dispatchers_session

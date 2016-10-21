@@ -1,8 +1,8 @@
 (function() {
-var app = angular.module('taxi', ['ngRoute']);
+var app = angular.module('taxi', ['ngRoute', 'ngDialog']);
 
 app.controller('CreateOrderController', ['$scope', '$http', function($scope, $http) {
-  $scope.data = {
+  $scope.options = {
     availableOptions: [
       {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'},
       {value: '5'}, {value: '6'}, {value: '7'}, {value: '8'}
@@ -11,15 +11,20 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
   };
   $scope.phone_pattern = /(0)[0-9]{9}/;
   $scope.email_pattern = /^(.+)@(.+)$/;
+  $scope.disabled = false;
+
   $scope.addOrder = function() {
-    if (!$scope.order.email) {
-      $scope.order.email = '';
+    if (!$scope.ngDialogData.email) {
+      $scope.ngDialogData.email = '';
     }
-    $scope.order.email = $scope.order.email.toLowerCase();
-    $scope.order.passengers = $scope.data.selectedOption.value;
-    $http.post('/orders', { order: $scope.order }).success(function(data){
+    $scope.ngDialogData.email = $scope.ngDialogData.email.toLowerCase();
+    $scope.ngDialogData.passengers = $scope.options.selectedOption.value;
+    $http.post('/orders', {order: $scope.ngDialogData}).success(function(data){
       alert('Ваш заказ принят!');
-      $scope.order = {};
+      $scope.disabled = true;
+      $scope.orderForm.$setPristine();
+      $scope.orderForm.$setUntouched();
+      $scope.ngDialogData = {};
     });
   };
 
@@ -28,9 +33,17 @@ app.controller('CreateOrderController', ['$scope', '$http', function($scope, $ht
 
 app.controller('DriversController', ['$scope', '$http', function($scope, $http) {
 
+  var dispatcher = new WebSocketRails(window.location.host + '/websocket');
+  var notification = document.getElementById("notification");
+
   $http.get('/drivers/orders.json').success(function(data){
     $scope.orders = data;
-    console.log(data);
+  });
+
+  dispatcher.bind('get_new_order', function(data) {
+    $http.get('/drivers/orders.json').success(function(data){
+      $scope.orders = data;
+    });
   });
 
   $scope.deleteOrder = function(order) {
@@ -40,7 +53,9 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
 
   $scope.putMethod = function(order) {
     var url = '/drivers/orders/' + order.id;
-    $http.put(url, {order: order});
+    $http.put(url, {order: order}).success(function(){
+      dispatcher.trigger('update_order', { id: order.id });
+    });
   };
 
   $scope.acceptOrder = function(order) {
@@ -69,9 +84,96 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
 
 app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
 
+  var dispatcher = new WebSocketRails(window.location.host + '/websocket');
+  var notification = document.getElementById("notification");
 
+  $http.get('/dispatchers/orders.json').success(function(data){
+    $scope.orders = data;
+  });
+
+  $http.get('/dispatchers/drivers.json').success(function(data){
+    $scope.drivers = data;
+  });
+
+  dispatcher.bind('get_drivers', function(data) {
+    $http.get('/dispatchers/drivers.json').success(function(data){
+      $scope.drivers = data;
+    });
+  });
+
+  dispatcher.bind('get_orders', function(data) {
+    $http.get('/dispatchers/orders.json').success(function(data){
+      $scope.orders = data;
+    });
+  });
+
+  $scope.options = {
+    availableOptions: [
+      {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'},
+      {value: '5'}, {value: '6'}, {value: '7'}, {value: '8'}
+    ],
+    selectedOption: {value: '1'}
+  };
+  $scope.phone_pattern = /(0)[0-9]{9}/;
+  $scope.email_pattern = /^(.+)@(.+)$/;
+  $scope.isDispatcher = true;
+
+  $scope.create = function(){
+    ngDialog.open({ template: 'templates/order.html', controller: 'DispatchersController', className: 'ngdialog-theme-default' });
+  };
+
+  $scope.addOrder = function(){
+    $scope.ngDialogData.passengers = $scope.options.selectedOption.value;
+    if ($scope.ngDialogData.driver_id) {
+      $scope.ngDialogData.driver_id = $scope.ngDialogData.driver_id.id;
+      $scope.ngDialogData.status = 'waiting';
+    }
+    $http.post('/orders', {order: $scope.ngDialogData}).success(function() {
+      dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
+    });
+    return true;
+  };
+
+  $scope.update = function(order){
+    order.isUpdating = true;
+    ngDialog.open({ template: 'templates/order.html', data: order, controller: 'DispatchersController', className: 'ngdialog-theme-default' });
+  };
+
+  $scope.updateOrder = function() {
+    if ($scope.ngDialogData.driver_id) {
+      $scope.ngDialogData.driver_id = $scope.ngDialogData.driver_id.id;
+      $scope.ngDialogData.status = 'waiting';
+    }
+    var url = '/drivers/orders/' + $scope.ngDialogData.id;
+    $http.put(url, {order: $scope.ngDialogData}).success(function(){
+      dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
+    });
+    return true;
+  };
+
+  $scope.confirmCancel = function(order){
+    ngDialog.open({ template: 'confirm', data: order, controller: 'DispatchersController', className: 'ngdialog-theme-default' });
+  }
+
+  $scope.cancelOrder = function() {
+    $scope.ngDialogData.status = 'canceled';
+    var url = '/drivers/orders/' + $scope.ngDialogData.id;
+    $http.put(url, {order: $scope.ngDialogData}).success(function(data){
+      dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
+      var index = $scope.orders.indexOf(data);
+      $scope.orders.splice(index, 1);
+    });
+    return true;
+  };
 
 }]);
+
+app.directive('orderForm', function(){
+  return {
+    restrict: 'E',
+    templateUrl: 'templates/order.html'
+  };
+});
 
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
