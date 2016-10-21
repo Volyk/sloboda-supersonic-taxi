@@ -1,4 +1,5 @@
 class DriversController < ApplicationController
+  include WsBroadcast
   before_action :authenticate_driver!, only: [:orders]
   before_action :set_order, except: [:orders]
   respond_to :html, :json
@@ -15,6 +16,23 @@ class DriversController < ApplicationController
   end
 
   def update_order
+    unless current_dispatcher.nil?
+      @order.dispatcher_id = current_dispatcher.id
+      if params[:order][:status] == 'waiting'
+        @driver = Driver.find_for_authentication(id: params[:order][:driver_id])
+        @driver.status = 'busy'
+        @driver.save
+        ws_new_order(@driver.id)
+        ws_broadcast_driver(@driver.id)
+      end
+    end
+    unless current_driver.nil?
+      if params[:order][:status] == 'declined' || params[:order][:status] == 'done'
+        current_driver.status = 'available'
+        current_driver.save
+        ws_broadcast_driver(current_driver.id)
+      end
+    end
     if @order.update(order_params)
       render json: @order.as_json
     else
