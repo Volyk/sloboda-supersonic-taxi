@@ -6,16 +6,13 @@ class WsConnectionController < WebsocketRails::BaseController
   end
 
   def client_connected
-    if !current_dispatcher.nil?
-      @name = 'disp' + current_dispatcher.id.to_s
-      WebsocketRails.users[@name] = connection
-    elsif !current_driver.nil?
-      WebsocketRails.users[current_driver.id] = connection
-      @orders = Order.where(status: %w(waiting arrived accepted)) \
-                     .where(driver_id: current_driver.id)
-      current_driver.status = @orders.empty? ? 'available' : 'busy'
-      current_driver.save
-      broadcast_message :get_drivers, 'id' => current_driver.id
+    if current_dispatcher
+      WebsocketRails.users["disp#{current_dispatcher.id}"] = connection
+    elsif current_driver
+      driver_id = current_driver.id
+      WebsocketRails.users[driver_id] = connection
+      update_driver_status(driver_id)
+      broadcast_message :get_drivers, 'id' => driver_id
     end
   end
 
@@ -24,5 +21,12 @@ class WsConnectionController < WebsocketRails::BaseController
     current_driver.status = 'offline'
     current_driver.save
     broadcast_message :get_drivers, 'id' => current_driver.id
+  end
+
+  private
+
+  def update_driver_status(driver_id)
+    orders_present = Order.on_driver.where(driver_id: driver_id).present?
+    Driver.find(driver_id).update status: orders_present ? 'busy' : 'available'
   end
 end

@@ -11,4 +11,5 @@ class Order < ApplicationRecord
                 accepted: 'accepted', declined: 'declined', done: 'done',
                 canceled: 'canceled'}
 
+  scope :on_driver, -> { where(status: %w(waiting arrived accepted)) }
 end
