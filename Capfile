@@ -1,5 +1,4 @@
 # Load DSL and Setup Up Stages
-load 'deploy/assets'
 require 'capistrano/setup'
 require 'capistrano/deploy'
 require 'capistrano/rails'
