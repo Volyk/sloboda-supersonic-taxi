@@ -9,9 +9,10 @@
 
   <body>
     <div id="admin_panel_wrapper">
+    <div id="current_admin" style="display: none"><%= current_admin.id %></div>
 
       <div id="logout_panel">
-        <span class="grey_text">Welcome, </span><%= Admin.find_for_authentication(:id => current_admin.id).login %> |
+        <span class="grey_text">Welcome, </span><%= current_admin.login %> |
         <%= link_to 'Logout', destroy_admin_session_path, :method => :delete %>
       </div>
 
@@ -152,7 +153,7 @@
 
       <div id="driver_form">
         <span class="title">Phone phone:</span>
-        <input id="driver_phone" type="text">
+        <input id="driver_phone" type="text" maxlength="10">
         <br>
         <span class="title">Password:</span>
         <input id="driver_password" type="text">
@@ -166,7 +167,7 @@
         <span class="title">Passengers:</span>
         <input id="driver_passengers" type="phone" step=1 min=0>
         <br>
-        <span class="title">Trunk (kg):</span>
+        <span class="title">Trunk (liters):</span>
         <input id="driver_trunk" type="phone" step=1 min=0>
         <br>
         <button class="cancel_form form_button">Cancel</button>
@@ -188,7 +189,7 @@
         <span class="title">Passengers:</span>
         <div id="dr_details_passengers" class="details_value"></div>
         <br>
-        <span class="title">Trunk (kg):</span>
+        <span class="title">Trunk (liters):</span>
         <div id="dr_details_trunk" class="details_value"></div>
         <br>
         <button class="cancel_form form_button">Back</button>
@@ -200,7 +201,7 @@
         <div id="driver_info_container">
           <div id="edit_driver_id" class="hidden"></div>
           <span class="title">Phone phone:</span>
-          <input id="edit_driver_phone" type="text">
+          <input id="edit_driver_phone" type="text" maxlength="10">
           <br>
           <span class="title">Password:</span>
           <input id="edit_driver_password" type="text" placeholder="Left blank to not change">
@@ -214,7 +215,7 @@
           <span class="title">Passengers:</span>
           <input id="edit_driver_passengers" type="phone" step=1 min=0>
           <br>
-          <span class="title">Trunk (kg):</span>
+          <span class="title">Trunk (liters):</span>
           <input id="edit_driver_trunk" type="phone" step=1 min=0>
           <br>
           <button class="cancel_form form_button">Cancel</button>
@@ -233,6 +234,8 @@
       // System functions
 
       var dispatcher = new WebSocketRails(window.location.host + '/websocket');
+
+      var author = document.getElementById('current_admin').innerHTML;
 
       function xnotice(data) {
         clearTimeout(window.xnotice_timeout);
@@ -328,6 +331,27 @@
         }
       }
 
+      dispatcher.bind('get_changed_status', function(data) {
+        var target = find_list_container(data.role, data.id);
+        if (target != false) {
+          if (data.active == true) {
+            target.getElementsByTagName('span')[3].innerHTML = 'Active';
+            target.getElementsByTagName('span')[3].className = 'list_active'
+            target.getElementsByTagName('span')[5].innerHTML = 'Deactivate';
+            target.getElementsByTagName('span')[5].className = 'disable_button';
+            target.getElementsByTagName('span')[5].removeEventListener('click', enable);
+            target.getElementsByTagName('span')[5].addEventListener('click', disable);
+          } else if (data.active == false) {
+            target.getElementsByTagName('span')[3].innerHTML = 'Inactive';
+            target.getElementsByTagName('span')[3].className = 'list_inactive'
+            target.getElementsByTagName('span')[5].innerHTML = 'Activate';
+            target.getElementsByTagName('span')[5].className = 'enable_button';
+            target.getElementsByTagName('span')[5].removeEventListener('click', disable);
+            target.getElementsByTagName('span')[5].addEventListener('click', enable);
+          }
+        }
+      });
+
       function edit() {
         var target = this.parentNode.parentNode.getElementsByTagName('span')[0].innerHTML;
         var role = this.parentNode.parentNode.getElementsByTagName('span')[1].innerHTML;
@@ -420,7 +444,9 @@
       }
 
       dispatcher.bind('get_new_admin_data', function(data) {
-        hide_bg_shadow();
+        if (data.author == author) {
+          hide_bg_shadow();
+        }
         create_unit(data);
       });
 
@@ -472,7 +498,9 @@
       }
 
       dispatcher.bind('get_new_dispatcher_data', function(data) {
-        hide_bg_shadow();
+        if (data.author == author) {
+          hide_bg_shadow();
+        }
         create_unit(data);
       });
 
@@ -500,7 +528,9 @@
       }
 
       dispatcher.bind('get_edit_dispatcher_data', function(data) {
-        hide_bg_shadow();
+        if (data.author == author) {
+          hide_bg_shadow();
+        }
         if (data.email != undefined) {
           var target = find_list_container('dispatcher', data.id);
           target.getElementsByTagName('span')[2].innerHTML = data.email;
@@ -543,7 +573,9 @@
         var dr_passengers = +document.getElementById('driver_passengers').value;
         var dr_trunk = +document.getElementById('driver_trunk').value;
         if ((dr_phone.length != 10) || (dr_pass.length < 6)) {
-          xnotice({ message: 'phone should be in format 0503334455 | Pass. at least 6 chars.' });
+          xnotice({ message: 'Phone should be in format 0503334455 | Pass. at least 6 chars.' });
+        } else if ((dr_passengers < 0) || (dr_trunk < 0)) {
+          xnotice({ message: 'Passengers and trunk could not be < 0' });
         } else {
           dr_params = {};
           dr_params.phone = dr_phone;
@@ -557,7 +589,9 @@
       }
 
       dispatcher.bind('get_new_driver_data', function(data) {
-        hide_bg_shadow();
+        if (data.author == author) {
+          hide_bg_shadow();
+        }
         create_unit(data);
       });
 
@@ -603,6 +637,8 @@
         var dr_old_phone = find_list_container('driver', target).getElementsByTagName('span')[2].innerHTML;
         if ((dr_phone.length != 10) || ((dr_pass.length > 0) && (dr_pass.length < 6))) {
           xnotice({ message: 'phone should be in format 0503334455 | Pass. at least 6 chars.' });
+        } else if ((dr_passengers < 0) || (dr_trunk < 0)) {
+          xnotice({ message: 'Passengers and trunk could not be < 0' });
         } else {
           dr_params = { id: target };
           if (dr_phone != dr_old_phone) {
@@ -620,7 +656,9 @@
       }
 
       dispatcher.bind('get_edit_driver_data', function(data) {
-        hide_bg_shadow();
+        if (data.author == author) {
+          hide_bg_shadow();
+        }
         var target = find_list_container('driver', data.id);
         target.getElementsByTagName('div')[0].innerHTML = data.name;
         if (data.phone != undefined) {
@@ -641,6 +679,9 @@
         setTimeout(function(t) {
           dispatcher.trigger('driver_avatar', { id: t });
         }, 200, target);
+        setTimeout(function(t) {
+          dispatcher.trigger('driver_avatar', { id: t });
+        }, 10000, target);
       }
 
       dispatcher.bind('update_avatar', function(data) {
