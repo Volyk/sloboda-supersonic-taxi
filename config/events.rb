@@ -35,7 +35,4 @@ WebsocketRails::EventMap.describe do
 
   # Core
   subscribe :update_order, to: WsCoreController, with_method: :update_order
-
-
-
 end
