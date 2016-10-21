@@ -1,5 +1,5 @@
 # Change these
-server '46.101.209.147', port: 22, roles: [:web, :app, :db], primary: true
+server '139.59.140.162', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:rakvium/sloboda-supersonic-taxi.git'
 set :application,     'sloboda-supersonic-taxi'
