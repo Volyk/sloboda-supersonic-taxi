@@ -41,16 +41,10 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
   });
 
   dispatcher.bind('get_new_order', function(data) {
-    $scope.get_orders(1000);
+    $http.get('/drivers/orders.json').success(function(data){
+      $scope.orders = data;
+    });
   });
-
-  $scope.get_orders = function(delay) {
-    setTimeout(function() {
-      $http.get('/drivers/orders.json').success(function(data){
-        $scope.orders = data;
-      });
-    }, delay);
-  }
 
   $scope.deleteOrder = function(order) {
     var index = $scope.orders.indexOf(order);
@@ -73,7 +67,6 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
     order.status = 'declined';
     $scope.putMethod(order);
     $scope.deleteOrder(order);
-    $scope.get_orders(1000);
   };
 
   $scope.arrivedToOrder = function(order) {
@@ -85,7 +78,6 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
     order.status = 'done';
     $scope.putMethod(order);
     $scope.deleteOrder(order);
-    $scope.get_orders(1000);
   };
 
 }]);
@@ -104,11 +96,15 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
   });
 
   dispatcher.bind('get_drivers', function(data) {
-    $scope.get_drivers(800);
+    $http.get('/dispatchers/drivers.json').success(function(data){
+      $scope.drivers = data;
+    });
   });
 
   dispatcher.bind('get_orders', function(data) {
-    $scope.get_orders(300);
+    $http.get('/dispatchers/orders.json').success(function(data){
+      $scope.orders = data;
+    });
   });
 
   $scope.options = {
@@ -121,22 +117,6 @@ app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function
   $scope.phone_pattern = /(0)[0-9]{9}/;
   $scope.email_pattern = /^(.+)@(.+)$/;
   $scope.isDispatcher = true;
-
-  $scope.get_orders = function(delay) {
-    setTimeout(function() {
-      $http.get('/dispatchers/orders.json').success(function(data){
-        $scope.orders = data;
-      });
-    }, delay);
-  }
-
-  $scope.get_drivers = function(delay) {
-    setTimeout(function() {
-      $http.get('/dispatchers/drivers.json').success(function(data){
-        $scope.drivers = data;
-      });
-    }, delay);
-  }
 
   $scope.create = function(){
     ngDialog.open({ template: 'templates/order.html', controller: 'DispatchersController', className: 'ngdialog-theme-default' });
