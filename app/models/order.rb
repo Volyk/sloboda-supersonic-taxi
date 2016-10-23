@@ -1,4 +1,3 @@
-#
 class Order < ApplicationRecord
   validates :email, format: { with: /\A(.+)@(.+)\z/ }, allow_blank: true
   validates :end_point, :passengers, :start_point, presence: true
@@ -11,4 +10,6 @@ class Order < ApplicationRecord
   enum status: { incoming: 'incoming', waiting: 'waiting', arrived: 'arrived',
                  accepted: 'accepted', declined: 'declined', done: 'done',
                  canceled: 'canceled' }
+
+  scope :on_driver, -> { where(status: %w(waiting arrived accepted)) }
 end
