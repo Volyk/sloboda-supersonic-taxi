@@ -1,32 +1,49 @@
 # Manage the connections
 class WsConnectionController < WebsocketRails::BaseController
   def initialize_session
-    # perform application setup here
-    controller_store[:message_count] = 0
+    WebsocketRails.users.users['admin'] = WebsocketRails::UserManager.new
+    WebsocketRails.users.users['driver'] = WebsocketRails::UserManager.new
+    WebsocketRails.users.users['dispatcher'] = WebsocketRails::UserManager.new
   end
 
   def client_connected
-    if current_dispatcher
-      WebsocketRails.users["disp#{current_dispatcher.id}"] = connection
-    elsif current_driver
-      driver_id = current_driver.id
-      WebsocketRails.users[driver_id] = connection
-      update_driver_status(driver_id)
-      broadcast_message :get_drivers, 'id' => driver_id
-    end
+    handle(current_admin, 'admin', true) if current_admin
+    handle(current_driver, 'driver', true) if current_driver
+    handle(current_dispatcher, 'dispatcher', true) if current_dispatcher
   end
 
   def delete_user
-    return if current_driver.nil?
-    current_driver.status = 'offline'
-    current_driver.save
-    broadcast_message :get_drivers, 'id' => current_driver.id
+    handle(current_admin, 'admin', false) if current_admin
+    handle(current_driver, 'driver', false) if current_driver
+    handle(current_dispatcher, 'dispatcher', false) if current_dispatcher
   end
 
   private
 
-  def update_driver_status(driver_id)
-    orders_present = Order.on_driver.where(driver_id: driver_id).present?
-    Driver.find(driver_id).update status: orders_present ? 'busy' : 'available'
+  def handle(user, role, state)
+    manager = WebsocketRails.users[role]
+    if state
+      manager[user.id] = connection
+    elsif manager.users[user.id.to_s]
+      manager[user.id].connections.delete(connection)
+      manager.users.delete(user.id.to_s) if manager[user.id].connections.empty?
+    end
+    arbitrary_actions(user, role, state)
+  end
+
+  def arbitrary_actions(user, role, state)
+    broadcast_message :ws_connection, 'id' => user.id, 'role' => role,
+                                      'state' => state
+    update_driver_status(user.id, state) if role == 'driver'
+  end
+
+  def update_driver_status(id, state)
+    if state
+      orders_present = Order.on_driver.where(driver_id: id).present?
+      Driver.find(id).update status: orders_present ? 'busy' : 'available'
+    else
+      Driver.find(id).update status: 'offline'
+    end
+    broadcast_message :get_drivers, 'message' => id
   end
 end
