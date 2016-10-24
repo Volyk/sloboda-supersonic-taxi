@@ -17,6 +17,7 @@ class DriversController < ApplicationController
 
   def update_order
     order_status = params[:order][:status]
+    #byebug
     unless current_dispatcher.nil?
       @order.dispatcher_id = current_dispatcher.id
       if order_status == 'waiting'
@@ -31,6 +32,7 @@ class DriversController < ApplicationController
       if order_status == 'declined' || order_status == 'done'
         current_driver.status = 'available'
         current_driver.save
+        @order.driver_id = nil
         ws_broadcast_driver(current_driver.id)
       end
     end
@@ -44,11 +46,11 @@ class DriversController < ApplicationController
   private
 
   def order_params
-    if !current_dispatcher.nil?
+    if current_dispatcher
       params.require(:order).permit(:phone, :email, :start_point, :end_point,
                                     :comment, :passengers, :baggage, :driver_id,
                                     :status)
-    elsif !current_driver.nil?
+    elsif current_driver
       params.require(:order).permit(:status)
     end
   end

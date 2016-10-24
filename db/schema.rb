@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 20161022192252) do
 
   create_table "drivers", force: :cascade do |t|
     t.string   "car_type"
-    t.string   "passengers",             default: "0"
-    t.string   "trunk",                  default: "0"
+    t.integer  "passengers",             default: 0
+    t.integer  "trunk",                  default: 0
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
     t.string   "phone",                  default: "",        null: false

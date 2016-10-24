@@ -54,7 +54,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    if !current_dispatcher.nil?
+    if current_dispatcher
       params.require(:order).permit(:phone, :email, :start_point, :end_point,
                                     :comment, :passengers, :baggage, :driver_id,
                                     :status)

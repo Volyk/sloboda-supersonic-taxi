@@ -573,7 +573,7 @@
         var dr_passengers = +document.getElementById('driver_passengers').value;
         var dr_trunk = +document.getElementById('driver_trunk').value;
         if ((dr_phone.length != 10) || (dr_pass.length < 6)) {
-          xnotice({ message: 'Phone should be in format 0503334455 | Pass. at least 6 chars.' });
+          xnotice({ message: 'Phone should be in format 0--------- | Pass. at least 6 chars.' });
         } else if ((dr_passengers < 0) || (dr_trunk < 0)) {
           xnotice({ message: 'Passengers and trunk could not be < 0' });
         } else {
@@ -636,7 +636,7 @@
         var dr_trunk = +document.getElementById('edit_driver_trunk').value;
         var dr_old_phone = find_list_container('driver', target).getElementsByTagName('span')[2].innerHTML;
         if ((dr_phone.length != 10) || ((dr_pass.length > 0) && (dr_pass.length < 6))) {
-          xnotice({ message: 'phone should be in format 0503334455 | Pass. at least 6 chars.' });
+          xnotice({ message: 'phone should be in format 0--------- | Pass. at least 6 chars.' });
         } else if ((dr_passengers < 0) || (dr_trunk < 0)) {
           xnotice({ message: 'Passengers and trunk could not be < 0' });
         } else {

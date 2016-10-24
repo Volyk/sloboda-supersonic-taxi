@@ -14,7 +14,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
         data = { 'id' => message[:id], 'role' => 'admin', 'active' => false }
         broadcast_message :get_changed_status, data
       else
-        send_message :xnotice, 'message' => 'Status: Inactive - ERROR'
+        message = 'Disable ERROR: ' + @admin.errors.details.to_s
+        send_message :xnotice, 'message' => message
       end
     end
   end
@@ -28,7 +29,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
         data = { 'id' => message[:id], 'role' => 'admin', 'active' => true }
         broadcast_message :get_changed_status, data
       else
-        send_message :xnotice, 'message' => 'Status: Active - ERROR'
+        message = 'Enable ERROR: ' + @admin.errors.details.to_s
+        send_message :xnotice, 'message' => message
       end
     end
   end
@@ -42,7 +44,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
         data = { 'id' => message[:id], 'role' => 'dispatcher', 'active' => false }
         broadcast_message :get_changed_status, data
       else
-        send_message :xnotice, 'message' => 'Status: Inactive - ERROR'
+        message = 'Disable ERROR: ' + @dispatcher.errors.details.to_s
+        send_message :xnotice, 'message' => message
       end
     end
   end
@@ -56,7 +59,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
         data = { 'id' => message[:id], 'role' => 'dispatcher', 'active' => true }
         broadcast_message :get_changed_status, data
       else
-        send_message :xnotice, 'message' => 'Status: Active - ERROR'
+        message = 'Enable ERROR: ' + @dispatcher.errors.details.to_s
+        send_message :xnotice, 'message' => message
       end
     end
   end
@@ -70,7 +74,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
         data = { 'id' => message[:id], 'role' => 'driver', 'active' => false }
         broadcast_message :get_changed_status, data
       else
-        send_message :xnotice, 'message' => 'Status: Inactive - ERROR'
+        message = 'Disable ERROR: ' + @driver.errors.details.to_s
+        send_message :xnotice, 'message' => message
       end
     end
   end
@@ -84,7 +89,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
         data = { 'id' => message[:id], 'role' => 'driver', 'active' => true }
         broadcast_message :get_changed_status, data
       else
-        send_message :xnotice, 'message' => 'Status: Active - ERROR'
+        message = 'Enable ERROR: ' + @driver.errors.details.to_s
+        send_message :xnotice, 'message' => message
       end
     end
   end
@@ -103,7 +109,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
           admin_data[:author] = current_admin.id
           broadcast_message :get_new_admin_data, admin_data
         else
-          send_message :xnotice, 'message' => 'Creating admin: ERROR'
+          message = 'Create ERROR: ' + @admin.errors.details.to_s
+          send_message :xnotice, 'message' => message
         end
       end
     end
@@ -117,7 +124,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
       if @admin.save
         send_message :xnotice, 'message' => 'Password changed successfully'
       else
-        send_message :xnotice, 'message' => 'Changing password: ERROR'
+        message = 'Edit ERROR: ' + @admin.errors.details.to_s
+        send_message :xnotice, 'message' => message
       end
     end
   end
@@ -136,7 +144,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
           dispatcher_data[:author] = current_admin.id
           broadcast_message :get_new_dispatcher_data, dispatcher_data
         else
-          send_message :xnotice, 'message' => 'Creating dispatcher: ERROR'
+          message = 'Create ERROR: ' + @dispatcher.errors.details.to_s
+          send_message :xnotice, 'message' => message
         end
       end
     end
@@ -162,7 +171,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
           dispatcher_data[:author] = current_admin.id
           broadcast_message :get_edit_dispatcher_data, dispatcher_data
         else
-          send_message :xnotice, 'message' => 'Changing dispatcher: ERROR'
+          message = 'Edit ERROR: ' + @dispatcher.errors.details.to_s
+          send_message :xnotice, 'message' => message
         end
       end
     end
@@ -187,7 +197,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
           driver_data[:author] = current_admin.id
           broadcast_message :get_new_driver_data, driver_data
         else
-          send_message :xnotice, 'message' => 'Creating driver: ERROR'
+          message = 'Create ERROR: ' + @driver.errors.details.to_s
+          send_message :xnotice, 'message' => message
         end
       end
     end
@@ -238,7 +249,8 @@ class Admins::WsPanelController < WebsocketRails::BaseController
           driver_data[:author] = current_admin.id
           broadcast_message :get_edit_driver_data, driver_data
         else
-          send_message :xnotice, 'message' => 'Changing driver: ERROR'
+          message = 'Edit ERROR: ' + @driver.errors.details.to_s
+          send_message :xnotice, 'message' => message
         end
       end
     end
@@ -257,6 +269,6 @@ class Admins::WsPanelController < WebsocketRails::BaseController
   private
 
   def last_admin?
-    Admin.where(active: true).length == 1 ? true : false
+    Admin.where(active: true).count == 1 ? true : false
   end
 end
