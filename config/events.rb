@@ -33,4 +33,6 @@ WebsocketRails::EventMap.describe do
   subscribe :edit_driver, to: Admins::WsPanelController, with_method: :edit_driver
   subscribe :driver_avatar, to: Admins::WsPanelController, with_method: :driver_avatar
 
+  # Core
+  subscribe :update_order, to: WsCoreController, with_method: :update_order
 end
