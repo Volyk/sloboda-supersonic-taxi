@@ -26,6 +26,7 @@ test: &TEST
 
 production:
   adapter: postgresql
+  username: deploy
   prepared_statements: false
   database: sloboda_production
   pool: 5
