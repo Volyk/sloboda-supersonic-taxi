@@ -1,11 +1,10 @@
 <div ng-app="taxi">
   <nav class="navbar navbar-default">
     <div class="collapse navbar-collapse">
-	  <ul class="nav navbar-nav navbar-right">
-    <li class ="logout"><%= link_to "История",      history_driver_path %></li>
+    <ul class="nav navbar-nav navbar-right">
     <li class="logout"><%= link_to "Выйти", destroy_driver_session_path, method: :delete %></li>
-	  </ul>
-	</div>
+    </ul>
+  </div>
   </nav>
   <div class="view-container">
     <div ng-view class="view-frame animate-view"></div>
