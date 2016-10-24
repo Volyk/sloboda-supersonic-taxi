@@ -11,4 +11,8 @@ class OrderMailer < ApplicationMailer
     mail(to: @order.email, subject: 'Accept Order')
   end
 
+  def execute_order(order)
+    @order = order
+    mail(to: @order.email, subject: 'Execute Order')
+  end
 end
