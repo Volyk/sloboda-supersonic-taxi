@@ -17,7 +17,6 @@ class DriversController < ApplicationController
 
   def update_order
     order_status = params[:order][:status]
-    #byebug
     unless current_dispatcher.nil?
       @order.dispatcher_id = current_dispatcher.id
       if order_status == 'waiting'
@@ -37,6 +36,7 @@ class DriversController < ApplicationController
       end
     end
     if @order.update(order_params)
+      OrderMailer.accept_order(@order).deliver if @order.status == 'accepted'
       render json: @order.as_json
     else
       render json: @order.errors, status: :unprocessable_entity
