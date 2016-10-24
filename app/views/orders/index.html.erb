@@ -4,57 +4,55 @@
   </div>
 </div>
 <noscript>
-    <div class='col-sm-4 col-sm-offset-4'><h3><%= notice %></h3></div>
-    <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
-        <form class="order-form" method="post" action="/orders">
+    <div class="col-lg-6 col-lg-offset-2 col-md-7 col-md-offset-2 col-sm-7 col-sm-offset-2 col-xs-12">
+        <form class="form-horizontal order-form" method="post" action="/orders">
             <div class="form-group">
-                <label for="phone" class="col-sm-4 control-label">Номер телефона<span class="required">*</span></label>
-                <div class="col-sm-8">
+                <label for="phone" class="col-sm-4 col-xs-12 control-label">Номер телефона<span class="required">*</span></label>
+                <div class="col-sm-8 col-xs-12">
                     <input type="text" maxlength="10" class="form-control" id="phone" name="order[phone]" placeholder="0987654321" required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="email" class="col-sm-4 control-label">Email</label>
-                <div class="col-sm-8">
+                <label for="email" class="col-sm-4 col-xs-12 control-label">Email</label>
+                <div class="col-sm-8 col-xs-12">
                     <input type="text" class="form-control" id="email" name="order[email]" placeholder="Введите email">
                 </div>
             </div>
             <div class="form-group">
-                <label for="start_point" class="col-sm-4 control-label">Откуда<span class="required">*</span></label>
-                <div class="col-sm-8">
+                <label for="start_point" class="col-sm-4 col-xs-12 control-label">Откуда<span class="required">*</span></label>
+                <div class="col-sm-8 col-xs-12">
                     <input type="text" class="form-control" id="start_point" name="order[start_point]" placeholder="Введите адрес" required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="end_point" class="col-sm-4 control-label">Куда<span class="required">*</span></label>
-                <div class="col-sm-8">
+                <label for="end_point" class="col-sm-4 col-xs-12 control-label">Куда<span class="required">*</span></label>
+                <div class="col-sm-8 col-xs-12">
                     <input type="text" class="form-control" id="end_point" name="order[end_point]" placeholder="Введите адрес" required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="passengers" class="col-sm-4 control-label">Пассажиры<span class="required">*</span></label>
-                <div class="col-sm-2">
+                <label for="passengers" class="col-sm-4 col-xs-12 control-label">Пассажиры<span class="required">*</span></label>
+                <div class="col-sm-3 col-xs-12 passengers">
                     <select class="form-control" id="passengers" name="order[passengers]">
                         <option value="1" selected>1</option><option value="2">2</option><option value="3">3</option>
                         <option value="4">4</option><option value="5">5</option><option value="6">6</option>
                         <option value="7">7</option><option value="8">8</option>
-                </select>
                     </select>
                 </div>
-                <div class="checkbox col-xs-6">
+                <div class="checkbox col-sm-5 col-xs-12">
                     <label for="baggage">
                         <input id="baggage" name="order[baggage]" type="checkbox" value="true">Наличие багажа
                     </label>
                 </div>
             </div>
             <div class="form-group">
-                <label for="comment" class="col-sm-4 control-label">Комментарий</label>
-                <div class="col-sm-8"><textarea class="form-control" rows="2" id="comment" name="order[comment]"></textarea></div>
+                <label for="comment" class="col-sm-4 col-xs-12 control-label">Комментарий</label>
+                <div class="col-sm-8 col-xs-12"><textarea class="form-control" rows="2" id="comment" name="order[comment]"></textarea></div>
             </div>
             <div class="col-sm-2 col-sm-offset-5 col-xs-3 col-xs-offset-3">
                 <button type="submit" class="btn btn-default">Отправить</button>
             </div>
         </form>
-
-    <div class="phone_us col-sm-6 col-sm-offset-3"><a href="tel:+380987654321">Позвонить: +380987654321</a></div>
+        <div class="phone_us col-sm-6 col-sm-offset-3"><a href="tel:+380987654321">Позвонить: +380987654321</a></div>
+    </div>
 </noscript>
