@@ -3,21 +3,21 @@ class OrderMailer < ApplicationMailer
 
   def order_email(order)
     @order = order
-    mail(to: @order.email, subject: 'Order Email')
+    mail(to: @order.email, subject: 'New Order')
   end
 
   def accept_order(order)
     @order = order
-    mail(to: @order.email, subject: 'Accept Order')
+    mail(to: @order.email, subject: 'Accepted Order')
   end
 
   def execute_order(order)
     @order = order
-    mail(to: @order.email, subject: 'Execute Order')
+    mail(to: @order.email, subject: 'Executed Order')
   end
 
   def arrive(order)
     @order = order
-    mail(to: @order.email, subject: 'Execute Order')
+    mail(to: @order.email, subject: 'Arrived Driver')
   end
 end
