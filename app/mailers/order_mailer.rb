@@ -15,4 +15,9 @@ class OrderMailer < ApplicationMailer
     @order = order
     mail(to: @order.email, subject: 'Execute Order')
   end
+
+  def arrive(order)
+    @order = order
+    mail(to: @order.email, subject: 'Execute Order')
+  end
 end

@@ -38,6 +38,7 @@ class DriversController < ApplicationController
     if @order.update(order_params)
       OrderMailer.accept_order(@order).deliver if @order.status == 'accepted'
       OrderMailer.execute_order(@order).deliver if @order.status == 'done'
+      OrderMailer.arrive(@order).deliver if @order.status == 'arrived'
       render json: @order.as_json
     else
       render json: @order.errors, status: :unprocessable_entity
