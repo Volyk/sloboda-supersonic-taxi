@@ -16,11 +16,14 @@
         $scope.email_pattern = /^(.+)@(.+)$/;
         $scope.isDispatcher = true;
 
-        function putMethod(data) {
+        function checkStatus(data){
             if (data.driver_id) {
                 data.driver_id = data.driver_id.id;
                 data.status = 'waiting';
             }
+        }
+        
+        function putMethod(data) {
             var url = '/drivers/orders/' + data.id;
             $http.put(url, {order: data}).success(function(){
                 dispatcher.trigger('update_order', { id: data.id });
@@ -33,12 +36,16 @@
 
         $scope.addOrder = function(){
             $scope.ngDialogData.passengers = $scope.options.selectedOption.value;
-            putMethod($scope.ngDialogData);
+            checkStatus($scope.ngDialogData);
+            $http.post('/orders', {order: $scope.ngDialogData}).success(function() {
+                dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
+            });
             return true;
         };
 
 
         $scope.updateOrder = function() {
+            checkStatus($scope.ngDialogData);
             putMethod($scope.ngDialogData);
             return true;
         };
