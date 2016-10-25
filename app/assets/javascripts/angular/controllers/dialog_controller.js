@@ -1,7 +1,7 @@
 (function(){
     angular
     .module('taxi')
-    .controller('DialogController', ['$scope', '$http', function($scope, $http) {
+    .controller('DialogController', ['$scope', '$http', 'ngDialog', 'apiService', function($scope, $http, ngDialog, apiService) {
 
         var dispatcher = new WebSocketRails(window.location.host + '/websocket');
 
@@ -12,6 +12,7 @@
             ],
             selectedOption: {value: '1'}
         };
+
         $scope.phone_pattern = /(0)[0-9]{9}/;
         $scope.email_pattern = /^(.+)@(.+)$/;
         $scope.isDispatcher = true;
@@ -22,40 +23,34 @@
                 data.status = 'waiting';
             }
         }
-        
-        function putMethod(data) {
-            var url = '/drivers/orders/' + data.id;
-            $http.put(url, {order: data}).success(function(){
-                dispatcher.trigger('update_order', { id: data.id });
-                if(data.status == 'canceled') {
-                    var index = $scope.orders.indexOf($scope.ngDialogData);
-                    $scope.orders.splice(index, 1);
-                }
-            });
-        }
 
         $scope.addOrder = function(){
             $scope.ngDialogData.passengers = $scope.options.selectedOption.value;
             checkStatus($scope.ngDialogData);
-            $http.post('/orders', {order: $scope.ngDialogData}).success(function() {
+            apiService.newOrder($scope.ngDialogData).then(function(){
                 dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
             });
             return true;
         };
 
-
         $scope.updateOrder = function() {
+            var url = '/drivers/orders/' + $scope.ngDialogData;
             checkStatus($scope.ngDialogData);
-            putMethod($scope.ngDialogData);
+            apiService.updateOrder(url, $scope.ngDialogData).then(function(){
+                dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
+            });
             return true;
         };
 
-
         $scope.cancelOrder = function() {
-            $scope.ngDialogData.status = 'canceled'; 
-            putMethod($scope.ngDialogData);
+            var url = '/drivers/orders/' + $scope.ngDialogData;
+            $scope.ngDialogData.status = 'canceled';
+            apiService.updateOrder(url, $scope.ngDialogData).then(function(){
+                dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
+            }); 
             return true;
         };
 
     }]);
+
 }) ();

@@ -1,7 +1,7 @@
 (function () {
     angular
     .module('taxi')
-    .controller('CreateOrderController', ['$scope', '$http', function($scope, $http) {
+    .controller('CreateOrderController', ['$scope', '$http', 'apiService', function($scope, $http, apiService) {
         $scope.options = {
             availableOptions: [
             {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'},
@@ -23,7 +23,7 @@
             }
             $scope.ngDialogData.email = $scope.ngDialogData.email.toLowerCase();
             $scope.ngDialogData.passengers = $scope.options.selectedOption.value;
-            $http.post('/orders', {order: $scope.ngDialogData}).success(function(){
+            apiService.newOrder($scope.ngDialogData).then(function(){
                 alert('Ваш заказ принят!');
                 $scope.disabled = true;
                 $scope.orderForm.$setPristine();
@@ -32,4 +32,5 @@
             });
         };
     }]);
+    
 }) ();

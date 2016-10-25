@@ -5,6 +5,7 @@
 </script>
 
 <div class="col-sm-6">
+  <button class="btn btn-lg btn-primary order-btn" ng-click="create()">Новый заказ</button>
   <ul class="list-group">
     <div ng-repeat="order in orders">
       <li class="list-group-item">
@@ -15,6 +16,7 @@
         <p>Количество пассажиров: {{order.passengers}}</p>
         <p>Багаж: <span ng-if="order.baggage">есть</span><span ng-if="!order.baggage">нет</span></p>
         <div class="comment-wrap"><p>Комментарий: {{order.comment}}</p></div>
+        <div ng-if="order.decline_order"><p>Комментарий водителя: {{order.decline_order}}</p></div>
         <p><button class="btn btn-success" ng-click="update(order)">Редактировать</button>
            <button class="btn btn-danger" ng-click="confirmCancel(order)">Отменить заказ</button>
         </p>

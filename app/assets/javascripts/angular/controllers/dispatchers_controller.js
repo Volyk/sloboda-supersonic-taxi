@@ -1,16 +1,15 @@
 (function(){
     angular
     .module('taxi')
-    .controller('DispatchersController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
+    .controller('DispatchersController', ['$scope', '$http', 'ngDialog', 'apiService', function($scope, $http, ngDialog, apiService) {
 
         var dispatcher = new WebSocketRails(window.location.host + '/websocket');
         var notification = document.getElementById('notification');
 
-        $http.get('/dispatchers/orders.json').success(function(data){
+        apiService.getDispatcherOrders().then(function(data){
             $scope.orders = data;
         });
-
-        $http.get('/dispatchers/drivers.json').success(function(data){
+        apiService.getDrivers().then(function(data){
             $scope.drivers = data;
         });
 
@@ -24,16 +23,16 @@
             $http.get('/dispatchers/orders.json').success(function(data){
                 $scope.orders = data;
             });
+            notification.play();
         });
 
         $scope.create = function(){
-            ngDialog.open({ template: 'templates/order.html', controller: 'DialogController', className: 'ngdialog-theme-default' });
+            ngDialog.open({ template: 'templates/order.html', scope: $scope, controller: 'DialogController', className: 'ngdialog-theme-default' });
         };
 
-       
         $scope.update = function(order){
             order.isUpdating = true;
-            ngDialog.open({ template: 'templates/order.html', data: order, controller: 'DialogController', className: 'ngdialog-theme-default' });
+            ngDialog.open({ template: 'templates/order.html', data: order, scope: $scope, controller: 'DialogController', className: 'ngdialog-theme-default' });
         };
 
 
@@ -42,4 +41,5 @@
         };
 
     }]);
+    
 }) ();
