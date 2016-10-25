@@ -1,6 +1,3 @@
-<div ng-if="disabled" class="col-sm-2 col-sm-offset-5 col-xs-3 col-xs-offset-3 moreOrders">
-  <button class="btn btn-lg btn-success" ng-click="moreOrders()">Ещё один заказ</button>
-</div>
 <form novalidate class="form-horizontal order-form" name="orderForm">
   <div class="form-group">
     <label for="phone" class="col-sm-4 control-label">Номер телефона<span class="required">*</span></label>
@@ -54,12 +51,15 @@
       </div>
     </div>
   </div>
-  <div ng-if="!ngDialogData.isUpdating">
+  <div ng-if="!ngDialogData.isUpdating&&!disabled">
   <div class="form-group">
     <div class="col-sm-2 col-sm-offset-5 col-xs-3 col-xs-offset-3">
-      <button type="submit" ng-disabled="orderForm.$invalid || disabled" class="btn btn-lg btn-success" ng-click="addOrder() && closeThisDialog()">Отправить</button>
+      <button type="submit" ng-disabled="orderForm.$invalid" class="btn btn-lg btn-success" ng-click="addOrder() && closeThisDialog()">Отправить</button>
     </div>
   </div>
+  </div>
+  <div ng-if="disabled" class="col-sm-2 col-sm-offset-5 col-xs-3 col-xs-offset-3">
+    <button class="btn btn-lg btn-success" ng-click="moreOrders()">Ещё один заказ</button>
   </div>
   <div ng-if="ngDialogData.isUpdating">
     <div class="form-group">

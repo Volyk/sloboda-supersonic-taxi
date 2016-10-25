@@ -3,9 +3,8 @@
   <button class="btn btn-success col-sm-offset-4" ng-click="cancelOrder() && closeThisDialog()">Да</button>
   <button class="btn btn-default" ng-click="closeThisDialog()">Отмена</button>
 </script>
-
+<div class="col-sm-12"><button class="btn btn-lg btn-primary order-btn" ng-click="create()">Новый заказ</button></div>
 <div class="col-sm-6">
-  <button class="btn btn-lg btn-primary order-btn" ng-click="create()">Новый заказ</button>
   <ul class="list-group">
     <div ng-repeat="order in orders">
       <li class="list-group-item">

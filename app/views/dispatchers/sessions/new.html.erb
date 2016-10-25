@@ -8,14 +8,14 @@
   </div>
 
   <div class="col-sm-4 col-sm-offset-4">
-    <%= f.label :Пароль %><br />
+    <%= f.label :password, 'Пароль' %><br />
     <%= f.password_field :password, autocomplete: "off" %>
   </div>
 
   <% if devise_mapping.rememberable? -%>
     <div class="col-sm-4 col-sm-offset-4">
       <%= f.check_box :remember_me %>
-      <%= f.label :запомнить_меня %>
+      <%= f.label :remember_me, 'запомнить меня' %>
     </div>
   <% end -%>
 
