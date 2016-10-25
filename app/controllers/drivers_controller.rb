@@ -102,11 +102,13 @@ class DriversController < ApplicationController
       log(nil, current_dispatcher.id, state)
     when 'Done', 'Accepted', 'Arrived'
       log(current_driver.id, nil, state)
+      (current_driver.update done: current_driver.done + 1) if state == 'Done'
     when 'Waiting'
       log(@order.driver_id, current_dispatcher.id, 'Assigned')
     when 'Declined', 'Incoming'
       if current_driver
         log(current_driver.id, nil, state)
+        current_driver.update cancelled: current_driver.cancelled + 1
       else
         log(nil, current_dispatcher.id, 'Corrected')
       end

@@ -16,6 +16,7 @@ class OrdersTask < OrdersController
   def arbitrary_actions(driver, order)
     log_message = 'Declined by timeout'
     OrdersBlog.log(order.id, driver.id, order.dispatcher_id, log_message)
+    driver.update cancelled: driver.cancelled + 1
     # *** Old !WO ***
     ws_new_order(driver.id)
     ws_broadcast_driver(driver.id)
