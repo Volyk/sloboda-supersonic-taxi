@@ -23,7 +23,9 @@ class OrdersTask < OrdersController
     ws_broadcast_order(order.id)
 
     # ***New !WN ***
-    ws_message('driver', driver.id, 'order_timed_out', order.as_json)
+    history = driver.orders.where('updated_at >=? AND status =?',
+                                   Date.yesterday, 'done')
+    ws_message('driver', driver.id, 'order_timed_out', history.as_json)
     broadcast('dispatcher', 'new_driver', driver.as_json)
     broadcast('dispatcher', 'new_order', order.as_json)
   end

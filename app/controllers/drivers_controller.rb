@@ -86,6 +86,7 @@ class DriversController < ApplicationController
     return if @order_status != 'waiting'
     driver = Driver.find(params[:order][:driver_id])
     driver.update status: 'busy'
+    @order.status = 'waiting'
     # *** Old !WO ***
     ws_new_order(driver.id)
     ws_broadcast_driver(driver.id)

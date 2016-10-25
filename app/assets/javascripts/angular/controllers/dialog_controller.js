@@ -3,8 +3,6 @@
     .module('taxi')
     .controller('DialogController', ['$scope', '$http', 'ngDialog', 'apiService', function($scope, $http, ngDialog, apiService) {
 
-        var dispatcher = new WebSocketRails(window.location.host + '/websocket');
-
         $scope.options = {
             availableOptions: [
             {value: '1'}, {value: '2'}, {value: '3'}, {value: '4'}, 
@@ -27,27 +25,21 @@
         $scope.addOrder = function(){
             $scope.ngDialogData.passengers = $scope.options.selectedOption.value;
             checkStatus($scope.ngDialogData);
-            apiService.newOrder($scope.ngDialogData).then(function(){
-                dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
-            });
+            apiService.newOrder($scope.ngDialogData);
             return true;
         };
 
         $scope.updateOrder = function() {
-            var url = '/drivers/orders/' + $scope.ngDialogData;
+            var url = '/drivers/orders/' + $scope.ngDialogData.id;
             checkStatus($scope.ngDialogData);
-            apiService.updateOrder(url, $scope.ngDialogData).then(function(){
-                dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
-            });
+            apiService.updateOrder(url, $scope.ngDialogData);
             return true;
         };
 
         $scope.cancelOrder = function() {
-            var url = '/drivers/orders/' + $scope.ngDialogData;
+            var url = '/drivers/orders/' + $scope.ngDialogData.id;
             $scope.ngDialogData.status = 'canceled';
-            apiService.updateOrder(url, $scope.ngDialogData).then(function(){
-                dispatcher.trigger('update_order', { id: $scope.ngDialogData.id });
-            }); 
+            apiService.updateOrder(url, $scope.ngDialogData);
             return true;
         };
 

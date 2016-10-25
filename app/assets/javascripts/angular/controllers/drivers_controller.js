@@ -6,23 +6,34 @@
         var dispatcher = new WebSocketRails(window.location.host + '/websocket');
         var notification = document.getElementById('notification');
 
+
         apiService.getDriverOrders().then(function(data){
             $scope.orders = data;
         });
 
-        dispatcher.bind('get_new_order', function() {
-            $http.get('/drivers/orders.json').success(function(data){
-                $scope.orders = data;
-                if ($scope.orders[0].status === 'waiting') {
-                    notification.play();
-                }
-            });
+        dispatcher.bind('receive_order', function(data) {
+            if (data.status === 'waiting') {
+                $scope.orders = [data];
+                $scope.$apply();
+                notification.play();
+            }
+        });
+
+        dispatcher.bind('order_timed_out', function(data) {
+            $scope.orders = data;
+            $scope.$apply();
+        });
+
+        dispatcher.bind('ping', function() {
+            dispatcher.trigger('pong', { msg: 'pong' });
         });
 
         $scope.updateStatus = function(order) {
             var url = '/drivers/orders/' + order.id;
             apiService.updateOrder(url, order).then(function(){
-                dispatcher.trigger('update_order', { id: order.id });
+                apiService.getDriverOrders().then(function(data){
+                    $scope.orders = data;
+                });
             });
         };
 
