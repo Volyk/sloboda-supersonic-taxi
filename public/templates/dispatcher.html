@@ -11,8 +11,8 @@
       <li class="list-group-item">
         <h3>Заявка №{{order.id}}, {{order.created_at|date:'dd.MM.yyyy HH:mm:ss'}}</h3>
         <p>Номер телефона: {{order.phone}}</p>
-        <p>Откуда: {{order.start_point}}</p>
-        <p>Куда: {{order.end_point}}</p>
+        <div class="comment-wrap"><p>Откуда: {{order.start_point}}</p></div>
+        <div class="comment-wrap"><p>Куда: {{order.end_point}}</p></div>
         <p>Количество пассажиров: {{order.passengers}}</p>
         <p>Багаж: <span ng-if="order.baggage">есть</span><span ng-if="!order.baggage">нет</span></p>
         <div class="comment-wrap"><p>Комментарий: {{order.comment}}</p></div>
