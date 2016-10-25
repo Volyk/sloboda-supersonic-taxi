@@ -22,13 +22,18 @@ class WsConnectionController < WebsocketRails::BaseController
 
   def handle(user, role, state)
     manager = WebsocketRails.users[role]
-    if state
-      manager[user.id] = connection
-    elsif manager.users[user.id.to_s]
-      manager[user.id].connections.delete(connection)
-      manager.users.delete(user.id.to_s) if manager[user.id].connections.empty?
-    end
+    state ? add_connection(manager, user) : delete_connection(manager, user.id)
     arbitrary_actions(user, role, state)
+  end
+
+  def add_connection(manager, user)
+    manager[user.id] = connection
+  end
+
+  def delete_connection(manager, user_id)
+    return unless manager.users[user_id.to_s]
+    manager[user_id].connections.delete(connection)
+    manager.users.delete(user_id.to_s) if manager[user_id].connections.empty?
   end
 
   def arbitrary_actions(user, role, state)
@@ -38,12 +43,18 @@ class WsConnectionController < WebsocketRails::BaseController
   end
 
   def update_driver_status(id, state)
+    driver = Driver.find(id)
     if state
       orders_present = Order.on_driver.where(driver_id: id).present?
-      Driver.find(id).update status: orders_present ? 'busy' : 'available'
+      driver.update status: orders_present ? 'busy' : 'available'
     else
-      Driver.find(id).update status: 'offline'
+      driver.update status: 'offline'
     end
+    # *** Old !WO ***
     broadcast_message :get_drivers, 'message' => id
+
+    # *** New !WN***
+    action = driver.status == 'available' ? :new_driver : :remove_driver
+    broadcast_message action, driver.as_json
   end
 end

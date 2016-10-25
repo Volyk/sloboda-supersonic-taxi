@@ -83,9 +83,8 @@ app.controller('DriversController', ['$scope', '$http', function($scope, $http) 
 }]);
 
 app.controller('DispatchersController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
-  if (window.dispatcher == undefined) {
-    window.dispatcher = new WebSocketRails(window.location.host + '/websocket');
-  }
+
+  var dispatcher = new WebSocketRails(window.location.host + '/websocket');
   var notification = document.getElementById("notification");
 
   $http.get('/dispatchers/orders.json').success(function(data){
