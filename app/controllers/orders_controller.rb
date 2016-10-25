@@ -23,6 +23,7 @@ class OrdersController < ApplicationController
   private
 
   def create_success(format)
+    logging
     # *** Old !WO ***
     ws_broadcast_order(@order.id)
 
@@ -69,5 +70,12 @@ class OrdersController < ApplicationController
     # *** New !WN ***
     ws_message('driver', driver.id, 'receive_order', @order.as_json)
     broadcast('dispatcher', 'remove_driver', driver.as_json)
+  end
+
+  def logging
+    OrdersBlog.log(@order.id, nil, @order.dispatcher_id, 'Created')
+    return if @order.driver_id.nil?
+    message = 'Assigned'
+    OrdersBlog.log(@order.id, @order.driver_id, @order.dispatcher_id, message)
   end
 end

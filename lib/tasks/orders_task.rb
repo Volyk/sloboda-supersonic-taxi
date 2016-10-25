@@ -9,11 +9,13 @@ class OrdersTask < OrdersController
       driver = Driver.find(order.driver_id)
       driver.update status: 'available'
       order.update status: 'declined', driver_id: nil
-      ws_update_message(driver, order)
+      arbitrary_actions(driver, order)
     end
   end
 
-  def ws_update_message(driver, order)
+  def arbitrary_actions(driver, order)
+    log_message = 'Declined by timeout'
+    OrdersBlog.log(order.id, driver.id, order.dispatcher_id, log_message)
     # *** Old !WO ***
     ws_new_order(driver.id)
     ws_broadcast_driver(driver.id)
