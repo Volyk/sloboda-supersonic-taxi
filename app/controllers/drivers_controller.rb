@@ -53,7 +53,7 @@ class DriversController < ApplicationController
   end
 
   def order_params
-    filters = [:status] if current_driver || current_dispatcher
+    filters = [:status, :decline_order] if current_driver || current_dispatcher
     filters += [:phone, :email, :start_point, :end_point, :comment,
                 :passengers, :baggage, :driver_id] if current_dispatcher
     params.require(:order).permit(filters)
