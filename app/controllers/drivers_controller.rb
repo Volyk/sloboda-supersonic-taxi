@@ -61,5 +61,4 @@ class DriversController < ApplicationController
     @order = Order.find(params[:id])
     render json: { status: :not_found } unless @order
   end
-
 end

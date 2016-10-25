@@ -4,7 +4,6 @@ class DispatchersController < ApplicationController
   respond_to :html, :json
 
   def profile
-
   end
 
   def orders
@@ -22,5 +21,4 @@ class DispatchersController < ApplicationController
       format.html
     end
   end
-
 end

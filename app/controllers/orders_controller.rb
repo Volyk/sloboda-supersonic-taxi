@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
 
   def destroy
     @order.destroy
-    render json: {status: :ok}
+    render json: { status: :ok }
   end
 
   private
