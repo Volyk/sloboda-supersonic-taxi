@@ -24,10 +24,6 @@ class OrdersController < ApplicationController
 
   def create_success(format)
     logging
-    # *** Old !WO ***
-    ws_broadcast_order(@order.id)
-
-    # *** New !WN ***
     driver_assigned = @order.status == 'waiting' ? true : false
     broadcast('dispatcher', 'new_order', @order.as_json) unless driver_assigned
 
@@ -63,11 +59,6 @@ class OrdersController < ApplicationController
     return if params[:order][:status] != 'waiting'
     driver = Driver.find(params[:order][:driver_id])
     driver.update status: 'busy'
-    # *** Old !WO ***
-    ws_new_order(driver.id)
-    ws_broadcast_driver(driver.id)
-
-    # *** New !WN ***
     ws_message('driver', driver.id, 'receive_order', @order.as_json)
     broadcast('dispatcher', 'remove_driver', driver.as_json)
   end

@@ -44,7 +44,6 @@ class DriversController < ApplicationController
   end
 
   def ws_update_messages
-    # *** New !WN ***
     if @order.status == 'incoming' || @order.status == 'declined'
       broadcast('dispatcher', @event, @order.as_json)
     elsif @order.status == 'waiting' || @order.status == 'canceled'
@@ -69,10 +68,6 @@ class DriversController < ApplicationController
     return if @order_status != 'declined' && @order_status != 'done'
     current_driver.update status: 'available'
     @order.driver_id = nil if @order_status == 'declined'
-    # *** Old !WO ***
-    ws_broadcast_driver(current_driver.id)
-
-    # *** New !WN ***
     broadcast('dispatcher', 'new_driver', current_driver.as_json)
   end
 
@@ -87,11 +82,6 @@ class DriversController < ApplicationController
     driver = Driver.find(params[:order][:driver_id])
     driver.update status: 'busy'
     @order.status = 'waiting'
-    # *** Old !WO ***
-    ws_new_order(driver.id)
-    ws_broadcast_driver(driver.id)
-
-    # *** New !WN ***
     ws_message('driver', driver.id, 'receive_order', @order.as_json)
     broadcast('dispatcher', 'remove_driver', driver.as_json)
   end

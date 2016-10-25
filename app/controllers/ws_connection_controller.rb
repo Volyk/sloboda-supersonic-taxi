@@ -1,9 +1,6 @@
 # Manage the connections
 class WsConnectionController < WebsocketRails::BaseController
   def initialize_session
-    WebsocketRails.users.users['admin'] = WebsocketRails::UserManager.new
-    WebsocketRails.users.users['driver'] = WebsocketRails::UserManager.new
-    WebsocketRails.users.users['dispatcher'] = WebsocketRails::UserManager.new
   end
 
   def client_connected
@@ -50,10 +47,6 @@ class WsConnectionController < WebsocketRails::BaseController
     else
       driver.update status: 'offline'
     end
-    # *** Old !WO ***
-    broadcast_message :get_drivers, 'message' => id
-
-    # *** New !WN***
     action = driver.status == 'available' ? :new_driver : :remove_driver
     broadcast_message action, driver.as_json
   end
