@@ -2,33 +2,29 @@
 class OrdersTask < OrdersController
   include WsBroadcast
   def time_check
-    @warn_drivers = []
-    @warn_orders = []
     @orders = Order.where(status: 'waiting')
-    return false if @orders.nil?
+    return if @orders.nil?
     @orders.each do |order|
-      if Time.now.utc - order.updated_at > 300
-        @driver = Driver.find_for_authentication(id: order.driver_id)
-        @driver.status = 'available'
-        @driver.save
-        order.status = 'declined'
-        order.driver_id = nil
-        order.save
-        @warn_drivers.push(@driver.id)
-        @warn_orders.push(order.id)
-      end
+      next unless Time.now.utc - order.updated_at > 300
+      driver = Driver.find(order.driver_id)
+      driver.update status: 'available'
+      order.update status: 'declined', driver_id: nil
+      arbitrary_actions(driver, order)
     end
-    return false if @warn_orders.empty?
-    true
   end
 
-  def ws_warn
-    @warn_drivers.each do |driver_id|
-      ws_new_order(driver_id)
-      ws_broadcast_driver(driver_id)
-    end
-    @warn_orders.each do |order_id|
-      ws_broadcast_order(order_id)
-    end
+  def arbitrary_actions(driver, order)
+    log_message = 'Declined by timeout'
+    OrdersBlog.log(order.id, driver.id, order.dispatcher_id, log_message)
+    driver.update cancelled: driver.cancelled + 1
+    # *** Old !WO ***
+    ws_new_order(driver.id)
+    ws_broadcast_driver(driver.id)
+    ws_broadcast_order(order.id)
+
+    # ***New !WN ***
+    ws_message('driver', driver.id, 'order_timed_out', order.as_json)
+    broadcast('dispatcher', 'new_driver', driver.as_json)
+    broadcast('dispatcher', 'new_order', order.as_json)
   end
 end

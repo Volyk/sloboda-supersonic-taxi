@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161022192252) do
+ActiveRecord::Schema.define(version: 20161025120810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(version: 20161022192252) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "status",                 default: "offline"
+    t.integer  "done",                   default: 0
+    t.integer  "cancelled",              default: 0
     t.index ["phone"], name: "index_drivers_on_phone", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_drivers_on_reset_password_token", unique: true, using: :btree
   end
@@ -89,6 +91,7 @@ ActiveRecord::Schema.define(version: 20161022192252) do
     t.datetime "updated_at",                         null: false
     t.string   "email"
     t.string   "status",        default: "incoming"
+    t.string   "decline_order"
   end
 
   create_table "orders_blogs", force: :cascade do |t|
