@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
   end
 
   def create_failure(format)
-    format.html { render :new }
+    format.html { redirect_to '/', notice: @order.errors }
     format.json { render json: @order.errors, status: :unprocessable_entity }
   end
 
