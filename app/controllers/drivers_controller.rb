@@ -82,6 +82,7 @@ class DriversController < ApplicationController
     driver = Driver.find(params[:order][:driver_id])
     driver.update status: 'busy'
     @order.status = 'waiting'
+    @order.driver_id = driver.id
     ws_message('driver', driver.id, 'receive_order', @order.as_json)
     broadcast('dispatcher', 'remove_driver', driver.as_json)
   end
