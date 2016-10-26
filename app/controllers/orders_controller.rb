@@ -25,6 +25,7 @@ class OrdersController < ApplicationController
   def create_success(format)
     logging
     driver_assigned = @order.status == 'waiting' ? true : false
+    assign_driver if driver_assigned
     broadcast('dispatcher', 'new_order', @order.as_json) unless driver_assigned
 
     OrderMailer.order_email(@order).deliver
@@ -52,7 +53,6 @@ class OrdersController < ApplicationController
   def dispatcher_presence
     return if current_dispatcher.nil?
     @order.dispatcher_id = current_dispatcher.id
-    assign_driver
   end
 
   def assign_driver
