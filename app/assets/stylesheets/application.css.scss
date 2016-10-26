@@ -25,7 +25,7 @@ body {
     border-color: #78FA89;
 }
 .order-form {
-	margin-top: 50px;
+	margin-top: 30px;
 }
 .order-form span.required {
 	color: red;
@@ -44,12 +44,23 @@ body {
 	margin-left: 20px;
 }
 .avatar img {
-	height: 150px;
-	width: 150px;
+	max-height: 100%;
+	max-width: 100%;
 }
 .driver-info h3 {
 	margin-top: 0px;
 }
 .hideme {
 	display: none;
+}
+.comment-wrap {
+	word-wrap:break-word;
+}
+.moreOrders {
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+.order-btn {
+	margin-left: 30px;
+	margin-bottom: 20px;
 }

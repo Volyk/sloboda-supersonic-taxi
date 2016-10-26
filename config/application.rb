@@ -40,5 +40,9 @@ module SlobodaTeam
 
     config.middleware.delete Rack::Lock
 
+    WebsocketRails.users.users['admin'] = WebsocketRails::UserManager.new
+    WebsocketRails.users.users['driver'] = WebsocketRails::UserManager.new
+    WebsocketRails.users.users['dispatcher'] = WebsocketRails::UserManager.new
+
   end
 end
