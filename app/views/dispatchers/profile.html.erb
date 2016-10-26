@@ -1,14 +1,11 @@
 <div ng-app="taxi">
-  <div ng-controller="DispatchersController">
-    <nav class="navbar navbar-default">
-      <div class="collapse navbar-collapse">
+  <nav class="navbar navbar-default">
+    <div class="collapse navbar-collapse">
 	    <ul class="nav navbar-nav navbar-right">
-		  <li><a href="#" role="button" ng-click="create()">Новый заказ</a></li>
-		  <li class="logout"><%= link_to "Выйти", destroy_dispatcher_session_path, method: :delete %></li>
+		    <li class="logout"><%= link_to "Выйти", destroy_dispatcher_session_path, method: :delete %></li>
 	    </ul>
 	  </div>
-    </nav>	
-   </div>
+  </nav>	
   <div class="view-container">
     <div ng-view class="view-frame animate-view"></div>
   </div>

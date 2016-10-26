@@ -1,31 +1,26 @@
 <% if dispatcher_signed_in? %>
     <%= link_to "Sign out", destroy_dispatcher_session_path, method: :delete %>
-    <div ng-app="dispatcher">
-    <div class="view-container">
-      <div ng-view class="view-frame animate-view"></div>
-    </div>
-    </div>
 <% else %>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
+  <div class="col-sm-4 col-sm-offset-4">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
+  <div class="col-sm-4 col-sm-offset-4">
+    <%= f.label :password, 'Пароль' %><br />
     <%= f.password_field :password, autocomplete: "off" %>
   </div>
 
   <% if devise_mapping.rememberable? -%>
-    <div class="field">
+    <div class="col-sm-4 col-sm-offset-4">
       <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <%= f.label :remember_me, 'запомнить меня' %>
     </div>
   <% end -%>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <div class="col-sm-4 col-sm-offset-4">
+    <%= f.submit "Войти" %>
   </div>
 <% end %>
 
