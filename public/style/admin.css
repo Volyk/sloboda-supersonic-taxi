@@ -204,14 +204,14 @@ label {
 .list_active {
   position: absolute;
   top: 3px;
-  right: 10px;
+  right: 22px;
   color: green;
 }
 
 .list_inactive {
   position: absolute;
   top: 3px;
-  right: 7px;
+  right: 19px;
   color: red;
 }
 
@@ -266,7 +266,7 @@ label {
 
 #create_new_admin {
   color: grey;
-  margin-left: 5px;
+  margin-left: 7px;
   -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -284,7 +284,7 @@ label {
 
 #create_new_dispatcher {
   color: grey;
-  margin-left: 5px;
+  margin-left: 7px;
   -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -302,7 +302,7 @@ label {
 
 #create_new_driver {
   color: grey;
-  margin-left: 5px;
+  margin-left: 7px;
   -ms-user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -430,10 +430,12 @@ label {
 
 #drivers_list .list_active {
   top: 28px;
+  right: 10px;
 }
 
 #drivers_list .list_inactive {
   top: 28px;
+  right: 10px;
 }
 
 #drivers_list .list_controls {
@@ -510,17 +512,18 @@ label {
   position: fixed;
   background-color: white;
   width: 400px;
-  height: 325px;
+  height: 400px;
   border: 1px solid black;
   border-radius: 5px;
   display: none;
   text-align: center;
   padding-top: 20px;
+  padding-left: 40px;
 }
 
 #driver_details_form .title {
   display: inline-block;
-  width: 100px;
+  width: 120px;
 }
 
 #driver_details_form .details_value {
@@ -645,4 +648,144 @@ label {
   width: 100px;
   padding: 3px 10px 3px 10px;
   margin-right: 20px;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+#right_menu_bar {
+  position: absolute;
+  top: 100px;
+  left: 800px;
+}
+
+#menu_title {
+  color: grey;
+  font-size: 24px;
+}
+
+#right_menu_bar div {
+  position: absolute;
+  display: inline-block;
+  width: 75px;
+  height: 75px;
+  background-color: #F8F8FF;
+  border: 1px solid #DCDCDC;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 75px;
+  color: #63B8FF;
+  -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  white-space: pre;
+  cursor: pointer;
+}
+
+#right_menu_bar div:hover {
+  background-color: #AFEEEE;
+}
+
+#right_menu_bar div:active {
+  background-color: #CDC9C9;
+  border-color: #BEBEBE;
+}
+
+#log_button {
+  top: 10px;
+  font-size: 22px;
+}
+
+#ping_button {
+  top: 95px;
+  font-size: 22px;
+}
+
+.button_desc {
+  position: absolute;
+  top: -22px;
+  left: -100px;
+  display: none;
+  z-index: 2;
+  opacity: 0.99;
+  height: 32px;
+  width: 250px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  line-height: 32px;
+  font-size: 16px;
+}
+
+#right_menu_bar div:hover .button_desc {
+  display: inline-block;
+}
+
+.record_container {
+  margin: 10px 40px 10px 40px;
+  background-color: #F8F8FF;
+  border: 1px solid #DCDCDC;
+  border-radius: 5px;
+}
+
+.record_column {
+  line-height: 40px;
+  text-align: left;
+  display: inline-block;
+  width: 100px;
+}
+
+.record_column_long {
+  line-height: 40px;
+  text-align: left;
+  display: inline-block;
+  width: 200px;
+}
+
+.title_column {
+  line-height: 40px;
+  text-align: center;
+  display: inline-block;
+  width: 100px;
+}
+
+.record_container input {
+  width: 100%;
+}
+
+#filters_menu {
+  height: auto;
+}
+
+#clear_filters {
+  width: 100px;
+  margin-left: 8px;
+}
+
+#submit_button {
+  margin-left: 50px;
+}
+
+.online {
+  background-color: #CFFFD1 !important;
+}
+
+.list_container .id_label {
+  position: absolute;
+  top: -5px;
+  right: -11px;
+  border: 1px solid #8B8989;
+  border-radius: 20px;
+  width: 25px;
+  height: 25px;
+  background: linear-gradient(to top, #F0FFF0, #B0E0E6);
+  line-height: 25px;
+  text-align: center;
+  font-weight: bold;
 }

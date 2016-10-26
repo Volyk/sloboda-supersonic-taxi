@@ -37,6 +37,7 @@ class WsConnectionController < WebsocketRails::BaseController
     broadcast_message :ws_connection, 'id' => user.id, 'role' => role,
                                       'state' => state
     update_driver_status(user.id, state) if role == 'driver'
+    update_admin_list if role == 'admin' && state == true
   end
 
   def update_driver_status(id, state)
@@ -49,5 +50,18 @@ class WsConnectionController < WebsocketRails::BaseController
     end
     action = driver.status == 'available' ? :new_driver : :remove_driver
     broadcast_message action, driver.as_json
+  end
+
+  def update_admin_list
+    update_users('admin')
+    update_users('driver')
+    update_users('dispatcher')
+  end
+
+  def update_users(role)
+    WebsocketRails.users[role].users.each do |user|
+      send_message :ws_connection, 'id' => user[0], 'role' => role,
+                                   'state' => true
+    end
   end
 end

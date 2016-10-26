@@ -208,14 +208,7 @@ class Admins::WsPanelController < WebsocketRails::BaseController
   def get_driver_data
     if !current_admin.nil? && current_admin.active == true
       @driver = Driver.find_for_authentication(id: message[:id])
-      driver_data = {}
-      driver_data[:id] = @driver.id
-      driver_data[:phone] = @driver.phone
-      driver_data[:name] = @driver.name
-      driver_data[:car_type] = @driver.car_type
-      driver_data[:passengers] = @driver.passengers
-      driver_data[:trunk] = @driver.trunk
-      driver_data[:avatar] = @driver.avatar.url(:medium)
+      driver_data = @driver.as_json
       if message[:action] == 'details'
         send_message :open_details, driver_data
       elsif message[:action] == 'edit'

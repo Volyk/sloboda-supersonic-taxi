@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Action Log</title>
+    <link href="/style/admin.css" rel="stylesheet">
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+
+  <form action="?" method="GET">
+    <div id="filters_menu" class="record_container">
+      <div class="title_column">
+        Order:
+      </div>
+      <div class="record_column">
+        <input type="text" name="order" placeholder="ID / Phone" maxlength="10" value="<%= params[:order] %>">
+      </div>
+      <div class="title_column">
+        Action:
+      </div>
+      <div class="record_column_long">
+      <input type="text" name="action_field" value="<%= params[:action_field] %>">
+      </div>
+      <div class="title_column">
+        Driver:
+      </div>
+      <div class="record_column">
+        <input type="text" name="driver" placeholder="ID / Phone" maxlength="10" value="<%= params[:driver] %>">
+      </div>
+      <div class="title_column">
+        Dispatcher:
+      </div>
+      <div class="record_column">
+        <input type="text" name="dispatcher" placeholder="ID / E-mail" value="<%= params[:dispatcher] %>">
+      </div>
+      <br>
+      <div class="title_column">
+        From:
+      </div>
+      <div class="record_column_long">
+        <input type="text" name="from" placeholder="2016-10-25 15:44:48" value="<%= params[:from] %>">
+      </div>
+      <div class="title_column">
+        Before:
+      </div>
+      <div class="record_column_long">
+        <input type="text" name="to" placeholder="2016-10-25 15:44:48" value="<%= params[:to] %>">
+      </div>
+      <div id="submit_button" class="record_column">
+        <input type="submit" value="Search">
+      </div>
+      <div class="title_column">
+        <button id="clear_filters">Clear</button>
+      </div>
+    </div>
+  </form>
+
+  <% @orders_blogs.each do |record| %>
+    <div class="record_container">
+      <div class="title_column">
+        Order №
+      </div>
+      <div class="record_column">
+        <b><%= record.order_id %></b>
+      </div>
+      <div class="title_column">
+        has beed
+      </div>
+      <div class="record_column_long">
+        <b><%= record.action %></b>
+      </div>
+      <div class="title_column">
+        Driver ID:
+      </div>
+      <div class="record_column">
+        <b><%= record.driver_id %></b>
+      </div>
+      <div class="title_column">
+        Dispatcher ID:
+      </div>
+      <div class="record_column">
+        <b><%= record.dispatcher_id %></b>
+      </div>
+      <div class="title_column">
+        Time:
+      </div>
+      <div class="record_column_long">
+        <b><%= record.updated_at %></b>
+      </div>
+    </div>
+  <% end %>
+
+  <div style="width: 100%; text-align: center;">
+    <%= paginate @orders_blogs %>
+    <div style="height: 5px;"></div>
+    <%= page_entries_info @orders_blogs %>
+  </div>
+
+  <script type="text/javascript">
+
+  function load_handler() {
+
+    function clear(e) {
+      e.preventDefault();
+      fields = document.getElementsByTagName('input');
+      for (var i = 0; i < fields.length - 1; i++) {
+        fields[i].value = '';
+      }
+      document.getElementsByTagName('form')[0].submit();
+    }
+
+    document.getElementById('clear_filters').addEventListener('click', clear);
+  }
+
+  window.addEventListener('load', load_handler);
+
+  </script>
+
+  </body>
+  </html>
