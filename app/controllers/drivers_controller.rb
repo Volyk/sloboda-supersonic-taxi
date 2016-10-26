@@ -16,9 +16,10 @@ class DriversController < ApplicationController
   end
 
   def update_order
+    order_status = params[:order][:status]
     unless current_dispatcher.nil?
       @order.dispatcher_id = current_dispatcher.id
-      if params[:order][:status] == 'waiting'
+      if order_status == 'waiting'
         @driver = Driver.find_for_authentication(id: params[:order][:driver_id])
         @driver.status = 'busy'
         @driver.save
@@ -27,13 +28,17 @@ class DriversController < ApplicationController
       end
     end
     unless current_driver.nil?
-      if params[:order][:status] == 'declined' || params[:order][:status] == 'done'
+      if order_status == 'declined' || order_status == 'done'
         current_driver.status = 'available'
         current_driver.save
+        @order.driver_id = nil
         ws_broadcast_driver(current_driver.id)
       end
     end
     if @order.update(order_params)
+      OrderMailer.accept_order(@order).deliver if @order.status == 'accepted'
+      OrderMailer.execute_order(@order).deliver if @order.status == 'done'
+      OrderMailer.arrive(@order).deliver if @order.status == 'arrived'
       render json: @order.as_json
     else
       render json: @order.errors, status: :unprocessable_entity
@@ -43,12 +48,17 @@ class DriversController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:status, :driver_id)
+    if current_dispatcher
+      params.require(:order).permit(:phone, :email, :start_point, :end_point,
+                                    :comment, :passengers, :baggage, :driver_id,
+                                    :status)
+    elsif current_driver
+      params.require(:order).permit(:status)
+    end
   end
 
   def set_order
     @order = Order.find(params[:id])
-    render json: {status: :not_found} unless @order
+    render json: { status: :not_found } unless @order
   end
-
 end

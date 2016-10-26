@@ -48,19 +48,24 @@ class OrdersController < ApplicationController
 
   def destroy
     @order.destroy
-    render json: {status: :ok}
+    render json: { status: :ok }
   end
 
   private
 
   def order_params
-    params.require(:order).permit(:phone, :email, :start_point, :end_point,
-                                  :comment, :passengers, :baggage, :driver_id,
-                                  :status)
+    if current_dispatcher
+      params.require(:order).permit(:phone, :email, :start_point, :end_point,
+                                    :comment, :passengers, :baggage, :driver_id,
+                                    :status)
+    else
+      params.require(:order).permit(:phone, :email, :start_point, :end_point,
+                                    :comment, :passengers, :baggage)
+    end
   end
 
   def get_order
     @order = Order.find(params[:id])
-    render json: {status: :not_found} unless @order
-	end
+    render json: { status: :not_found } unless @order
+  end
 end
