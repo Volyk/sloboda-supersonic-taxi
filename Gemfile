@@ -46,6 +46,7 @@ gem 'websocket-rails', github: 'moaa/websocket-rails', branch: 'threadsocket-rai
 gem 'websocket-rails-js', github: 'websocket-rails/websocket-rails-js', branch: 'sub_protocols'
 
 group :development do
+    gem 'capistrano-secrets-yml'
     gem 'capistrano',         require: false
     gem 'capistrano-rvm',     require: false
     gem 'capistrano-rails',   require: false
