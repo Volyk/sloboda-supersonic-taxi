@@ -393,10 +393,11 @@
 
       // Pop-up form functions
 
-      function show_bg_shadow() {
+      function show_bg_shadow(form_id) {
         document.getElementsByClassName('bg_shadow')[0].style.width = document.documentElement.clientWidth + 'px';
         document.getElementsByClassName('bg_shadow')[0].style.height = document.documentElement.clientHeight + 'px';
         document.getElementsByClassName('bg_shadow')[0].style.display = 'inline-block';
+        window.current_form = form_id;
       }
 
       function hide_bg_shadow() {
@@ -408,6 +409,7 @@
         document.getElementById('driver_form').style.display = 'none';
         document.getElementById('driver_details_form').style.display = 'none';
         document.getElementById('edit_driver_form').style.display = 'none';
+        window.current_form = '';
       }
 
       document.getElementsByClassName('bg_shadow')[0].addEventListener('click', hide_bg_shadow);
@@ -438,7 +440,7 @@
       // Admin-related functions
 
       function create_admin() {
-        show_bg_shadow();
+        show_bg_shadow('send_admin_params');
         document.getElementById('admin_form').style.display = 'inline-block';
         document.getElementById('admin_form').style.left = get_left_margin(300) + 'px';
         document.getElementById('admin_form').style.top = get_top_margin(200) +  'px';
@@ -482,7 +484,7 @@
       document.getElementById('send_edit_admin').addEventListener('click', send_admin_edit_params);
 
       function edit_admin() {
-        show_bg_shadow();
+        show_bg_shadow('send_edit_admin');
         document.getElementById('edit_admin_form').style.display = 'inline-block';
         document.getElementById('edit_admin_form').style.left = get_left_margin(300) + 'px';
         document.getElementById('edit_admin_form').style.top = get_top_margin(200) +  'px';
@@ -492,7 +494,7 @@
       // Dispatcher-related functions
 
       function create_dispatcher() {
-        show_bg_shadow();
+        show_bg_shadow('send_dispatcher_params');
         document.getElementById('dispatcher_form').style.display = 'inline-block';
         document.getElementById('dispatcher_form').style.left = get_left_margin(300) + 'px';
         document.getElementById('dispatcher_form').style.top = get_top_margin(200) +  'px';
@@ -555,7 +557,7 @@
       document.getElementById('send_edit_dispatcher').addEventListener('click', send_dispatcher_edit_params);
 
       function edit_dispatcher(name) {
-        show_bg_shadow();
+        show_bg_shadow('send_edit_dispatcher');
         document.getElementById('edit_dispatcher_form').style.display = 'inline-block';
         document.getElementById('edit_dispatcher_form').style.left = get_left_margin(300) + 'px';
         document.getElementById('edit_dispatcher_form').style.top = get_top_margin(200) +  'px';
@@ -566,7 +568,7 @@
       // Driver-related functions
 
       function create_driver() {
-        show_bg_shadow();
+        show_bg_shadow('send_driver_params');
         document.getElementById('driver_form').style.display = 'inline-block';
         document.getElementById('driver_form').style.left = get_left_margin(400) + 'px';
         document.getElementById('driver_form').style.top = get_top_margin(325) +  'px';
@@ -614,7 +616,7 @@
 
 
       dispatcher.bind('open_details', function(data) {
-        show_bg_shadow();
+        show_bg_shadow('');
         document.getElementById('driver_details_form').style.display = 'inline-block';
         document.getElementById('driver_details_form').style.left = get_left_margin(400) + 'px';
         document.getElementById('driver_details_form').style.top = get_top_margin(400) +  'px';
@@ -629,7 +631,7 @@
 
 
       dispatcher.bind('edit_driver', function(data) {
-        show_bg_shadow();
+        show_bg_shadow('send_edit_driver');
         document.getElementById('edit_driver_form').style.display = 'inline-block';
         document.getElementById('edit_driver_form').style.left = get_left_margin(700) + 'px';
         document.getElementById('edit_driver_form').style.top = get_top_margin(325) +  'px';
@@ -739,6 +741,19 @@
           target.classList.remove('online');
         }
       });
+
+      // Key handling
+
+      window.current_form = '';
+
+      function key_handler(e) {
+
+        if ((window.current_form != '') && (e.keyCode === 13)) {
+          document.getElementById(window.current_form).click();
+        }
+      }
+
+      window.onkeydown = key_handler;
 
       // Event listeners
 
