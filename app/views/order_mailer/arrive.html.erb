@@ -6,7 +6,10 @@
   <body>
     <h1>Hi <%= @order.phone %></h1>
     <p>
-      Driver arrived! Hurry Up!
+      Car arrived! Hurry Up!<br>
+      Car <%= @driver.car_type %> is waiting for you. <br>
+      Here is contact number: <%= @driver.phone %> <br>
+      Have a good day!
     </p>
   </body>
 </html>

@@ -16,8 +16,9 @@ class OrderMailer < ApplicationMailer
     mail(to: @order.email, subject: 'Executed Order')
   end
 
-  def arrive(order)
+  def arrive(order, driver)
     @order = order
+    @driver = driver
     mail(to: @order.email, subject: 'Arrived Driver')
   end
 end
