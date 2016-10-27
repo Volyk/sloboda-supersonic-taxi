@@ -45,6 +45,14 @@ gem 'faye-websocket', '0.10.0'
 gem 'websocket-rails', github: 'moaa/websocket-rails', branch: 'threadsocket-rails'
 gem 'websocket-rails-js', github: 'websocket-rails/websocket-rails-js', branch: 'sub_protocols'
 
+group :development do
+    gem 'capistrano',         require: false
+    gem 'capistrano-rvm',     require: false
+    gem 'capistrano-rails',   require: false
+    gem 'capistrano-bundler', require: false
+    gem 'capistrano3-puma',   require: false
+end
+
 group :development, :test do
   gem "rspec-rails"
   gem "factory_girl_rails"
