@@ -759,6 +759,10 @@
         if ((window.current_button !== '') && (e.keyCode === 13)) {
           document.getElementById(window.current_button).click();
         }
+
+        if ((window.current_button !== '') && (e.keyCode === 27)) {
+          hide_bg_shadow();
+        }
       }
 
       window.onkeydown = key_handler;
