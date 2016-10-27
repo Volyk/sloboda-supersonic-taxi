@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'bundler'
+
 gem 'figaro'
 gem 'devise'
 gem 'angularjs-rails'
