@@ -45,6 +45,8 @@ gem 'faye-websocket', '0.10.0'
 gem 'websocket-rails', github: 'moaa/websocket-rails', branch: 'threadsocket-rails'
 gem 'websocket-rails-js', github: 'websocket-rails/websocket-rails-js', branch: 'sub_protocols'
 
+gem 'listen'
+
 group :development do
     gem 'capistrano-secrets-yml'
     gem 'capistrano',         require: false
@@ -75,7 +77,6 @@ end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console'
-  gem 'listen', '~> 3.0.5'
   gem 'pry-rails'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

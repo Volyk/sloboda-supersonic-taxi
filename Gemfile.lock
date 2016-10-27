@@ -339,7 +339,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   launchy
-  listen (~> 3.0.5)
+  listen
   paperclip
   pg
   pry-rails
