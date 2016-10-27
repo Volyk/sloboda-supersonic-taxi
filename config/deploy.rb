@@ -1,8 +1,8 @@
 # Change these
-server 138.68.95.218, port: 4004, roles: [:web, :app, :db], primary: true
+server '138.68.95.218', port: 4004, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'https://github.com/rakvium/sloboda-supersonic-taxi'
-set :branch           'volyk_deploy'
+set :branch,          'volyk_deploy'
 set :application,     'sloboda-supersonic-taxi'
 set :user,            'deploy'
 set :puma_threads,    [4, 16]
