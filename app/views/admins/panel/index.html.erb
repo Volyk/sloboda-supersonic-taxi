@@ -393,11 +393,15 @@
 
       // Pop-up form functions
 
-      function show_bg_shadow(form_id) {
+      function show_bg_shadow(appropriate_button_id) {
         document.getElementsByClassName('bg_shadow')[0].style.width = document.documentElement.clientWidth + 'px';
         document.getElementsByClassName('bg_shadow')[0].style.height = document.documentElement.clientHeight + 'px';
         document.getElementsByClassName('bg_shadow')[0].style.display = 'inline-block';
-        window.current_form = form_id;
+        init_key_handler(appropriate_button_id);
+      }
+
+      function init_key_handler(button_id) {
+        window.current_button = button_id;
       }
 
       function hide_bg_shadow() {
@@ -409,7 +413,11 @@
         document.getElementById('driver_form').style.display = 'none';
         document.getElementById('driver_details_form').style.display = 'none';
         document.getElementById('edit_driver_form').style.display = 'none';
-        window.current_form = '';
+        terminate_key_handler()
+      }
+
+      function terminate_key_handler() {
+        window.current_button = '';
       }
 
       document.getElementsByClassName('bg_shadow')[0].addEventListener('click', hide_bg_shadow);
@@ -744,12 +752,12 @@
 
       // Key handling
 
-      window.current_form = '';
+      window.current_button = '';
 
       function key_handler(e) {
 
-        if ((window.current_form != '') && (e.keyCode === 13)) {
-          document.getElementById(window.current_form).click();
+        if ((window.current_button !== '') && (e.keyCode === 13)) {
+          document.getElementById(window.current_button).click();
         }
       }
 
