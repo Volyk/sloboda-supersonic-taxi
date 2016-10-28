@@ -19,6 +19,8 @@ class DriversController < ApplicationController
   def update_order
     @order_status = params[:order][:status]
     @event = @order.status == @order_status ? 'change_order' : 'new_order'
+    @driver = Driver.find(params[:order][:driver_id]) unless
+      params[:order][:driver_id].nil?
     dispatcher_presence
     driver_presence
     @order.update(order_params) ? update_success : update_failure
@@ -40,7 +42,7 @@ class DriversController < ApplicationController
   def mailers
     OrderMailer.accept_order(@order).deliver if @order.status == 'accepted'
     OrderMailer.execute_order(@order).deliver if @order.status == 'done'
-    OrderMailer.arrive(@order).deliver if @order.status == 'arrived'
+    OrderMailer.arrive(@order, @driver).deliver if @order.status == 'arrived'
   end
 
   def ws_update_messages
