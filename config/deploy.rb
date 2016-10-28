@@ -1,5 +1,8 @@
+Figaro.load
+ENV['SET_BY_FIGARO'] # => nil
+Figaro.env.SET_BY_FIGARO
 # Change these
-server '138.68.95.218', port: 4004, roles: [:web, :app, :db], primary: true
+server ENV['IP_ADDRESS'], port: 4004, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'https://github.com/rakvium/sloboda-supersonic-taxi.git'
 set :branch,          'volyk_deploy'
