@@ -1,4 +1,4 @@
-source = IO.read('application.yml')
+source = IO.read('config/application.yml')
 vars = {}
 source.each_line do |line|
   var = line.match(/^(.+): '?([^'']+)'?$/)
