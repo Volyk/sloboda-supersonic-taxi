@@ -1,5 +1,11 @@
+source = IO.read('application.yml')
+vars = {}
+source.each_line do |line|
+  var = line.match(/^(.+): '?([^'']+)'?$/)
+  vars[var[1]] = var[2]
+end
 # Change these
-server ['IP_ADDRESS'], port: 4004, roles: [:web, :app, :db], primary: true
+server vars['IP_ADDRESS'], port: 4004, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'https://github.com/rakvium/sloboda-supersonic-taxi.git'
 set :branch,          'volyk_deploy'
