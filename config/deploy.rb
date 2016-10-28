@@ -1,5 +1,5 @@
 # Change these
-server ENV['IP_ADDRESS'], port: ENV['SERVER_PORT'], roles: [:web, :app, :db], primary: true
+server ENV['IP_ADDRESS'], port: 4004, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'https://github.com/rakvium/sloboda-supersonic-taxi.git'
 set :branch,          'volyk_deploy'
