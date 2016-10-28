@@ -1,6 +1,4 @@
 # Change these
-server ENV['IP_ADDRESS'], port: 22, roles: [:web, :app, :db], primary: true
-
 set :repo_url,        'git@github.com:rakvium/sloboda-supersonic-taxi.git'
 set :application,     'sloboda-supersonic-taxi'
 set :user,            'deploy'
