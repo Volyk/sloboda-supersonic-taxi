@@ -5,7 +5,7 @@ source.each_line do |line|
   vars[var[1]] = var[2]
 end
 # Change these
-server vars['IP_ADDRESS'], port: vars['PORT'], roles: [:web, :app, :db], primary: true
+server vars['IP_ADDRESS'], port: vars['PORT'].to_i, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'https://github.com/rakvium/sloboda-supersonic-taxi.git'
 set :branch,          'volyk_deploy'
