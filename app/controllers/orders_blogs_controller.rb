@@ -4,7 +4,7 @@ class OrdersBlogsController < ApplicationController
   # GET /orders_blogs
   # GET /orders_blogs.json
   def index
-    @orders_blogs = OrdersBlog.all
+    @orders_blogs = OrdersBlog.all.page(params[:page]).per(10)
   end
 
   # GET /orders_blogs/1
