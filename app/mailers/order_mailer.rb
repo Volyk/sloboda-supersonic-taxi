@@ -21,4 +21,10 @@ class OrderMailer < ApplicationMailer
     @driver = driver
     mail(to: @order.email, subject: 'Arrived Driver')
   end
+
+  def cancelled(order)
+    @order = order
+    mail(to: @order.email, subject: 'Your order was cancelled')
+  end
+
 end

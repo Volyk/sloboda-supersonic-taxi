@@ -43,6 +43,7 @@ class DriversController < ApplicationController
     OrderMailer.accept_order(@order).deliver if @order.status == 'accepted'
     OrderMailer.execute_order(@order).deliver if @order.status == 'done'
     OrderMailer.arrive(@order, @driver).deliver if @order.status == 'arrived'
+    OrderMailer.cancelled(@order).deliver if @order.status == 'canceled'
   end
 
   def ws_update_messages
