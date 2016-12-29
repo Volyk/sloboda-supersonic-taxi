@@ -13,3 +13,5 @@ The taxi for a little city
 5. Denis Dotsenko, denisdotsenko7@gmail.com
 
 6. Serj Bichkhidzhy, serj.bichkhidzhy@gmail.com
+
+Notification. The application ready for use with gem mailcatcher. If you are going to do it, please, do 'gem instal mailcatcher' before.
