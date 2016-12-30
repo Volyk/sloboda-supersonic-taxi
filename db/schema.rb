@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20161025120810) do
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.string   "email"
-    t.string   "status",        default: "new"
+    t.string   "status",        default: "incoming"
     t.string   "decline_order"
   end
 
